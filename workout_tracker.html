@@ -402,6 +402,80 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
 .signin-btn:hover{border-color:var(--accent);color:var(--accent);}
 .signin-btn svg{flex-shrink:0;}
 .signin-note{font-size:12px;color:var(--text3);max-width:320px;line-height:1.6;}
+
+/* ── WORKOUT DAY PICKER ── */
+.day-picker{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;align-items:center;}
+.day-picker-label{font-size:12px;color:var(--text3);font-weight:600;margin-right:4px;flex-shrink:0;}
+.day-chip{font-size:12px;font-weight:600;padding:5px 10px;border-radius:6px;border:1px solid var(--border);background:var(--surface2);color:var(--text2);cursor:pointer;transition:all .15s;user-select:none;}
+.day-chip.on{border-color:var(--p2);color:var(--p2);background:var(--p2bg);}
+.day-chip:hover{border-color:var(--border2);color:var(--text);}
+
+/* ── REP RANGE BADGE ── */
+.rep-range-badge{display:inline-block;font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;margin-left:6px;vertical-align:middle;}
+.rep-range-badge.strength{background:rgba(255,150,64,.15);color:var(--p3);border:1px solid rgba(255,150,64,.3);}
+.rep-range-badge.hypertrophy{background:var(--p1bg);color:var(--p1);border:1px solid rgba(74,158,255,.3);}
+.rep-range-badge.endurance{background:var(--p2bg);color:var(--p2);border:1px solid rgba(47,216,138,.3);}
+.rep-range-badge.cardio{background:var(--surface2);color:var(--text3);border:1px solid var(--border2);}
+
+/* ── DELOAD BANNER ── */
+.deload-banner{background:rgba(255,150,64,.1);border:1px solid var(--p3);border-radius:8px;padding:12px 16px;margin-bottom:16px;font-size:13px;color:var(--p3);line-height:1.6;}
+.deload-banner strong{font-weight:700;}
+
+/* ── REST DAY CARD ── */
+.rest-day-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px;margin-bottom:20px;}
+.rest-day-title{font-size:14px;font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.rest-suggestion{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;}
+.rest-chip{font-size:12px;font-weight:600;padding:6px 12px;border-radius:6px;border:1px solid var(--border);background:var(--surface2);color:var(--text2);}
+.rest-chip.active{border-color:var(--p2);color:var(--p2);background:var(--p2bg);}
+.rest-chip.warn{border-color:var(--p3);color:var(--p3);background:rgba(255,150,64,.08);}
+
+/* ── PHASE ASSESSMENT ── */
+.assessment-modal{background:var(--surface);border:1px solid var(--border2);border-radius:14px;width:92%;max-width:560px;max-height:88vh;overflow-y:auto;}
+.assessment-hd{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--surface);z-index:1;}
+.assessment-title{font-family:"Barlow Condensed",sans-serif;font-size:20px;font-weight:800;text-transform:uppercase;letter-spacing:1px;}
+.assessment-close{width:32px;height:32px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text2);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.assessment-body{padding:20px;}
+.assess-section{margin-bottom:20px;}
+.assess-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3);margin-bottom:8px;}
+.assess-row{display:flex;gap:10px;align-items:center;margin-bottom:8px;flex-wrap:wrap;}
+.assess-ex-name{font-size:13px;font-weight:600;flex:1;min-width:120px;}
+.assess-input{background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:7px 10px;font-family:"Barlow Condensed",sans-serif;font-size:16px;font-weight:800;color:var(--text);width:80px;text-align:center;-moz-appearance:textfield;}
+.assess-input::-webkit-inner-spin-button,.assess-input::-webkit-outer-spin-button{-webkit-appearance:none;}
+.assess-input:focus{outline:none;border-color:var(--accent);}
+.assess-vs{font-size:11px;color:var(--text3);white-space:nowrap;}
+.assess-delta{font-size:13px;font-weight:700;min-width:60px;}
+.assess-delta.pos{color:var(--p2);}.assess-delta.neg{color:var(--red);}.assess-delta.neu{color:var(--text3);}
+.assess-save-btn{width:100%;font-family:"Barlow Condensed",sans-serif;font-size:14px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:12px;border-radius:8px;border:none;background:var(--accent);color:var(--atxt);cursor:pointer;margin-top:8px;}
+.assess-save-btn:hover{background:var(--accent2);}
+
+/* ── STRENGTH COMPARISON ── */
+.strength-comp-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px;margin-bottom:20px;}
+.comp-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:12px;}
+.comp-table th{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3);text-align:left;padding:6px 10px;border-bottom:1px solid var(--border);}
+.comp-table td{padding:8px 10px;border-bottom:1px solid var(--border);color:var(--text2);vertical-align:middle;}
+.comp-table tr:last-child td{border-bottom:none;}
+.comp-table tr:hover td{background:var(--surface2);}
+.comp-ex{font-weight:600;color:var(--text);}
+.comp-bar-wrap{height:6px;background:var(--surface2);border-radius:3px;overflow:hidden;margin-top:3px;width:100%;}
+.comp-bar{height:100%;border-radius:3px;background:var(--p2);transition:width .6s;}
+.comp-pct{font-family:"Barlow Condensed",sans-serif;font-size:14px;font-weight:800;}
+.comp-pct.pos{color:var(--p2);}.comp-pct.neg{color:var(--red);}.comp-pct.neu{color:var(--text3);}
+
+/* ── BODY COMP ── */
+.bodycomp-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px;margin-bottom:20px;}
+.bodycomp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px;}
+.bc-item{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px;text-align:center;}
+.bc-val{font-family:"Barlow Condensed",sans-serif;font-size:26px;font-weight:800;margin-bottom:2px;}
+.bc-label{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;font-weight:700;}
+.bc-note{font-size:11px;color:var(--text3);margin-top:10px;line-height:1.6;padding:8px;background:var(--surface2);border-radius:6px;}
+
+/* ── PROJECTED FINISH ── */
+.proj-bar{display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:12px 18px;margin-bottom:20px;}
+.proj-icon{font-size:22px;flex-shrink:0;}
+.proj-text{flex:1;}
+.proj-main{font-size:14px;font-weight:600;color:var(--text);}
+.proj-sub{font-size:12px;color:var(--text2);margin-top:2px;}
+
 /* TOAST */
 .toast{position:fixed;bottom:24px;right:24px;background:var(--accent);color:var(--atxt);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;letter-spacing:1px;padding:12px 20px;border-radius:8px;z-index:999;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none;max-width:280px;}
 .toast.show{opacity:1;transform:translateY(0);}
@@ -818,7 +892,7 @@ const PHASES=[
 const MILESTONE_WEEKS=[4,8,12];
 
 // ═══════════════════════════════════════════════════ STATE
-const DEFAULT_STATE={sets:{},completed:{},skipped:{},history:[],prs:{},bodyweight:[],sessionNotes:{},readiness:{},rm1History:{}};
+const DEFAULT_STATE={sets:{},completed:{},skipped:{},history:[],prs:{},bodyweight:[],sessionNotes:{},readiness:{},rm1History:{},workoutDays:{},assessments:{},startWeight:202,startBF:22};
 let S=JSON.parse(JSON.stringify(DEFAULT_STATE));
 try{const d=localStorage.getItem('lift12_v5');if(d)S=Object.assign(JSON.parse(JSON.stringify(DEFAULT_STATE)),JSON.parse(d));}catch(e){}
 const save=()=>{
@@ -880,6 +954,19 @@ function epley1RM(weight,reps){
   return Math.round(weight*(1+reps/30));
 }
 
+
+// ═══════════════════════════════════════════════════ REP RANGE GUIDANCE
+function getRepRange(reps){
+  const r=parseInt(reps)||0;
+  if(r===0)return null;
+  if(r<=3)return{label:'Strength',cls:'strength',desc:'1–3 reps = max strength'};
+  if(r<=5)return{label:'Strength',cls:'strength',desc:'4–5 reps = strength'};
+  if(r<=8)return{label:'Hypertrophy',cls:'hypertrophy',desc:'6–8 reps = strength/hypertrophy'};
+  if(r<=12)return{label:'Hypertrophy',cls:'hypertrophy',desc:'8–12 reps = muscle building'};
+  if(r<=20)return{label:'Endurance',cls:'endurance',desc:'13–20 reps = muscular endurance'};
+  return{label:'Endurance',cls:'endurance',desc:'20+ reps = endurance'};
+}
+
 // ═══════════════════════════════════════════════════ STREAK
 function calcStreak(){
   let s=0;
@@ -939,6 +1026,237 @@ function getProgression(ph,week,di,key){
   return results.length?results:null;
 }
 
+
+// ═══════════════════════════════════════════════════ DELOAD DETECTION
+function getDeloadInfo(){
+  // After every 4 completed weeks suggest a deload
+  const completedWeeks=[];
+  PHASES.forEach(ph=>ph.weeks.forEach(w=>{
+    if(ph.days.every((_,di)=>S.completed[wk(ph.id,w,di)]||S.skipped[wk(ph.id,w,di)]))
+      completedWeeks.push({pid:ph.id,w});
+  }));
+  if(completedWeeks.length>0&&completedWeeks.length%4===0){
+    // Check if current week (next incomplete) is a deload candidate
+    const nextIncomplete=getNexIncompleteWeek();
+    if(nextIncomplete)return{suggest:true,completedCount:completedWeeks.length,next:nextIncomplete};
+  }
+  return null;
+}
+function getNexIncompleteWeek(){
+  for(const ph of PHASES)for(const w of ph.weeks){
+    if(!ph.days.every((_,di)=>S.completed[wk(ph.id,w,di)]||S.skipped[wk(ph.id,w,di)]))
+      return{pid:ph.id,w};
+  }
+  return null;
+}
+
+// ═══════════════════════════════════════════════════ REST DAY SUGGESTIONS
+function getRestDaySuggestion(){
+  // Look at recent workout days and suggest optimal rest
+  const recentKeys=Object.keys(S.completed).filter(k=>S.completed[k]).slice(-4);
+  if(!recentKeys.length)return null;
+  // Get days of week trained (from workoutDays log)
+  const daysThisWeek=Object.entries(S.workoutDays||{})
+    .filter(([k,v])=>v)
+    .map(([k,v])=>v)
+    .flat()
+    .filter(Boolean);
+  const dayNames=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const today=new Date().getDay();
+  // Figure out which muscle groups were trained last 2 sessions
+  const lastTwo=recentKeys.slice(-2).map(k=>{
+    const m=k.match(/p(\d+)_w(\d+)_d(\d+)/);
+    if(!m)return null;
+    const ph=ph_(parseInt(m[1]));
+    return ph?ph.days[parseInt(m[3])].title:null;
+  }).filter(Boolean);
+  // Simple fatigue model
+  const hasLower=lastTwo.some(t=>t.toLowerCase().includes('lower')||t.toLowerCase().includes('full'));
+  const hasUpper=lastTwo.some(t=>t.toLowerCase().includes('push')||t.toLowerCase().includes('pull')||t.toLowerCase().includes('upper'));
+  let suggestions=[];
+  if(hasLower&&hasUpper)suggestions.push({text:'Full rest recommended',warn:true});
+  else if(hasLower)suggestions.push({text:'Upper body OK today',warn:false});
+  else if(hasUpper)suggestions.push({text:'Lower body OK today',warn:false});
+  if(recentKeys.length>=3)suggestions.push({text:'Consider a rest day soon',warn:true});
+  return suggestions.length?suggestions:null;
+}
+
+// ═══════════════════════════════════════════════════ PROJECTED FINISH
+function getProjectedFinish(){
+  const total=PHASES.reduce((a,p)=>a+p.weeks.length*p.days.length,0);
+  const done=Object.values(S.completed).filter(Boolean).length;
+  if(done<3)return null;
+  // Use history to get pace (sessions per week)
+  const hist=S.history.slice(0,8);
+  if(hist.length<2)return null;
+  // Simple: sessions done / weeks elapsed
+  const remaining=total-done;
+  const sessionsPerWeek=done/Math.max(calcStreak(),1);
+  const weeksLeft=Math.ceil(remaining/Math.max(sessionsPerWeek,1));
+  const finishDate=new Date();
+  finishDate.setDate(finishDate.getDate()+weeksLeft*7);
+  return{
+    date:finishDate.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'}),
+    weeksLeft,
+    pace:sessionsPerWeek.toFixed(1)
+  };
+}
+
+// ═══════════════════════════════════════════════════ BODY COMPOSITION ESTIMATE
+function getBodyCompEstimate(){
+  const currentBW=S.bodyweight.length?S.bodyweight[S.bodyweight.length-1].w:S.startWeight||202;
+  const startBW=S.startWeight||202;
+  const startBF=S.startBF||22; // 20-25% midpoint
+  const startFatLbs=startBW*(startBF/100);
+  const startMuscleLbs=startBW-startFatLbs;
+  // Estimate: each lb of body weight lost assumed to be 75% fat, 25% muscle when in deficit
+  // Each week of training adds ~0.25–0.5 lbs muscle (beginner rate)
+  const done=Object.values(S.completed).filter(Boolean).length;
+  const weeksTraining=Math.min(done/3,12); // approx
+  const bwChange=currentBW-startBW;
+  const estimatedMuscleGained=Math.min(weeksTraining*0.35,4); // cap at 4 lbs over 12 weeks
+  const estimatedFatLost=Math.max(0,-bwChange+estimatedMuscleGained);
+  const currentFatLbs=Math.max(startFatLbs-estimatedFatLost,0);
+  const currentMuscleLbs=startMuscleLbs+estimatedMuscleGained;
+  const currentBF=Math.max(((currentFatLbs/currentBW)*100),8).toFixed(1);
+  return{
+    currentBW:currentBW.toFixed(1),
+    currentBF,
+    currentMuscleLbs:currentMuscleLbs.toFixed(1),
+    currentFatLbs:currentFatLbs.toFixed(1),
+    estimatedMuscleGained:estimatedMuscleGained.toFixed(1),
+    estimatedFatLost:estimatedFatLost.toFixed(1),
+    weeksTraining:Math.round(weeksTraining)
+  };
+}
+
+// ═══════════════════════════════════════════════════ STRENGTH COMPARISON
+function getStrengthComparison(){
+  // Key barbell lifts — find week 1 logged weight vs latest
+  const keyLifts=['Barbell bench press','Barbell back squat','Barbell deadlift','Barbell overhead press','Pull-ups'];
+  const results=[];
+  keyLifts.forEach(name=>{
+    let week1W=null,latestW=null,latestDate='';
+    PHASES.forEach(ph=>ph.weeks.forEach(w=>ph.days.forEach((day,di)=>{
+      const key=wk(ph.id,w,di);
+      if(!S.completed[key])return;
+      day.exercises.forEach((ex,ei)=>{
+        if(ex.name!==name)return;
+        const ek=`${key}_e${ei}`;
+        const wts=(S.sets[ek]||[]).map(s=>parseFloat(s.weight||s.reps||0)).filter(v=>v>0);
+        if(!wts.length)return;
+        const maxW=Math.max(...wts);
+        if(week1W===null)week1W=maxW;
+        latestW=maxW;
+        const he=S.history.find(h=>h.key===key);
+        if(he)latestDate=he.date;
+      });
+    })));
+    if(week1W!==null&&latestW!==null){
+      const delta=latestW-week1W;
+      const pct=week1W>0?Math.round((delta/week1W)*100):0;
+      results.push({name,week1W,latestW,delta,pct,latestDate});
+    }
+  });
+  return results;
+}
+
+// ═══════════════════════════════════════════════════ PHASE ASSESSMENT
+function openAssessment(phaseId){
+  const ph=ph_(phaseId);
+  const prevAssess=S.assessments[`phase${phaseId}`]||{};
+  const keyLifts=['Barbell bench press','Barbell back squat','Barbell deadlift','Barbell overhead press'];
+  document.getElementById('assess-title').textContent=`${ph.label} Assessment`;
+  // Get logged bests for this phase
+  const phaseBests={};
+  ph.weeks.forEach(w=>ph.days.forEach((day,di)=>{
+    const key=wk(ph.id,w,di);
+    if(!S.completed[key])return;
+    day.exercises.forEach((ex,ei)=>{
+      const ek=`${key}_e${ei}`;
+      const wts=(S.sets[ek]||[]).map(s=>parseFloat(s.weight||0)).filter(v=>v>0);
+      if(wts.length)phaseBests[ex.name]=Math.max(phaseBests[ex.name]||0,...wts);
+    });
+  }));
+  // Get phase-start targets
+  const startTargets={'Barbell bench press':115,'Barbell back squat':75,'Barbell deadlift':115,'Barbell overhead press':65};
+  let html=`
+    <div class="assess-section">
+      <div class="assess-label">💪 Strength — Logged best vs target</div>
+      ${keyLifts.map(name=>{
+        const best=phaseBests[name]||prevAssess[name]||0;
+        const target=parseInt(ph.days.flatMap(d=>d.exercises).find(e=>e.name===name)?.w)||startTargets[name]||0;
+        const delta=best&&target?best-target:0;
+        const cls=delta>0?'pos':delta<0?'neg':'neu';
+        return`<div class="assess-row">
+          <div class="assess-ex-name">${name}</div>
+          <input class="assess-input" type="number" placeholder="lbs" value="${best||''}"
+            id="assess-${name.replace(/\s/g,'_')}"
+            oninput="updateAssessDelta('${name.replace(/\s/g,'_')}',${target},this.value)">
+          <div class="assess-vs">vs ${target} lbs target</div>
+          <div class="assess-delta ${cls}" id="delta-${name.replace(/\s/g,'_')}">${delta?`${delta>0?'+':''}${delta} lbs`:''}</div>
+        </div>`;
+      }).join('')}
+    </div>
+    <div class="assess-section">
+      <div class="assess-label">🏃 Cardio — Pull-ups & endurance</div>
+      <div class="assess-row">
+        <div class="assess-ex-name">Max pull-ups (unweighted)</div>
+        <input class="assess-input" type="number" placeholder="reps" value="${prevAssess.pullups||''}"
+          id="assess-pullups">
+        <div class="assess-vs">started at 5–6</div>
+        <div class="assess-delta" id="delta-pullups"></div>
+      </div>
+      <div class="assess-row">
+        <div class="assess-ex-name">Body weight</div>
+        <input class="assess-input" type="number" placeholder="lbs" value="${S.bodyweight.length?S.bodyweight[S.bodyweight.length-1].w:''}"
+          id="assess-bodyweight">
+        <div class="assess-vs">started at 202 lbs</div>
+        <div class="assess-delta" id="delta-bodyweight"></div>
+      </div>
+    </div>
+    <div class="assess-section">
+      <div class="assess-label">📝 Notes</div>
+      <textarea class="session-note" style="min-height:80px" id="assess-notes"
+        placeholder="How did this phase go? What improved? What was hard?">${prevAssess.notes||''}</textarea>
+    </div>
+    <button class="assess-save-btn" onclick="saveAssessment(${phaseId})">Save Assessment</button>
+  `;
+  document.getElementById('assess-body').innerHTML=html;
+  document.getElementById('assess-modal').classList.add('on');
+  document.body.style.overflow='hidden';
+}
+function updateAssessDelta(nameId,target,val){
+  const v=parseFloat(val);
+  const el=document.getElementById(`delta-${nameId}`);
+  if(!el||!v||!target)return;
+  const d=Math.round(v-target);
+  el.textContent=`${d>0?'+':''}${d} lbs`;
+  el.className='assess-delta '+(d>0?'pos':d<0?'neg':'neu');
+}
+function saveAssessment(phaseId){
+  const ph=ph_(phaseId);
+  const keyLifts=['Barbell bench press','Barbell back squat','Barbell deadlift','Barbell overhead press'];
+  const data={savedAt:new Date().toISOString()};
+  keyLifts.forEach(name=>{
+    const el=document.getElementById(`assess-${name.replace(/\s/g,'_')}`);
+    if(el&&el.value)data[name]=parseFloat(el.value);
+  });
+  const pu=document.getElementById('assess-pullups');if(pu&&pu.value)data.pullups=parseInt(pu.value);
+  const bw=document.getElementById('assess-bodyweight');
+  if(bw&&bw.value){
+    data.bodyweight=parseFloat(bw.value);
+    S.bodyweight.push({w:parseFloat(bw.value),date:new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})});
+  }
+  const notes=document.getElementById('assess-notes');if(notes)data.notes=notes.value;
+  S.assessments[`phase${phaseId}`]=data;
+  save();
+  closeAssess();
+  toast(`${ph.label} assessment saved ✓`);
+}
+function closeAssess(){document.getElementById('assess-modal').classList.remove('on');document.body.style.overflow='';}
+function assessBgClick(e){if(e.target===document.getElementById('assess-modal'))closeAssess();}
+
 // ═══════════════════════════════════════════════════ HOME
 function renderHome(){
   const total=PHASES.reduce((a,p)=>a+p.weeks.length*p.days.length,0);
@@ -988,6 +1306,9 @@ function renderHome(){
       </div>
     </div>
 
+    <div class="proj-bar" id="proj-bar" style="display:none"></div>
+    <div class="rest-day-card" id="rest-day-card" style="display:none"></div>
+
     <div class="shd">Phases</div>
     <div class="phase-grid" id="ph-grid"></div>
 
@@ -999,6 +1320,12 @@ function renderHome(){
 
     <div class="shd">Body Weight</div>
     <div class="card" id="bw-section"></div>
+
+    <div class="shd">Body Composition Estimate</div>
+    <div class="bodycomp-card" id="bodycomp-card"></div>
+
+    <div class="shd">Strength Comparison — Week 1 vs Now</div>
+    <div class="strength-comp-card" id="strength-comp-card"></div>
 
     <div class="shd">Personal Records & Estimated 1RM</div>
     <div class="card" id="pr-section"></div>
@@ -1038,8 +1365,12 @@ function renderHome(){
   renderHeatmap();
   renderAchievements();
   renderBW();
+  renderBodyComp();
+  renderStrengthComp();
   renderPR();
   renderChart();
+  renderProjectedFinish();
+  renderRestDaySuggestion();
   try{const ts=localStorage.getItem('lift12_lastExport');document.getElementById('sync-last').textContent=ts?`Last exported: ${ts}`:'Never exported';}catch(e){}
 }
 
@@ -1251,6 +1582,80 @@ function drawCanvas(id,vals,labels,color,showGoal=false){
   });
 }
 
+
+// ═══════════════════════════════════════════════════ PROJECTED FINISH
+function renderProjectedFinish(){
+  const el=document.getElementById('proj-bar');if(!el)return;
+  const info=getProjectedFinish();
+  if(!info){el.style.display='none';return;}
+  el.style.display='flex';
+  el.innerHTML=`<div class="proj-icon">📅</div><div class="proj-text"><div class="proj-main">Projected finish: <strong>${info.date}</strong></div><div class="proj-sub">${info.weeksLeft} weeks remaining · ${info.pace} sessions/week average</div></div>`;
+}
+
+// ═══════════════════════════════════════════════════ REST DAY
+function renderRestDaySuggestion(){
+  const el=document.getElementById('rest-day-card');if(!el)return;
+  const suggestions=getRestDaySuggestion();
+  if(!suggestions||!suggestions.length){el.style.display='none';return;}
+  el.style.display='block';
+  el.innerHTML=`<div class="rest-day-title">💤 Recovery Suggestion</div><div class="rest-suggestion">${suggestions.map(s=>`<div class="rest-chip${s.warn?' warn':' active'}">${s.text}</div>`).join('')}</div>`;
+}
+
+// ═══════════════════════════════════════════════════ BODY COMP
+function renderBodyComp(){
+  const el=document.getElementById('bodycomp-card');if(!el)return;
+  const bc=getBodyCompEstimate();
+  el.innerHTML=`
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;flex-wrap:wrap;gap:8px;">
+      <div style="font-size:14px;font-weight:600">Body Composition Estimate</div>
+      <div style="font-size:11px;color:var(--text3)">Based on ${bc.weeksTraining} weeks training · starting BF ~22%</div>
+    </div>
+    <div class="bodycomp-grid">
+      <div class="bc-item">
+        <div class="bc-val" style="color:var(--p2)">~${bc.currentBF}%</div>
+        <div class="bc-label">Est. Body Fat</div>
+      </div>
+      <div class="bc-item">
+        <div class="bc-val" style="color:var(--p1)">+${bc.estimatedMuscleGained}</div>
+        <div class="bc-label">Muscle Gained (lbs)</div>
+      </div>
+      <div class="bc-item">
+        <div class="bc-val" style="color:var(--accent)">-${bc.estimatedFatLost}</div>
+        <div class="bc-label">Fat Lost Est. (lbs)</div>
+      </div>
+    </div>
+    <div class="bc-note">⚠️ These are rough estimates based on beginner muscle-gain rates and your logged weight trend. For accurate body fat, use a DEXA scan or body fat calipers.</div>
+  `;
+}
+
+// ═══════════════════════════════════════════════════ STRENGTH COMPARISON
+function renderStrengthComp(){
+  const el=document.getElementById('strength-comp-card');if(!el)return;
+  const data=getStrengthComparison();
+  if(!data.length){
+    el.innerHTML='<div style="font-size:13px;color:var(--text3)">Log weights on your main lifts to see your progress comparison here.</div>';
+    return;
+  }
+  const maxPct=Math.max(...data.map(d=>Math.abs(d.pct)),1);
+  el.innerHTML=`
+    <div style="font-size:14px;font-weight:600;margin-bottom:4px">Strength Comparison</div>
+    <div style="font-size:12px;color:var(--text3);margin-bottom:12px">First logged session vs most recent</div>
+    <table class="comp-table">
+      <thead><tr><th>Exercise</th><th>Week 1</th><th>Latest</th><th>Change</th></tr></thead>
+      <tbody>${data.map(d=>`<tr>
+        <td class="comp-ex">${d.name}</td>
+        <td style="color:var(--text2)">${d.week1W} lbs</td>
+        <td style="color:var(--text2)">${d.latestW} lbs</td>
+        <td>
+          <div class="comp-pct ${d.delta>0?'pos':d.delta<0?'neg':'neu'}">${d.delta>0?'+':''}${d.delta} lbs</div>
+          <div class="comp-bar-wrap"><div class="comp-bar" style="width:${Math.min(Math.abs(d.pct)/maxPct*100,100)}%;background:${d.delta>0?'var(--p2)':d.delta<0?'var(--red)':'var(--text3)'}"></div></div>
+        </td>
+      </tr>`).join('')}
+      </tbody>
+    </table>
+  `;
+}
+
 // ═══════════════════════════════════════════════════ PHASE VIEW
 function renderPhase(phaseId){
   const ph=ph_(phaseId);
@@ -1260,7 +1665,11 @@ function renderPhase(phaseId){
     <div class="badge ${ph.color}">${ph.label} · ${ph.sub}</div>
     <div class="pv-title">${ph.label}: ${ph.sub.split('·')[1]?.trim()||''}</div>
     <div class="pv-desc">${ph.desc}</div>
-    <div class="shd">${ph.weeks.length} weeks — tap a week to view workouts</div>
+    <div id="deload-banner-ph"></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px;">
+      <div class="shd" style="margin-bottom:0">${ph.weeks.length} weeks — tap a week to view workouts</div>
+      <button onclick="openAssessment(${phaseId})" style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:7px 14px;border-radius:7px;border:1px solid var(--gold);background:var(--goldbg);color:var(--gold);cursor:pointer">📊 Assessment</button>
+    </div>
     <div class="weeks-grid" id="wk-grid"></div>
   `;
   const grid=document.getElementById('wk-grid');
@@ -1285,6 +1694,14 @@ function renderPhase(phaseId){
     div.onclick=()=>go('week',ph.id,w);
     grid.appendChild(div);
   });
+  // deload check
+  const deloadEl=document.getElementById('deload-banner-ph');
+  if(deloadEl){
+    const deload=getDeloadInfo();
+    if(deload&&deload.next&&deload.next.pid===phaseId){
+      deloadEl.innerHTML=`<div class="deload-banner">🔄 <strong>Deload suggested for Week ${deload.next.w}.</strong> You've completed ${deload.completedCount} consecutive weeks — reduce all weights by 40–50% this week to allow full recovery before pushing harder again.</div>`;
+    }
+  }
 }
 
 // ═══════════════════════════════════════════════════ WEEK VIEW
@@ -1336,6 +1753,30 @@ function renderWeek(phaseId,week){
     const shb=document.createElement('button');shb.className='act-btn';
     shb.textContent='📋 Share';shb.onclick=e=>{e.stopPropagation();shareWorkout(ph,week,di,key);};
     actions.append(mb,sb,tb,cb,shb);body.appendChild(actions);
+    // workout day picker
+    const dp=document.createElement('div');dp.className='day-picker';
+    const dpLabel=document.createElement('span');dpLabel.className='day-picker-label';dpLabel.textContent='Trained on:';
+    dp.appendChild(dpLabel);
+    const days=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+    // auto-detect from completed date
+    const histEntry=S.history.find(h=>h.key===key);
+    const autoDay=histEntry?new Date(histEntry.date).toLocaleDateString('en-US',{weekday:'short'}):
+      S.completed[key]?new Date().toLocaleDateString('en-US',{weekday:'short'}):null;
+    const savedDay=(S.workoutDays&&S.workoutDays[key])||autoDay;
+    days.forEach(d=>{
+      const chip=document.createElement('span');
+      chip.className='day-chip'+(savedDay===d?' on':'');
+      chip.textContent=d;
+      chip.onclick=()=>{
+        if(!S.workoutDays)S.workoutDays={};
+        S.workoutDays[key]=d;
+        save();
+        dp.querySelectorAll('.day-chip').forEach(ch=>ch.classList.remove('on'));
+        chip.classList.add('on');
+      };
+      dp.appendChild(chip);
+    });
+    body.appendChild(dp);
     // session note
     const noteTA=document.createElement('textarea');noteTA.className='session-note';
     noteTA.placeholder='Session notes — how did it go? PRs, observations, how you felt...';
@@ -1400,7 +1841,7 @@ function makeExCard(ex,ek,ei,ph,sessionKey){
         ${ytUrl?`<button class="yt-pill" onclick="event.stopPropagation();openYT('${ytUrl}','${ex.name}')">▶ Watch</button>`:''}
         ${hasPR?`<span class="pr-badge-inline">PR ${hasPR.w}lb</span>`:''}
       </div>
-      <div class="ex-pres">${ex.p}</div>
+      <div class="ex-pres">${ex.p}${(()=>{const m=ex.p.match(/(\d+)/);if(!m)return'';const rr=getRepRange(m[1]);return rr&&getExType(ex.name).type==='weight'?`<span class="rep-range-badge ${rr.cls}">${rr.label}</span>`:'';})()} </div>
     </div>
     <div class="ex-right">
       <div class="ex-wt" style="color:var(--${ph.color})">${ex.w}</div>
@@ -1576,7 +2017,8 @@ function toggleDone(ph,week,di,key){
     const today=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
     const readiness=S.readiness[today]||null;
     S.history=S.history.filter(h=>h.key!==key);
-    S.history.unshift({key,date:today,phase:ph.label,phaseColor:ph.color,week,day:ph.days[di].name,title:ph.days[di].title,ts,tr,note,readiness});
+    const trainedDay=(S.workoutDays&&S.workoutDays[key])||new Date().toLocaleDateString('en-US',{weekday:'short'});
+    S.history.unshift({key,date:today,phase:ph.label,phaseColor:ph.color,week,day:ph.days[di].name,title:ph.days[di].title,ts,tr,note,readiness,trainedDay});
     toast('Workout logged! 💪');
     // check new achievements
     setTimeout(()=>checkNewAchievements(),100);
@@ -1780,7 +2222,7 @@ function renderHistory(){
   `;
   const hb=document.getElementById('hist-body');
   if(!S.history.length){hb.innerHTML='<div class="hist-empty">No workouts logged yet.</div>';return;}
-  let html=`<table class="hist-tbl"><thead><tr><th>Date</th><th>Workout</th><th>Phase</th><th>Sets</th><th>Reps</th><th>Readiness</th></tr></thead><tbody>`;
+  let html=`<table class="hist-tbl"><thead><tr><th>Date</th><th>Day</th><th>Workout</th><th>Phase</th><th>Sets</th><th>Reps</th></tr></thead><tbody>`;
   S.history.forEach(h=>{
     const c=h.phaseColor||'p1';
     const rd=h.readiness;
@@ -1789,7 +2231,7 @@ function renderHistory(){
       <td><div style="font-weight:600;color:var(--text)">${h.date}</div><div style="font-size:11px;color:var(--text3)">Wk ${h.week} · ${h.day}</div></td>
       <td style="color:var(--text)"><div style="font-weight:600">${h.title}</div>${h.note?`<div class="hist-note">"${h.note.substring(0,60)}${h.note.length>60?'…':''}"</div>`:''}</td>
       <td><span style="font-size:11px;font-weight:700;padding:2px 7px;border-radius:4px;background:var(--${c}bg);color:var(--${c})">${h.phase}</span></td>
-      <td>${h.ts||'—'}</td><td>${h.tr||'—'}</td><td>${rdHtml}</td>
+      <td style="font-weight:600;color:var(--text)">${h.trainedDay||'—'}</td><td>${h.ts||'—'}</td><td>${h.tr||'—'}</td>
     </tr>`;
   });
   hb.innerHTML=html+'</tbody></table>';
@@ -1863,5 +2305,17 @@ window.renderSyncStatus = renderSyncStatus;
 updateAuthUI(null);
 go('home');
 </script>
+
+<!-- PHASE ASSESSMENT MODAL -->
+<div class="modal-overlay" id="assess-modal" onclick="assessBgClick(event)">
+  <div class="assessment-modal">
+    <div class="assessment-hd">
+      <div class="assessment-title" id="assess-title">Phase Assessment</div>
+      <button class="assessment-close" onclick="closeAssess()">✕</button>
+    </div>
+    <div class="assessment-body" id="assess-body"></div>
+  </div>
+</div>
+
 </body>
 </html>
