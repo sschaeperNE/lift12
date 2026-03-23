@@ -386,6 +386,22 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
 .share-copy-btn{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:10px 20px;border-radius:8px;border:none;background:var(--accent);color:var(--atxt);cursor:pointer;margin-top:12px;width:100%;}
 .share-copy-btn:hover{background:var(--accent2);}
 
+/* AUTH */
+.auth-btn{font-family:"Barlow",sans-serif;font-size:12px;font-weight:600;padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text2);cursor:pointer;transition:all .15s;white-space:nowrap;display:flex;align-items:center;gap:6px;}
+.auth-btn:hover{border-color:var(--border2);color:var(--text);}
+.auth-btn.signed-in{border-color:var(--p2);color:var(--p2);background:var(--p2bg);}
+.auth-avatar{width:22px;height:22px;border-radius:50%;object-fit:cover;}
+.sync-status{font-size:11px;color:var(--p2);padding:4px 10px;border-radius:5px;background:var(--p2bg);border:1px solid var(--p2);white-space:nowrap;display:none;}
+.sync-status.show{display:inline-block;}
+/* SIGN-IN SCREEN */
+.signin-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;text-align:center;gap:20px;}
+.signin-logo{font-family:"Barlow Condensed",sans-serif;font-size:64px;font-weight:900;color:var(--accent);letter-spacing:4px;text-transform:uppercase;}
+.signin-logo span{color:var(--text3);font-weight:400;}
+.signin-sub{font-size:15px;color:var(--text2);max-width:360px;line-height:1.6;}
+.signin-btn{display:flex;align-items:center;gap:10px;font-family:"Barlow",sans-serif;font-size:15px;font-weight:600;padding:14px 28px;border-radius:10px;border:1px solid var(--border2);background:var(--surface);color:var(--text);cursor:pointer;transition:all .2s;}
+.signin-btn:hover{border-color:var(--accent);color:var(--accent);}
+.signin-btn svg{flex-shrink:0;}
+.signin-note{font-size:12px;color:var(--text3);max-width:320px;line-height:1.6;}
 /* TOAST */
 .toast{position:fixed;bottom:24px;right:24px;background:var(--accent);color:var(--atxt);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;letter-spacing:1px;padding:12px 20px;border-radius:8px;z-index:999;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none;max-width:280px;}
 .toast.show{opacity:1;transform:translateY(0);}
@@ -415,6 +431,84 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
 </style>
 </head>
 <body>
+<!-- FIREBASE -->
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged }
+  from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+import { getFirestore, doc, setDoc, getDoc, onSnapshot }
+  from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+const fbConfig = {
+  apiKey: "AIzaSyCp5wqtqtZ_INdRBBBlU0bP0XQcMIxP9Zk",
+  authDomain: "lift12-830c6.firebaseapp.com",
+  projectId: "lift12-830c6",
+  storageBucket: "lift12-830c6.firebasestorage.app",
+  messagingSenderId: "571010282495",
+  appId: "1:571010282495:web:dd42ddd2ef517c03cdedca"
+};
+const fbApp  = initializeApp(fbConfig);
+const auth   = getAuth(fbApp);
+const db     = getFirestore(fbApp);
+const provider = new GoogleAuthProvider();
+
+let _uid = null;
+let _syncUnsubscribe = null;
+
+// Expose to global scope so non-module JS can call them
+window.fbSignIn = async () => {
+  try {
+    await signInWithPopup(auth, provider);
+  } catch(e) { alert('Sign-in failed: ' + e.message); }
+};
+window.fbSignOut = async () => {
+  if(_syncUnsubscribe){ _syncUnsubscribe(); _syncUnsubscribe=null; }
+  await signOut(auth);
+  _uid = null;
+  window.updateAuthUI(null);
+};
+window.fbSave = async (data) => {
+  if(!_uid) return;
+  try {
+    await setDoc(doc(db,'users',_uid,'data','progress'), { payload: JSON.stringify(data), ts: Date.now() });
+  } catch(e) { console.warn('Firebase save failed:', e); }
+};
+
+// Listen for auth state
+onAuthStateChanged(auth, async (user) => {
+  if(user){
+    _uid = user.uid;
+    window.updateAuthUI(user);
+    // Load data once, then set up real-time listener
+    const snap = await getDoc(doc(db,'users',_uid,'data','progress'));
+    if(snap.exists()){
+      try {
+        const incoming = JSON.parse(snap.data().payload);
+        const def = JSON.parse(JSON.stringify(window.DEFAULT_STATE));
+        window.S = Object.assign(def, incoming);
+        window.renderHome();
+      } catch(e) { console.warn('Load error:', e); }
+    }
+    // Real-time sync: update if another device saves
+    if(_syncUnsubscribe) _syncUnsubscribe();
+    _syncUnsubscribe = onSnapshot(doc(db,'users',_uid,'data','progress'), (snap) => {
+      if(!snap.exists() || snap.metadata.hasPendingWrites) return;
+      try {
+        const incoming = JSON.parse(snap.data().payload);
+        const def = JSON.parse(JSON.stringify(window.DEFAULT_STATE));
+        window.S = Object.assign(def, incoming);
+        window.renderSyncStatus('Synced just now ✓');
+        // Refresh current view
+        if(document.getElementById('v-home').classList.contains('on')) window.renderHome();
+      } catch(e){}
+    });
+  } else {
+    _uid = null;
+    window.updateAuthUI(null);
+  }
+});
+</script>
+
 <header class="hdr">
   <div class="logo" onclick="go('home')">LIFT<span>12</span></div>
   <div class="bc" id="bc"></div>
@@ -422,6 +516,7 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
     <button class="icon-btn" onclick="openPlateCalc()" title="Plate calculator">🏋️</button>
     <button class="icon-btn" id="theme-btn" onclick="toggleTheme()" title="Toggle theme">🌙</button>
     <button class="hbtn" id="hist-btn" onclick="go('history')">History</button>
+    <div id="auth-ui"></div>
   </div>
 </header>
 <div class="main">
@@ -505,6 +600,7 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);min-
 </div>
 
 <div class="toast" id="toast"></div>
+<span class="sync-status" id="sync-status"></span>
 <input type="file" id="import-input" accept=".json" style="display:none" onchange="importFile(this)">
 <script>
 // ═══════════════════════════════════════════════════ YOUTUBE DATA
@@ -584,6 +680,24 @@ const YT_DESC={
   'Bike sprint':'All-out technique for maximum power output.',
   'Bike steady state':'Zone 2 — how to find the right effort level.',
 };
+
+// ═══════════════════════════════════════════════════ EXERCISE TYPES
+// Types: 'weight' | 'time' | 'reps' | 'distance' | 'intervals'
+const EX_TYPE = {
+  'Plank':                    {type:'time',   unit:'seconds', label:'Duration'},
+  'Bike sprint intervals':    {type:'intervals', unit:'rounds', label:'Rounds'},
+  'Bike sprints':             {type:'intervals', unit:'rounds', label:'Rounds'},
+  'Bike sprint':              {type:'intervals', unit:'rounds', label:'Rounds'},
+  'Bike steady state':        {type:'time',   unit:'mins',    label:'Duration'},
+  'Treadmill incline walk':   {type:'time',   unit:'mins',    label:'Duration'},
+  'Treadmill run/walk intervals':{type:'time',unit:'mins',    label:'Duration'},
+  'Treadmill HIIT':           {type:'time',   unit:'mins',    label:'Duration'},
+  'Treadmill run':            {type:'time',   unit:'mins',    label:'Duration'},
+  'Core circuit':             {type:'reps',   unit:'rounds',  label:'Rounds'},
+  'Full core circuit':        {type:'reps',   unit:'rounds',  label:'Rounds'},
+  'Dead hang':                {type:'time',   unit:'seconds', label:'Duration'},
+};
+function getExType(name){ return EX_TYPE[name] || {type:'weight', unit:'lbs', label:'Weight'}; }
 
 // ═══════════════════════════════════════════════════ SUPERSETS
 // key = exercise name, value = the name it pairs with
@@ -707,7 +821,16 @@ const MILESTONE_WEEKS=[4,8,12];
 const DEFAULT_STATE={sets:{},completed:{},skipped:{},history:[],prs:{},bodyweight:[],sessionNotes:{},readiness:{},rm1History:{}};
 let S=JSON.parse(JSON.stringify(DEFAULT_STATE));
 try{const d=localStorage.getItem('lift12_v5');if(d)S=Object.assign(JSON.parse(JSON.stringify(DEFAULT_STATE)),JSON.parse(d));}catch(e){}
-const save=()=>{try{localStorage.setItem('lift12_v5',JSON.stringify(S));}catch(e){}};
+const save=()=>{
+  try{localStorage.setItem('lift12_v5',JSON.stringify(S));}catch(e){}
+  // also push to Firebase if signed in
+  if(window.fbSave) window.fbSave(S);
+};
+window.DEFAULT_STATE = DEFAULT_STATE;
+window.renderHome = renderHome;
+window.S = S;
+// proxy to keep window.S in sync
+const _origSave = save;
 const wk=(pid,w,di)=>`p${pid}_w${w}_d${di}`;
 const ph_=id=>PHASES.find(p=>p.id===id);
 let theme=localStorage.getItem('lift12_theme')||'dark';
@@ -883,12 +1006,12 @@ function renderHome(){
     <div class="shd">Strength Progress Chart</div>
     <div class="chart-section" id="chart-section"></div>
 
-    <div class="shd">iCloud Sync</div>
+    <div class="shd">Sync & Backup</div>
     <div class="sync-banner">
       <div class="sync-icon">☁️</div>
       <div class="sync-text">
-        <div class="sync-title">Export → save to iCloud Drive → import on other device</div>
-        <div class="sync-sub">Works between Mac and iPhone. Export after each workout.</div>
+        <div class="sync-title">Firebase sync is active when signed in</div>
+        <div class="sync-sub">Sign in with Google to sync automatically across all devices. Export/Import still available as a manual backup.</div>
         <div class="sync-last" id="sync-last"></div>
       </div>
       <div class="sync-btns">
@@ -1348,18 +1471,74 @@ function calcWarmupSets(w){
 function renderSetRows(ex,ek){
   const c=document.getElementById(`sr-${ek}`);if(!c)return;
   const sets=S.sets[ek]||[];
-  c.innerHTML=sets.map((s,si)=>`
-    <div class="set-row">
-      <div class="set-lbl">S${si+1}</div>
-      <input class="si${s.reps?' v':''}" type="number" min="0" inputmode="numeric" pattern="[0-9]*" placeholder="reps"
-        value="${s.reps}" id="r-${ek}-${si}" onchange="upd('${ek}',${si},'reps',this.value)"/>
-      <input class="si${s.weight?' v':''}" type="text" inputmode="decimal" placeholder="lbs/BW"
-        value="${s.weight}" id="wt-${ek}-${si}" onchange="upd('${ek}',${si},'weight',this.value)"/>
-      <input class="si${s.notes?' v':''}" type="text" placeholder="notes"
-        value="${s.notes||''}" id="nt-${ek}-${si}" onchange="upd('${ek}',${si},'notes',this.value)"/>
-      <button class="ok-btn${s.done?' done':''}" id="ob-${ek}-${si}" onclick="togSet('${ek}',${si})">${s.done?'✓':'○'}</button>
-    </div>
-  `).join('');
+  const et=getExType(ex.name);
+  const isWeight=et.type==='weight';
+  const isTime=et.type==='time';
+  const isIntervals=et.type==='intervals';
+  const isReps=et.type==='reps';
+  // Build header labels based on type
+  let col1='', col2='', col3='';
+  if(isWeight){col1='Reps done';col2='Weight used';col3='Notes';}
+  else if(isTime){col1='Duration';col2='';col3='Notes';}
+  else if(isIntervals){col1='Rounds';col2='Effort';col3='Notes';}
+  else{col1='Reps / Rounds';col2='';col3='Notes';}
+  // Update header
+  const hdrEl=c.previousElementSibling;
+  if(hdrEl&&hdrEl.classList.contains('sets-hdr')){
+    hdrEl.innerHTML=`<span>Set</span><span>${col1}</span>${col2?`<span>${col2}</span>`:'<span></span>'}<span>${col3}</span><span></span>`;
+  }
+  c.innerHTML=sets.map((s,si)=>{
+    if(isWeight){
+      return`<div class="set-row">
+        <div class="set-lbl">S${si+1}</div>
+        <input class="si${s.reps?' v':''}" type="number" min="0" inputmode="numeric" placeholder="reps"
+          value="${s.reps||''}" id="r-${ek}-${si}" onchange="upd('${ek}',${si},'reps',this.value)"/>
+        <input class="si${s.weight?' v':''}" type="text" inputmode="decimal" placeholder="lbs / BW"
+          value="${s.weight||''}" id="wt-${ek}-${si}" onchange="upd('${ek}',${si},'weight',this.value)"/>
+        <input class="si${s.notes?' v':''}" type="text" placeholder="notes"
+          value="${s.notes||''}" id="nt-${ek}-${si}" onchange="upd('${ek}',${si},'notes',this.value)"/>
+        <button class="ok-btn${s.done?' done':''}" id="ob-${ek}-${si}" onclick="togSet('${ek}',${si})">${s.done?'✓':'○'}</button>
+      </div>`;
+    } else if(isTime){
+      // time-based: duration field + notes, no weight
+      const unitOpts=['seconds','mins'].map(u=>`<option value="${u}"${(s.timeUnit||et.unit)===u?' selected':''}>${u}</option>`).join('');
+      return`<div class="set-row" style="grid-template-columns:30px 1fr auto 1fr 34px">
+        <div class="set-lbl">S${si+1}</div>
+        <input class="si${s.duration?' v':''}" type="number" min="0" inputmode="numeric" placeholder="${et.unit}"
+          value="${s.duration||''}" id="r-${ek}-${si}" onchange="upd('${ek}',${si},'duration',this.value)"/>
+        <select class="si" style="width:80px;padding:5px 4px" id="u-${ek}-${si}" onchange="upd('${ek}',${si},'timeUnit',this.value)">
+          ${unitOpts}
+        </select>
+        <input class="si${s.notes?' v':''}" type="text" placeholder="notes"
+          value="${s.notes||''}" id="nt-${ek}-${si}" onchange="upd('${ek}',${si},'notes',this.value)"/>
+        <button class="ok-btn${s.done?' done':''}" id="ob-${ek}-${si}" onclick="togSet('${ek}',${si})">${s.done?'✓':'○'}</button>
+      </div>`;
+    } else if(isIntervals){
+      // intervals: rounds + effort dropdown + notes
+      const effortOpts=['','Easy','Moderate','Hard','Max'].map(e=>`<option value="${e}"${(s.effort||'')=== e?' selected':''}>${e||'Effort'}</option>`).join('');
+      return`<div class="set-row">
+        <div class="set-lbl">S${si+1}</div>
+        <input class="si${s.reps?' v':''}" type="number" min="0" inputmode="numeric" placeholder="rounds"
+          value="${s.reps||''}" id="r-${ek}-${si}" onchange="upd('${ek}',${si},'reps',this.value)"/>
+        <select class="si" id="wt-${ek}-${si}" onchange="upd('${ek}',${si},'effort',this.value)">
+          ${effortOpts}
+        </select>
+        <input class="si${s.notes?' v':''}" type="text" placeholder="notes"
+          value="${s.notes||''}" id="nt-${ek}-${si}" onchange="upd('${ek}',${si},'notes',this.value)"/>
+        <button class="ok-btn${s.done?' done':''}" id="ob-${ek}-${si}" onclick="togSet('${ek}',${si})">${s.done?'✓':'○'}</button>
+      </div>`;
+    } else {
+      // reps only
+      return`<div class="set-row" style="grid-template-columns:30px 1fr 1fr 34px">
+        <div class="set-lbl">S${si+1}</div>
+        <input class="si${s.reps?' v':''}" type="number" min="0" inputmode="numeric" placeholder="reps / rounds"
+          value="${s.reps||''}" id="r-${ek}-${si}" onchange="upd('${ek}',${si},'reps',this.value)"/>
+        <input class="si${s.notes?' v':''}" type="text" placeholder="notes"
+          value="${s.notes||''}" id="nt-${ek}-${si}" onchange="upd('${ek}',${si},'notes',this.value)"/>
+        <button class="ok-btn${s.done?' done':''}" id="ob-${ek}-${si}" onclick="togSet('${ek}',${si})">${s.done?'✓':'○'}</button>
+      </div>`;
+    }
+  }).join('');
 }
 
 function upd(ek,si,field,val){
@@ -1658,7 +1837,30 @@ function toast(msg){
   setTimeout(()=>t.classList.remove('show'),3200);
 }
 
+// ═══════════════════════════════════════════════════ AUTH UI
+function updateAuthUI(user){
+  const el=document.getElementById('auth-ui');if(!el)return;
+  if(user){
+    const name=user.displayName?user.displayName.split(' ')[0]:'You';
+    const photo=user.photoURL?`<img class="auth-avatar" src="${user.photoURL}" alt="">`:'👤';
+    el.innerHTML=`<button class="auth-btn signed-in" onclick="window.fbSignOut()">${photo} ${name} · Sign out</button>`;
+  } else {
+    el.innerHTML=`<button class="auth-btn" onclick="window.fbSignIn()">Sign in with Google</button>`;
+  }
+}
+function renderSyncStatus(msg){
+  const el=document.getElementById('sync-status');if(!el)return;
+  el.textContent=msg;el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'),3000);
+}
+
+// expose to module scope
+window.updateAuthUI = updateAuthUI;
+window.renderSyncStatus = renderSyncStatus;
+
 // ═══════════════════════════════════════════════════ INIT
+// Show sign-in screen if no auth yet — Firebase module will call renderHome when signed in
+updateAuthUI(null);
 go('home');
 </script>
 </body>
