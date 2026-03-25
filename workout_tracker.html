@@ -561,6 +561,28 @@ body.fs-large{font-size:17px;}
   .ql-input{font-size:22px;padding:10px 6px;}
 }
 
+
+/* ── DIFFICULTY SELECTOR ── */
+.diff-bar{display:flex;align-items:center;gap:8px;padding:12px 16px;background:var(--surface2);border-radius:8px;margin-bottom:14px;flex-wrap:wrap;}
+.diff-label{font-size:12px;font-weight:600;color:var(--text2);flex-shrink:0;}
+.diff-pills{display:flex;gap:6px;}
+.diff-pill{font-family:"Barlow Condensed",sans-serif;font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:5px 12px;border-radius:20px;border:1px solid var(--border2);background:var(--surface);color:var(--text3);cursor:pointer;transition:all .15s;user-select:none;}
+.diff-pill:hover{color:var(--text);border-color:var(--border2);}
+.diff-pill.easy.on{background:rgba(47,216,138,.15);border-color:var(--p2);color:var(--p2);}
+.diff-pill.medium.on{background:rgba(74,158,255,.15);border-color:var(--p1);color:var(--p1);}
+.diff-pill.hard.on{background:rgba(255,79,79,.15);border-color:var(--red);color:var(--red);}
+.diff-info{font-size:11px;color:var(--text3);flex:1;min-width:160px;}
+/* Per-exercise adjusted badge */
+.diff-adj-badge{display:inline-block;font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;margin-left:6px;vertical-align:middle;}
+.diff-adj-badge.easy{background:rgba(47,216,138,.15);color:var(--p2);border:1px solid rgba(47,216,138,.3);}
+.diff-adj-badge.medium{background:rgba(74,158,255,.15);color:var(--p1);border:1px solid rgba(74,158,255,.3);}
+.diff-adj-badge.hard{background:rgba(255,79,79,.15);color:var(--red);border:1px solid rgba(255,79,79,.3);}
+/* Week card difficulty badge */
+.wk-diff-badge{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;margin-top:8px;}
+.wk-diff-badge.easy{background:rgba(47,216,138,.15);color:var(--p2);}
+.wk-diff-badge.medium{background:rgba(74,158,255,.15);color:var(--p1);}
+.wk-diff-badge.hard{background:rgba(255,79,79,.15);color:var(--red);}
+
 /* TOAST */
 .toast{position:fixed;bottom:24px;right:24px;background:var(--accent);color:var(--atxt);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;letter-spacing:1px;padding:12px 20px;border-radius:8px;z-index:999;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none;max-width:280px;}
 .toast.show{opacity:1;transform:translateY(0);}
@@ -978,7 +1000,7 @@ const PHASES=[
 const MILESTONE_WEEKS=[4,8,12];
 
 // ═══════════════════════════════════════════════════ STATE
-const DEFAULT_STATE={sets:{},completed:{},skipped:{},history:[],prs:{},bodyweight:[],sessionNotes:{},readiness:{},rm1History:{},workoutDays:{},assessments:{},startWeight:202,startBF:22,restDays:{}};
+const DEFAULT_STATE={sets:{},completed:{},skipped:{},history:[],prs:{},bodyweight:[],sessionNotes:{},readiness:{},rm1History:{},workoutDays:{},assessments:{},startWeight:202,startBF:22,restDays:{},difficulty:{}};
 let S=JSON.parse(JSON.stringify(DEFAULT_STATE));
 try{const d=localStorage.getItem('lift12_v5');if(d)S=Object.assign(JSON.parse(JSON.stringify(DEFAULT_STATE)),JSON.parse(d));}catch(e){}
 const save=()=>{
@@ -1750,6 +1772,84 @@ function renderStrengthComp(){
   `;
 }
 
+
+// ═══════════════════════════════════════════════════ DIFFICULTY ENGINE
+
+// Keys: weekKey = "p1_w1"  dayKey = "p1_w1_d0"  (day overrides week)
+function diffKey(phaseId,week){return `p${phaseId}_w${week}`;}
+function dayDiffKey(phaseId,week,di){return `p${phaseId}_w${week}_d${di}`;}
+
+function getDiff(phaseId,week,di){
+  // day override takes priority, then week default, then 'medium'
+  const dk=dayDiffKey(phaseId,week,di);
+  const wk2=diffKey(phaseId,week);
+  return (S.difficulty&&S.difficulty[dk])||
+         (S.difficulty&&S.difficulty[wk2])||
+         'medium';
+}
+
+function setWeekDiff(phaseId,week,level){
+  if(!S.difficulty)S.difficulty={};
+  S.difficulty[diffKey(phaseId,week)]=level;
+  // clear any day overrides for this week so week default applies cleanly
+  PHASES.find(p=>p.id===phaseId)?.days.forEach((_,di)=>{
+    delete S.difficulty[dayDiffKey(phaseId,week,di)];
+  });
+  save();
+}
+
+function setDayDiff(phaseId,week,di,level){
+  if(!S.difficulty)S.difficulty={};
+  S.difficulty[dayDiffKey(phaseId,week,di)]=level;
+  save();
+}
+
+// Returns adjusted prescribed reps string and adjusted target weight string
+function applyDifficulty(ex,phaseId,week,di){
+  const level=getDiff(phaseId,week,di);
+  if(level==='medium')return{adjP:ex.p,adjW:ex.w,level};
+
+  const et=getExType(ex.name);
+  if(et.type!=='weight')return{adjP:ex.p,adjW:ex.w,level}; // cardio unchanged
+
+  // Parse base weight from ex.w — take the first number
+  const wMatch=ex.w.match(/[\d.]+/);
+  const baseW=wMatch?parseFloat(wMatch[0]):0;
+
+  // Parse rep range — e.g. "3 × 10" or "4 × 6–8" or "5 × 5"
+  const repMatch=ex.p.match(/×\s*([\d]+)(?:–([\d]+))?/);
+  const baseSets=ex.sets;
+  const repLow=repMatch?parseInt(repMatch[1]):8;
+  const repHigh=repMatch&&repMatch[2]?parseInt(repMatch[2]):repLow;
+  const setsMatch=ex.p.match(/(\d+)\s*×/);
+  const prescSets=setsMatch?parseInt(setsMatch[1]):baseSets;
+
+  let adjW=baseW,adjRepLow=repLow,adjRepHigh=repHigh,adjSets=prescSets;
+
+  if(level==='easy'){
+    // 60% of weight, bottom of rep range, same sets
+    adjW=baseW>0?Math.round(baseW*0.6/5)*5:0;
+    adjRepLow=repLow;
+    adjRepHigh=repLow; // just the bottom
+  } else if(level==='hard'){
+    // +10% weight (rounded to nearest 5), top of rep range + 1–2 extra reps
+    adjW=baseW>0?Math.round(baseW*1.1/5)*5:0;
+    adjRepLow=repHigh;
+    adjRepHigh=repHigh+2;
+  }
+
+  const wStr=ex.w.replace(/[\d.]+/,adjW||wMatch?.[0]||'');
+  const rStr=adjRepLow===adjRepHigh?`${adjSets} × ${adjRepLow}`:`${adjSets} × ${adjRepLow}–${adjRepHigh}`;
+  return{adjP:rStr,adjW:baseW>0?wStr:ex.w,level};
+}
+
+const DIFF_INFO={
+  easy:'~60% weight · lower rep range · same sets — good for recovery or low-energy days',
+  medium:'Prescribed weight & reps exactly as written in the program',
+  hard:'+10% weight · top of rep range +1–2 reps — push for a new PR'
+};
+const DIFF_EMOJI={easy:'🟢',medium:'🔵',hard:'🔴'};
+
 // ═══════════════════════════════════════════════════ PHASE VIEW
 function renderPhase(phaseId){
   const ph=ph_(phaseId);
@@ -1778,9 +1878,10 @@ function renderPhase(phaseId){
     }).join('');
     // milestone week marker
     const isMilestone=MILESTONE_WEEKS.includes(w);
+    const wkDiff=(S.difficulty&&S.difficulty[diffKey(ph.id,w)])||'medium';
     div.innerHTML=`
       <div class="wk-num ${ph.color}">Week ${w}${isMilestone?` <span style="font-size:10px;background:var(--goldbg);color:var(--gold);padding:1px 5px;border-radius:3px;margin-left:4px">📊 Milestone</span>`:''}</div>
-      <div class="wk-title">Week ${w}</div>
+      <div class="wk-title" style="display:flex;align-items:center;gap:8px">Week ${w}<span class="wk-diff-badge ${wkDiff}">${DIFF_EMOJI[wkDiff]} ${wkDiff.charAt(0).toUpperCase()+wkDiff.slice(1)}</span></div>
       <div class="day-pills">${pills}</div>
       <div class="wk-stat">${ph.days.length} workouts · ${ph.days.reduce((a,d)=>a+d.exercises.length,0)} exercises</div>
       ${allDone?'<div class="wk-done">✓ Week Complete</div>':`<div class="wk-stat" style="margin-top:6px">${doneDays} done${skippedDays?` · ${skippedDays} skipped`:''} / ${ph.days.length} total</div>`}
@@ -1812,6 +1913,7 @@ function renderWeek(phaseId,week){
       <button class="vt-btn${compactView?' on':''}" onclick="setView(true,${phaseId},${week})">Compact</button>
       <button class="vt-btn" onclick="window.print()" style="margin-left:auto">🖨 Print</button>
     </div>
+    <div id="week-diff-bar"></div>
     ${MILESTONE_WEEKS.includes(week)?`<div style="background:var(--goldbg);border:1px solid var(--gold);border-radius:8px;padding:12px 16px;margin-bottom:16px;font-size:13px;color:var(--gold)">📊 <strong>Milestone Week ${week}</strong> — Time to log your key stats: bench press, squat, pull-up count, and body weight. Compare against Week 1 to see your progress!</div>`:''}
     <div id="vol-summary-wrap"></div>
     <div id="days-container"></div>
@@ -1833,6 +1935,19 @@ function renderWeek(phaseId,week){
       </div>
     </div>`;
   }
+  // Week-level difficulty bar
+  const wdb=document.getElementById('week-diff-bar');
+  if(wdb){
+    const curWkDiff=(S.difficulty&&S.difficulty[diffKey(phaseId,week)])||'medium';
+    wdb.innerHTML=`<div class="diff-bar">
+      <span class="diff-label">Week difficulty:</span>
+      <div class="diff-pills">
+        ${['easy','medium','hard'].map(lv=>`<span class="diff-pill ${lv}${curWkDiff===lv?' on':''}"
+          onclick="setWeekDiff(${phaseId},${week},'${lv}');renderWeek(${phaseId},${week})">${DIFF_EMOJI[lv]} ${lv.charAt(0).toUpperCase()+lv.slice(1)}</span>`).join('')}
+      </div>
+      <span class="diff-info">${DIFF_INFO[curWkDiff]}</span>
+    </div>`;
+  }
   const container=document.getElementById('days-container');
   ph.days.forEach((day,di)=>{
     const key=wk(ph.id,week,di);
@@ -1851,6 +1966,15 @@ function renderWeek(phaseId,week){
       if(suggestions)banner.innerHTML=`💡 Based on last session — suggested weights: ${suggestions}`;
       if(suggestions)body.appendChild(banner);
     }
+    // per-day difficulty override
+    const dayDiffEl=document.createElement('div');dayDiffEl.className='diff-bar';dayDiffEl.style.marginBottom='10px';
+    const dayDiffCur=getDiff(ph.id,week,di);
+    dayDiffEl.innerHTML=`<span class="diff-label">Day difficulty:</span>
+      <div class="diff-pills">
+        ${['easy','medium','hard'].map(lv=>`<span class="diff-pill ${lv}${dayDiffCur===lv?' on':''}"
+          onclick="setDayDiff(${ph.id},${week},${di},'${lv}');renderWeek(${ph.id},${week})">${DIFF_EMOJI[lv]} ${lv.charAt(0).toUpperCase()+lv.slice(1)}</span>`).join('')}
+      </div>`;
+    body.appendChild(dayDiffEl);
     // actions
     const actions=document.createElement('div');actions.className='session-actions';
     const mb=document.createElement('button');mb.className=`act-btn${isDone?' done':' primary'}`;mb.id=`mb-${key}`;
@@ -1907,7 +2031,11 @@ function renderWeek(phaseId,week){
       const exList=document.createElement('div');exList.className='ex-list';
       day.exercises.forEach((ex,ei)=>{
         const ek=`${key}_e${ei}`;
-        if(!S.sets[ek])S.sets[ek]=Array.from({length:ex.sets},()=>({reps:'',weight:'',notes:'',done:false}));
+        if(!S.sets[ek]){
+          const _adj=applyDifficulty(ex,ph.id,week,di);
+          const _baseW=_adj.adjW!==ex.w?_adj.adjW.match(/[\d.]+/)?.[0]||'':'';
+          S.sets[ek]=Array.from({length:ex.sets},()=>({reps:'',weight:_baseW,notes:'',done:false}));
+        }
         // superset connector before this exercise?
         if(ei>0){
           const prevEx=day.exercises[ei-1];
@@ -1938,6 +2066,14 @@ function setView(compact,pid,w){compactView=compact;renderWeek(pid,w);}
 
 // ═══════════════════════════════════════════════════ EXERCISE CARD
 function makeExCard(ex,ek,ei,ph,sessionKey){
+  // Parse difficulty adjustment for this exercise's day
+  const ekM=ek.match(/p(\d+)_w(\d+)_d(\d+)_e(\d+)/);
+  const _pid=ekM?parseInt(ekM[1]):ph.id;
+  const _wk=ekM?parseInt(ekM[2]):1;
+  const _di=ekM?parseInt(ekM[3]):0;
+  const adj=applyDifficulty(ex,_pid,_wk,_di);
+  const isAdjusted=adj.level!=='medium';
+
   const ytUrl=YT[ex.name]||null;
   const hasPR=S.prs[ex.name];
   const card=document.createElement('div');card.className='ex-card';card.id=`exc-${ek}`;
@@ -1951,18 +2087,33 @@ function makeExCard(ex,ek,ei,ph,sessionKey){
         <span class="ex-name-span" onclick="event.stopPropagation();${ytUrl?`openYT('${ytUrl}','${ex.name}')`:'void(0)'}">${ex.name}</span>
         ${ytUrl?`<button class="yt-pill" onclick="event.stopPropagation();openYT('${ytUrl}','${ex.name}')">▶ Watch</button>`:''}
         ${hasPR?`<span class="pr-badge-inline">PR ${hasPR.w}lb</span>`:''}
+        ${isAdjusted?`<span class="diff-adj-badge ${adj.level}">${DIFF_EMOJI[adj.level]} ${adj.level}</span>`:''}
       </div>
-      <div class="ex-pres">${ex.p}${(()=>{const m=ex.p.match(/(\d+)/);if(!m)return'';const rr=getRepRange(m[1]);return rr&&getExType(ex.name).type==='weight'?`<span class="rep-range-badge ${rr.cls}">${rr.label}</span>`:'';})()} </div>
+      <div class="ex-pres">
+        ${isAdjusted
+          ? `<span style="text-decoration:line-through;opacity:.4;margin-right:4px">${ex.p}</span><strong>${adj.adjP}</strong>`
+          : ex.p}
+        ${(()=>{const m=(isAdjusted?adj.adjP:ex.p).match(/(\d+)/);if(!m)return'';const rr=getRepRange(m[1]);return rr&&getExType(ex.name).type==='weight'?`<span class="rep-range-badge ${rr.cls}">${rr.label}</span>`:'';})()} 
+      </div>
     </div>
     <div class="ex-right">
-      <div class="ex-wt" style="color:var(--${ph.color})">${ex.w}</div>
-      ${isBarbell(ex.name)?`<button class="ex-warmup-btn" onclick="event.stopPropagation();toggleWarmup('${ek}',${sugW||parseFloat(ex.w)||135})">Warm-up</button>`:''}
+      <div class="ex-wt" style="color:var(--${ph.color})">
+        ${isAdjusted&&adj.adjW!==ex.w
+          ? `<span style="text-decoration:line-through;opacity:.4;font-size:10px">${ex.w}</span><br>${adj.adjW}`
+          : ex.w}
+      </div>
+      ${isBarbell(ex.name)?`<button class="ex-warmup-btn" onclick="event.stopPropagation();toggleWarmup('${ek}',${sugW||parseFloat(adj.adjW)||135})">Warm-up</button>`:''}
     </div>
     <div class="ex-chev">▼</div>
   `;
   top.onclick=()=>card.classList.toggle('open');
   const body=document.createElement('div');body.className='ex-body';
   if(ex.note)body.innerHTML=`<div class="ex-note-bar">💡 ${ex.note}</div>`;
+  if(isAdjusted){
+    body.innerHTML+=`<div class="ex-note-bar" style="background:${adj.level==='easy'?'var(--p2bg)':adj.level==='hard'?'var(--redbg)':'var(--p1bg)'};border-left:3px solid ${adj.level==='easy'?'var(--p2)':adj.level==='hard'?'var(--red)':'var(--p1)'}">
+      ${DIFF_EMOJI[adj.level]} <strong>${adj.level.charAt(0).toUpperCase()+adj.level.slice(1)} mode:</strong> ${DIFF_INFO[adj.level]}
+    </div>`;
+  }
   // exercise note history
   const exNoteHist=getExNoteHistory(ex.name,ek);
   if(exNoteHist.length){
@@ -2179,7 +2330,8 @@ function toggleDone(ph,week,di,key){
     const readiness=S.readiness[today]||null;
     S.history=S.history.filter(h=>h.key!==key);
     const trainedDay=(S.workoutDays&&S.workoutDays[key])||new Date().toLocaleDateString('en-US',{weekday:'short'});
-    S.history.unshift({key,date:today,phase:ph.label,phaseColor:ph.color,week,day:ph.days[di].name,title:ph.days[di].title,ts,tr,note,readiness,trainedDay});
+    const sessionDiff=getDiff(ph.id,week,di);
+    S.history.unshift({key,date:today,phase:ph.label,phaseColor:ph.color,week,day:ph.days[di].name,title:ph.days[di].title,ts,tr,note,readiness,trainedDay,difficulty:sessionDiff});
     toast('Workout logged! 💪');
     // check new achievements
     setTimeout(()=>checkNewAchievements(),100);
@@ -2572,13 +2724,14 @@ function buildHistBody(){
     (h.day&&h.day.toLowerCase().includes(_histFilter))
   ):S.history;
   if(!filtered.length){hb.innerHTML='<div class="hist-empty">No results for "'+_histFilter+'"</div>';return;}
-  let html=`<table class="hist-tbl"><thead><tr><th>Date</th><th>Day</th><th>Workout</th><th>Phase</th><th>Sets</th><th>Reps</th></tr></thead><tbody>`;
+  let html=`<table class="hist-tbl"><thead><tr><th>Date</th><th>Day</th><th>Workout</th><th>Difficulty</th><th>Phase</th><th>Sets</th><th>Reps</th></tr></thead><tbody>`;
   filtered.forEach(h=>{
     const col=h.phaseColor||'p1';
     html+=`<tr>
       <td><div style="font-weight:600;color:var(--text)">${h.date}</div><div style="font-size:11px;color:var(--text3)">Wk ${h.week} · ${h.day}</div></td>
       <td style="font-weight:600;color:var(--text)">${h.trainedDay||'—'}</td>
       <td style="color:var(--text)"><div style="font-weight:600">${h.title}</div>${h.note?`<div class="hist-note">"${h.note.substring(0,60)}${h.note.length>60?'…':''}"</div>`:''}</td>
+      <td>${h.difficulty?`<span class='diff-adj-badge ${h.difficulty}'>${DIFF_EMOJI[h.difficulty]||''} ${h.difficulty}</span>`:'—'}</td>
       <td><span style="font-size:11px;font-weight:700;padding:2px 7px;border-radius:4px;background:var(--${col}bg);color:var(--${col})">${h.phase}</span></td>
       <td>${h.ts||'—'}</td><td>${h.tr||'—'}</td>
     </tr>`;
