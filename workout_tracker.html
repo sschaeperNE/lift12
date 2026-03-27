@@ -583,6 +583,34 @@ body.fs-large{font-size:17px;}
 .wk-diff-badge.medium{background:rgba(74,158,255,.15);color:var(--p1);}
 .wk-diff-badge.hard{background:rgba(255,79,79,.15);color:var(--red);}
 
+
+/* ── CUSTOM WORKOUT BUILDER ── */
+.add-workout-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px;border-radius:10px;border:2px dashed var(--border2);background:transparent;color:var(--text2);font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .2s;margin-top:16px;}
+.add-workout-btn:hover{border-color:var(--accent);color:var(--accent);background:rgba(232,255,71,.04);}
+.cwb-modal{background:var(--surface);border:1px solid var(--border2);border-radius:14px;width:92%;max-width:560px;max-height:90vh;overflow-y:auto;display:flex;flex-direction:column;}
+.cwb-hd{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--surface);z-index:1;}
+.cwb-title{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;text-transform:uppercase;letter-spacing:1px;}
+.cwb-close{width:32px;height:32px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text2);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.cwb-body{padding:20px;flex:1;}
+.cwb-rec-banner{background:var(--p2bg);border:1px solid var(--p2);border-radius:8px;padding:10px 14px;font-size:13px;color:var(--p2);margin-bottom:16px;line-height:1.5;}
+.cwb-section-title{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text3);margin-bottom:10px;margin-top:16px;}
+.cwb-name-input{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-family:'Barlow',sans-serif;font-size:14px;font-weight:600;color:var(--text);margin-bottom:16px;transition:border-color .15s;}
+.cwb-name-input:focus{outline:none;border-color:var(--accent);}
+.cwb-ex-list{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
+.cwb-ex-row{display:flex;align-items:center;gap:8px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 12px;}
+.cwb-ex-num{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:var(--text3);width:20px;flex-shrink:0;}
+.cwb-ex-select{flex:1;background:var(--surface2);border:none;font-family:'Barlow',sans-serif;font-size:13px;font-weight:600;color:var(--text);cursor:pointer;padding:0;}
+.cwb-ex-select:focus{outline:none;}
+.cwb-ex-remove{width:28px;height:28px;border-radius:5px;border:1px solid var(--border);background:var(--bg);color:var(--text3);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s;}
+.cwb-ex-remove:hover{border-color:var(--red);color:var(--red);}
+.cwb-add-ex-btn{font-size:12px;font-weight:600;padding:7px 14px;border-radius:6px;border:1px dashed var(--border2);background:transparent;color:var(--text3);cursor:pointer;transition:all .15s;width:100%;}
+.cwb-add-ex-btn:hover{border-color:var(--p2);color:var(--p2);}
+.cwb-save-btn{width:100%;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:14px;border-radius:10px;border:none;background:var(--accent);color:var(--atxt);cursor:pointer;margin-top:8px;}
+.cwb-save-btn:hover{background:var(--accent2);}
+.cwb-focus-pills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+.cwb-focus-pill{font-size:12px;font-weight:600;padding:5px 12px;border-radius:20px;border:1px solid var(--border2);background:var(--surface2);color:var(--text2);cursor:pointer;transition:all .15s;}
+.cwb-focus-pill.on{border-color:var(--p2);color:var(--p2);background:var(--p2bg);}
+
 /* TOAST */
 .toast{position:fixed;bottom:24px;right:24px;background:var(--accent);color:var(--atxt);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;letter-spacing:1px;padding:12px 20px;border-radius:8px;z-index:999;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none;max-width:280px;}
 .toast.show{opacity:1;transform:translateY(0);}
@@ -1059,7 +1087,7 @@ const PHASES=[
 const MILESTONE_WEEKS=[4,8,12];
 
 // ═══════════════════════════════════════════════════ STATE
-const DEFAULT_STATE={sets:{},completed:{},skipped:{},history:[],prs:{},bodyweight:[],sessionNotes:{},readiness:{},rm1History:{},workoutDays:{},assessments:{},startWeight:202,startBF:22,restDays:{},difficulty:{}};
+const DEFAULT_STATE={sets:{},completed:{},skipped:{},history:[],prs:{},bodyweight:[],sessionNotes:{},readiness:{},rm1History:{},workoutDays:{},assessments:{},startWeight:202,startBF:22,restDays:{},difficulty:{},customWorkouts:{}};
 let S=JSON.parse(JSON.stringify(DEFAULT_STATE));
 try{const d=localStorage.getItem('lift12_v5');if(d)S=Object.assign(JSON.parse(JSON.stringify(DEFAULT_STATE)),JSON.parse(d));}catch(e){}
 const save=()=>{
@@ -2112,11 +2140,28 @@ function renderWeek(phaseId,week){
     hd.onclick=()=>{hd.classList.toggle('col');body.classList.toggle('hide');};
     sec.append(hd,body);container.appendChild(sec);
   });
+  // Render any saved custom workouts for this week
+  const customKey=`cw_p${phaseId}_w${week}`;
+  const savedCustom=S.customWorkouts&&S.customWorkouts[customKey]||[];
+  savedCustom.forEach((cw,ci)=>renderCustomDay(cw,ci,customKey,ph,week,container));
+
+  // Add workout button
+  const addBtn=document.createElement('button');
+  addBtn.className='add-workout-btn';
+  addBtn.innerHTML='＋ Add Workout Day';
+  addBtn.onclick=()=>openCWB(phaseId,week,ph);
+  container.appendChild(addBtn);
+
   if(!compactView){
     setTimeout(()=>{
       ph.days.forEach((day,di)=>{
         const key=wk(ph.id,week,di);
         day.exercises.forEach((ex,ei)=>renderSetRows(ex,`${key}_e${ei}`));
+      });
+      // also render custom workout sets
+      const cws=S.customWorkouts&&S.customWorkouts[customKey]||[];
+      cws.forEach((cw,ci)=>{
+        cw.exercises.forEach((ex,ei)=>renderSetRows(ex,`cw_${customKey}_${ci}_e${ei}`));
       });
     },0);
   }
@@ -2658,7 +2703,7 @@ applyFontSize();
 let _ctInterval=null,_ctRemaining=0,_ctTotal=0;
 function startCornerTimer(){
   // figure out current rest period from active week
-  const restSec=_activeRestSec||90;
+  const restSec=_activeRestSec||60;
   _ctTotal=restSec;_ctRemaining=restSec;
   if(_ctInterval)clearInterval(_ctInterval);
   updateCornerTimer();
@@ -2690,7 +2735,7 @@ function cornerTimerTap(){
   if(_ctInterval)clearInterval(_ctInterval);_ctInterval=null;
   document.getElementById('corner-timer').classList.remove('show');
 }
-let _activeRestSec=90; // updated when week view opens
+let _activeRestSec=60; // updated when week view opens
 
 // ═══════════════════════════════════════════════════ WEEKLY VOLUME
 function getWeekVolume(phaseId,week){
@@ -2840,12 +2885,20 @@ function qlRender(){
   const prevSets=getPrevSetData(ek);
   document.getElementById('ql-ex-name').textContent=ex.name;
   document.getElementById('ql-progress').textContent=`Exercise ${_qlIdx+1} of ${_qlExercises.length} · ${ex.p}`;
-  document.getElementById('ql-ex-sub').textContent=ex.note||ex.w;
+  // Build subtitle: target weight + suggested weight
+  const _adj=applyDifficulty(ex,parseInt(ek.match(/p(\d+)/)?.[1]||1),
+    parseInt(ek.match(/w(\d+)/)?.[1]||1),parseInt(ek.match(/d(\d+)/)?.[1]||0));
+  const sugW2=getSuggestedWeight(ek,ex);
+  let subParts=[];
+  subParts.push(`📋 Target: ${_adj.adjW!==ex.w?_adj.adjW:ex.w}`);
+  if(sugW2)subParts.push(`💡 Suggested: ${sugW2} lbs (based on last session)`);
+  document.getElementById('ql-ex-sub').textContent=subParts.join('  ·  ');
   // prev
   const prevEl=document.getElementById('ql-prev');
   if(prevSets.length){
-    prevEl.style.display='block';
-    prevEl.textContent='Last time: '+prevSets.map((s,i)=>`S${i+1}: ${s.reps||'?'} reps @ ${s.weight||'?'} lbs`).filter((_,i)=>prevSets[i].reps||prevSets[i].weight).join(' · ');
+    const prevInfo=prevSets.map((s,i)=>`S${i+1}: ${s.reps||'?'} reps @ ${s.weight||'?'} lbs`).filter((_,i)=>prevSets[i].reps||prevSets[i].weight).join(' · ');
+    if(prevInfo){prevEl.style.display='block';prevEl.textContent='Last time: '+prevInfo;}
+    else prevEl.style.display='none';
   } else prevEl.style.display='none';
   // sets
   const setsEl=document.getElementById('ql-sets');
@@ -2899,6 +2952,281 @@ function closeQL(){
       day.exercises.forEach((ex,ei)=>renderSetRows(ex,`${key}_e${ei}`));
     });
   }
+}
+
+
+// ═══════════════════════════════════════════════════ EXERCISE LIBRARY
+const ALL_EXERCISES=[
+  // Lower body
+  {name:'Barbell back squat',p:'3 × 8',w:'Working weight',sets:3,cat:'lower',note:''},
+  {name:'Romanian deadlift',p:'3 × 10',w:'Working weight',sets:3,cat:'lower',note:''},
+  {name:'Barbell deadlift',p:'3 × 5',w:'Working weight',sets:3,cat:'lower',note:''},
+  {name:'DB Bulgarian split squat',p:'3 × 8 each',w:'20–25 lbs each',sets:3,cat:'lower',note:'Rear foot on bench.'},
+  {name:'DB walking lunge',p:'3 × 10 each leg',w:'20–25 lbs each',sets:3,cat:'lower',note:''},
+  {name:'DB goblet squat',p:'3 × 12',w:'25–30 lbs',sets:3,cat:'lower',note:'Pause at bottom.'},
+  {name:'DB reverse lunge',p:'3 × 10 each leg',w:'15–20 lbs each',sets:3,cat:'lower',note:''},
+  {name:'Cable pull-through',p:'3 × 12',w:'35–45 lbs',sets:3,cat:'lower',note:'Hip hinge with cable tension.'},
+  // Push
+  {name:'Barbell bench press',p:'3 × 8',w:'Working weight',sets:3,cat:'push',note:''},
+  {name:'Incline barbell bench press',p:'3 × 8',w:'Working weight',sets:3,cat:'push',note:'30–45° angle.'},
+  {name:'Decline barbell bench press',p:'3 × 8',w:'Working weight',sets:3,cat:'push',note:'15–30° decline.'},
+  {name:'Barbell overhead press',p:'3 × 8',w:'Working weight',sets:3,cat:'push',note:''},
+  {name:'DB incline press',p:'3 × 10',w:'25–30 lbs each',sets:3,cat:'push',note:''},
+  {name:'Ring push-ups',p:'3 × 12',w:'Bodyweight',sets:3,cat:'push',note:'Rings challenge stabilizers.'},
+  {name:'Ring dips',p:'3 × max',w:'Bodyweight',sets:3,cat:'push',note:'Control the descent.'},
+  {name:'Cable chest fly',p:'3 × 12',w:'20–25 lbs each side',sets:3,cat:'push',note:''},
+  {name:'Cable tricep pushdown',p:'3 × 12',w:'35–45 lbs',sets:3,cat:'push',note:'Elbows pinned.'},
+  {name:'EZ bar skull crusher',p:'3 × 10',w:'45–55 lbs total',sets:3,cat:'push',note:''},
+  // Pull
+  {name:'Pull-ups',p:'3 × max',w:'Bodyweight',sets:3,cat:'pull',note:'Full range of motion.'},
+  {name:'Ring pull-ups',p:'3 × max',w:'Bodyweight',sets:3,cat:'pull',note:'Turn rings out at top.'},
+  {name:'Ring rows',p:'3 × 12',w:'Bodyweight',sets:3,cat:'pull',note:'Adjust angle for difficulty.'},
+  {name:'Cable lat pulldown',p:'3 × 10',w:'65–80 lbs',sets:3,cat:'pull',note:'Full lat stretch at top.'},
+  {name:'Cable seated row',p:'3 × 10',w:'60–75 lbs',sets:3,cat:'pull',note:'Pull to lower chest.'},
+  {name:'Barbell row',p:'3 × 8',w:'Working weight',sets:3,cat:'pull',note:'Bent-over, overhand grip.'},
+  {name:'DB bent-over row',p:'3 × 10 each',w:'25–30 lbs',sets:3,cat:'pull',note:'Brace on bench.'},
+  {name:'DB single-arm row',p:'3 × 10 each',w:'25–30 lbs',sets:3,cat:'pull',note:''},
+  {name:'Cable face pull',p:'3 × 15',w:'25–35 lbs',sets:3,cat:'pull',note:'Elbows high and wide.'},
+  {name:'Ring face pulls',p:'3 × 15',w:'Bodyweight (angle)',sets:3,cat:'pull',note:''},
+  // Arms
+  {name:'EZ bar curl',p:'3 × 10',w:'50–60 lbs total',sets:3,cat:'arms',note:''},
+  {name:'DB curl',p:'3 × 12',w:'25–30 lbs',sets:3,cat:'arms',note:''},
+  {name:'Hammer curl',p:'3 × 12',w:'25 lbs',sets:3,cat:'arms',note:''},
+  {name:'Cable curl',p:'3 × 12',w:'30–40 lbs',sets:3,cat:'arms',note:'Constant tension.'},
+  // Core
+  {name:'Hanging leg raise',p:'3 × 10',w:'Bodyweight',sets:3,cat:'core',note:''},
+  {name:'Hanging knee raise',p:'3 × 12',w:'Bodyweight',sets:3,cat:'core',note:''},
+  {name:'Plank',p:'3 × 45s',w:'Bodyweight',sets:3,cat:'core',note:''},
+  {name:'Cable woodchop',p:'3 × 12 each side',w:'25–30 lbs',sets:3,cat:'core',note:'Rotate from hips.'},
+  {name:'Full core circuit',p:'3 rounds',w:'Plank 45s + leg raise × 10 + hollow hold 20s',sets:3,cat:'core',note:''},
+  // Cardio
+  {name:'Bike sprint intervals',p:'6 × 30s on / 30s off',w:'High resistance',sets:6,cat:'cardio',note:''},
+  {name:'Treadmill run/walk intervals',p:'20 mins total',w:'2 min run / 1 min walk',sets:1,cat:'cardio',note:''},
+  {name:'Treadmill HIIT',p:'10 mins',w:'1 min hard / 1 min easy',sets:1,cat:'cardio',note:''},
+  {name:'Bike steady state',p:'10 mins',w:'Moderate resistance',sets:1,cat:'cardio',note:'Zone 2.'},
+  {name:'Treadmill incline walk',p:'10 mins',w:'10–12% grade, 3.5 mph',sets:1,cat:'cardio',note:''},
+];
+
+// ═══════════════════════════════════════════════════ CUSTOM WORKOUT BUILDER
+let _cwbPhaseId=null,_cwbWeek=null,_cwbPh=null,_cwbExercises=[];
+
+function openCWB(phaseId,week,ph){
+  _cwbPhaseId=phaseId;_cwbWeek=week;_cwbPh=ph;
+  const customKey=`cw_p${phaseId}_w${week}`;
+  const existing=S.customWorkouts&&S.customWorkouts[customKey]||[];
+  document.getElementById('cwb-title').textContent=`Add Workout · Week ${week}`;
+  const rec=recommendWorkout(phaseId,week,ph);
+  _cwbExercises=[...rec.exercises];
+  renderCWBBody(rec);
+  document.getElementById('cwb-modal').classList.add('on');
+  document.body.style.overflow='hidden';
+}
+
+function recommendWorkout(phaseId,week,ph){
+  // Analyse what's already been trained this week
+  const trained={lower:0,push:0,pull:0,arms:0,core:0,cardio:0};
+  ph.days.forEach((day,di)=>{
+    const key=wk(ph.id,week,di);
+    if(!S.completed[key]&&!S.skipped[key])return;
+    const title=day.title.toLowerCase();
+    if(title.includes('lower'))trained.lower++;
+    if(title.includes('push')||title.includes('bench'))trained.push++;
+    if(title.includes('pull'))trained.pull++;
+    if(title.includes('arm'))trained.arms++;
+    if(title.includes('cardio')||title.includes('condition'))trained.cardio++;
+    // also count from exercises
+    day.exercises.forEach(ex=>{
+      const ec=ALL_EXERCISES.find(e=>e.name===ex.name);
+      if(ec)trained[ec.cat]=(trained[ec.cat]||0)+0.5;
+    });
+  });
+  // Also count custom workouts this week
+  const customKey=`cw_p${phaseId}_w${week}`;
+  (S.customWorkouts&&S.customWorkouts[customKey]||[]).forEach(cw=>{
+    cw.exercises.forEach(ex=>{
+      const ec=ALL_EXERCISES.find(e=>e.name===ex.name);
+      if(ec)trained[ec.cat]=(trained[ec.cat]||0)+0.5;
+    });
+  });
+  // Find least trained categories
+  const priority=['pull','push','lower','arms','core'].sort((a,b)=>(trained[a]||0)-(trained[b]||0));
+  const focus=priority[0];
+  const focus2=priority[1];
+  // Build recommended session
+  const pool=ALL_EXERCISES.filter(e=>e.cat===focus);
+  const pool2=ALL_EXERCISES.filter(e=>e.cat===focus2);
+  const cardio=ALL_EXERCISES.filter(e=>e.cat==='cardio');
+  const core=ALL_EXERCISES.filter(e=>e.cat==='core');
+  let exercises=[];
+  // 2–3 from primary focus
+  pool.slice(0,3).forEach(e=>exercises.push({...e}));
+  // 1–2 from secondary
+  pool2.slice(0,2).forEach(e=>exercises.push({...e}));
+  // 1 core + 1 cardio
+  if(core.length)exercises.push({...core[0]});
+  if(cardio.length)exercises.push({...cardio[0]});
+  const focusLabel=`${focus.charAt(0).toUpperCase()+focus.slice(1)} + ${focus2.charAt(0).toUpperCase()+focus2.slice(1)}`;
+  let reason=`Based on this week's sessions, you haven't trained ${focus} much. `;
+  if(trained[focus]===0)reason=`You haven't done any ${focus} work this week yet. `;
+  reason+=`This session balances it out with a ${focusLabel} focus.`;
+  return{focus,focus2,exercises,reason,title:`Bonus: ${focusLabel}`};
+}
+
+let _cwbFocus='';
+function renderCWBBody(rec){
+  const body=document.getElementById('cwb-body');
+  _cwbFocus=rec?rec.focus:'';
+  const focusCats=['lower','push','pull','arms','core','cardio'];
+  body.innerHTML=`
+    <div class="cwb-rec-banner" id="cwb-rec-banner">${rec?'💡 '+rec.reason:'Pick a focus to get started.'}</div>
+    <div class="cwb-section-title">Focus</div>
+    <div class="cwb-focus-pills">
+      ${focusCats.map(f=>`<div class="cwb-focus-pill${_cwbFocus===f?' on':''}" onclick="cwbSetFocus('${f}')">${f.charAt(0).toUpperCase()+f.slice(1)}</div>`).join('')}
+    </div>
+    <div class="cwb-section-title">Workout Name</div>
+    <input class="cwb-name-input" id="cwb-name" value="${rec?rec.title:'Custom Workout'}" placeholder="Workout name">
+    <div class="cwb-section-title">Exercises</div>
+    <div class="cwb-ex-list" id="cwb-ex-list"></div>
+    <button class="cwb-add-ex-btn" onclick="cwbAddExercise()">＋ Add Exercise</button>
+    <button class="cwb-save-btn" onclick="saveCWB()">Save Workout</button>
+  `;
+  renderCWBExList();
+}
+
+function renderCWBExList(){
+  const list=document.getElementById('cwb-ex-list');if(!list)return;
+  const exOptions=ALL_EXERCISES.map(e=>`<option value="${e.name}">${e.name} (${e.cat})</option>`).join('');
+  list.innerHTML=_cwbExercises.map((ex,i)=>`
+    <div class="cwb-ex-row">
+      <div class="cwb-ex-num">${i+1}</div>
+      <select class="cwb-ex-select" onchange="cwbChangeEx(${i},this.value)">
+        ${ALL_EXERCISES.map(e=>`<option value="${e.name}"${e.name===ex.name?' selected':''}>${e.name}</option>`).join('')}
+      </select>
+      <button class="cwb-ex-remove" onclick="cwbRemoveEx(${i})">✕</button>
+    </div>
+  `).join('');
+}
+
+function cwbSetFocus(focus){
+  _cwbFocus=focus;
+  const rec=recommendWorkout(_cwbPhaseId,_cwbWeek,_cwbPh);
+  // rebuild exercises for this focus
+  const pool=ALL_EXERCISES.filter(e=>e.cat===focus);
+  _cwbExercises=pool.slice(0,4).map(e=>({...e}));
+  const core=ALL_EXERCISES.find(e=>e.cat==='core'&&e.name!=='Full core circuit');
+  if(core&&focus!=='core')_cwbExercises.push({...core});
+  document.querySelectorAll('.cwb-focus-pill').forEach(p=>p.classList.remove('on'));
+  event.target.classList.add('on');
+  const banner=document.getElementById('cwb-rec-banner');
+  if(banner)banner.textContent=`💡 Showing ${focus} exercises. Customise by swapping or adding below.`;
+  renderCWBExList();
+}
+
+function cwbChangeEx(idx,name){
+  const found=ALL_EXERCISES.find(e=>e.name===name);
+  if(found)_cwbExercises[idx]={...found};
+}
+
+function cwbAddExercise(){
+  const first=ALL_EXERCISES[0];
+  _cwbExercises.push({...first});
+  renderCWBExList();
+}
+
+function cwbRemoveEx(idx){
+  _cwbExercises.splice(idx,1);
+  renderCWBExList();
+}
+
+function saveCWB(){
+  if(!_cwbExercises.length){toast('Add at least one exercise');return;}
+  const name=document.getElementById('cwb-name')?.value||'Custom Workout';
+  const customKey=`cw_p${_cwbPhaseId}_w${_cwbWeek}`;
+  if(!S.customWorkouts)S.customWorkouts={};
+  if(!S.customWorkouts[customKey])S.customWorkouts[customKey]=[];
+  const ci=S.customWorkouts[customKey].length;
+  S.customWorkouts[customKey].push({name,exercises:[..._cwbExercises],createdAt:new Date().toISOString()});
+  save();
+  closeCWB();
+  renderWeek(_cwbPhaseId,_cwbWeek);
+  toast(`"${name}" added to Week ${_cwbWeek} ✓`);
+}
+
+function closeCWB(){
+  document.getElementById('cwb-modal').classList.remove('on');
+  document.body.style.overflow='';
+}
+function cwbBgClick(e){if(e.target===document.getElementById('cwb-modal'))closeCWB();}
+
+function renderCustomDay(cw,ci,customKey,ph,week,container){
+  const key=`cw_${customKey}_${ci}`;
+  const isDone=!!(S.completed&&S.completed[key]);
+  const isSkipped=!!(S.skipped&&S.skipped[key]);
+  const sec=document.createElement('div');sec.className='day-section';
+  const hd=document.createElement('div');
+  hd.className=`ds-hd${isDone?' done':isSkipped?' skipped':''}`;hd.id=`dshd-${key}`;
+  hd.innerHTML=`<span class="ds-tag p2" style="background:var(--p2bg);color:var(--p2)">Bonus</span><span class="ds-title">${cw.name}</span><span class="ds-chip done-chip">✓ Done</span><span class="ds-chip skip-chip">— Skipped</span><span class="ds-chev">▼</span>`;
+  const body=document.createElement('div');body.className='ds-body';body.id=`dsbody-${key}`;
+
+  // Actions
+  const actions=document.createElement('div');actions.className='session-actions';
+  const mb=document.createElement('button');mb.className=`act-btn${isDone?' done':' primary'}`;mb.id=`mb-${key}`;
+  mb.textContent=isDone?'✓ Completed':'Mark Complete';
+  mb.onclick=e=>{e.stopPropagation();toggleCustomDone(ph,week,ci,customKey,key,cw);};
+  const sb=document.createElement('button');sb.className='act-btn';
+  sb.textContent='🗑 Remove';
+  sb.onclick=e=>{e.stopPropagation();removeCustomWorkout(customKey,ci,ph.id,week);};
+  const tb=document.createElement('button');tb.className='act-btn';
+  tb.textContent='⏱ Timer';
+  tb.onclick=e=>{e.stopPropagation();openTimer({title:cw.name},60);};
+  actions.append(mb,sb,tb);body.appendChild(actions);
+
+  // Note
+  const noteTA=document.createElement('textarea');noteTA.className='session-note';
+  noteTA.placeholder='Notes for this bonus session...';
+  noteTA.value=(S.sessionNotes&&S.sessionNotes[key])||'';noteTA.rows=2;
+  noteTA.onchange=()=>{if(!S.sessionNotes)S.sessionNotes={};S.sessionNotes[key]=noteTA.value;save();};
+  body.appendChild(noteTA);
+
+  // Exercises
+  const exList=document.createElement('div');exList.className='ex-list';
+  cw.exercises.forEach((ex,ei)=>{
+    const ek=`${key}_e${ei}`;
+    if(!S.sets)S.sets={};
+    if(!S.sets[ek])S.sets[ek]=Array.from({length:ex.sets||3},()=>({reps:'',weight:'',notes:'',done:false}));
+    const fakePhForColors={color:'p2',restSec:60};
+    exList.appendChild(makeExCard(ex,ek,ei,fakePhForColors,key));
+  });
+  body.appendChild(exList);
+  const rb=document.createElement('div');rb.className='rest-bar';rb.textContent='⏱ 60s rest between sets';body.appendChild(rb);
+  hd.onclick=()=>{hd.classList.toggle('col');body.classList.toggle('hide');};
+  sec.append(hd,body);container.appendChild(sec);
+}
+
+function toggleCustomDone(ph,week,ci,customKey,key,cw){
+  if(!S.completed)S.completed={};
+  const was=!!S.completed[key];S.completed[key]=!was;
+  if(!was){
+    if(!S.history)S.history=[];
+    const today=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+    S.history.unshift({key,date:today,phase:ph.label,phaseColor:ph.color,week,day:'Bonus',title:cw.name,ts:0,tr:0,note:'',trainedDay:new Date().toLocaleDateString('en-US',{weekday:'short'}),difficulty:'medium'});
+    toast('Bonus workout logged! 💪');
+  }
+  save();
+  const mb=document.getElementById(`mb-${key}`),hd=document.getElementById(`dshd-${key}`);
+  if(mb){mb.textContent=S.completed[key]?'✓ Completed':'Mark Complete';mb.classList.toggle('done',!!S.completed[key]);mb.classList.toggle('primary',!S.completed[key]);}
+  if(hd)hd.classList.toggle('done',!!S.completed[key]);
+}
+
+function removeCustomWorkout(customKey,ci,phaseId,week){
+  if(!confirm('Remove this bonus workout?'))return;
+  if(S.customWorkouts&&S.customWorkouts[customKey]){
+    S.customWorkouts[customKey].splice(ci,1);
+    if(!S.customWorkouts[customKey].length)delete S.customWorkouts[customKey];
+  }
+  save();
+  renderWeek(phaseId,week);
+  toast('Workout removed');
 }
 
 // ═══════════════════════════════════════════════════ TOAST
@@ -2974,6 +3302,18 @@ go('home');
       stroke-linecap="round" stroke-dasharray="150.8" stroke-dashoffset="0"/>
   </svg>
   <div class="corner-timer-count" id="ct-count">90</div>
+</div>
+
+
+<!-- CUSTOM WORKOUT BUILDER MODAL -->
+<div class="modal-overlay" id="cwb-modal" onclick="cwbBgClick(event)">
+  <div class="cwb-modal">
+    <div class="cwb-hd">
+      <div class="cwb-title" id="cwb-title">Add Workout</div>
+      <button class="cwb-close" onclick="closeCWB()">✕</button>
+    </div>
+    <div class="cwb-body" id="cwb-body"></div>
+  </div>
 </div>
 
 </body>
