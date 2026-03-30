@@ -611,6 +611,49 @@ body.fs-large{font-size:17px;}
 .cwb-focus-pill{font-size:12px;font-weight:600;padding:5px 12px;border-radius:20px;border:1px solid var(--border2);background:var(--surface2);color:var(--text2);cursor:pointer;transition:all .15s;}
 .cwb-focus-pill.on{border-color:var(--p2);color:var(--p2);background:var(--p2bg);}
 
+
+/* ── RPE SLIDER ── */
+.rpe-section{margin-top:10px;padding:10px 14px;background:var(--surface2);border-radius:8px;border:1px solid var(--border);}
+.rpe-label{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text3);margin-bottom:8px;}
+.rpe-row{display:flex;align-items:center;gap:10px;}
+.rpe-slider{flex:1;-webkit-appearance:none;appearance:none;height:6px;border-radius:3px;outline:none;cursor:pointer;background:linear-gradient(to right,var(--p2) 0%,var(--accent) 50%,var(--red) 100%);}
+.rpe-slider::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--text);border:2px solid var(--surface);cursor:pointer;}
+.rpe-val{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;min-width:28px;text-align:center;}
+.rpe-desc{font-size:11px;color:var(--text3);margin-top:4px;}
+
+/* ── PLATE CHANGE CALCULATOR ── */
+.plate-change-card{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:10px;display:none;}
+.plate-change-card.show{display:block;}
+.pcc-title{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text3);margin-bottom:10px;}
+.pcc-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px;}
+.pcc-inp{background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:6px 10px;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;color:var(--text);width:75px;text-align:center;-moz-appearance:textfield;}
+.pcc-inp::-webkit-inner-spin-button,.pcc-inp::-webkit-outer-spin-button{-webkit-appearance:none;}
+.pcc-inp:focus{outline:none;border-color:var(--accent);}
+.pcc-label{font-size:12px;color:var(--text3);}
+.pcc-result{font-size:13px;color:var(--text);margin-top:6px;padding:6px 8px;background:var(--bg);border-radius:5px;}
+.pcc-add{color:var(--p2);font-weight:700;}
+.pcc-remove{color:var(--red);font-weight:700;}
+
+/* ── 1RM TREND CARD ── */
+.rm1-trend-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px;margin-bottom:20px;}
+.rm1-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px;}
+.rm1-item{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px;text-align:center;}
+.rm1-lift{font-size:11px;color:var(--text3);font-weight:600;margin-bottom:4px;}
+.rm1-val{font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:800;color:var(--accent);}
+.rm1-val small{font-size:12px;font-weight:400;color:var(--text2);margin-left:2px;}
+.rm1-change{font-size:11px;margin-top:3px;}
+.rm1-change.pos{color:var(--p2);}.rm1-change.neg{color:var(--red);}.rm1-change.neu{color:var(--text3);}
+.rm1-chart-wrap{height:80px;margin-top:12px;}
+
+/* ── WORKOUT TEMPLATE ── */
+.template-section{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px;margin-bottom:16px;}
+.template-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px;}
+.template-grid{display:flex;gap:8px;flex-wrap:wrap;}
+.template-chip{font-size:12px;font-weight:600;padding:6px 12px;border-radius:20px;border:1px solid var(--border2);background:var(--surface2);color:var(--text2);cursor:pointer;transition:all .15s;}
+.template-chip:hover{border-color:var(--p2);color:var(--p2);}
+.save-template-btn{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:7px 14px;border-radius:7px;border:1px solid var(--gold);background:var(--goldbg);color:var(--gold);cursor:pointer;transition:all .15s;}
+.save-template-btn:hover{background:var(--gold);color:#000;}
+
 /* TOAST */
 .toast{position:fixed;bottom:24px;right:24px;background:var(--accent);color:var(--atxt);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;letter-spacing:1px;padding:12px 20px;border-radius:8px;z-index:999;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none;max-width:280px;}
 .toast.show{opacity:1;transform:translateY(0);}
@@ -931,6 +974,27 @@ const YT_EXTRA={
   'DB decline press':'https://www.youtube.com/watch?v=8iPEnn-ltC8',
   'Barbell Romanian deadlift':'https://www.youtube.com/watch?v=JCXUYuzwNrM',
   'Barbell hip thrust':'https://www.youtube.com/watch?v=JCXUYuzwNrM',
+  'Front squat':'https://www.youtube.com/watch?v=SW_C1A-rejs',
+  'Sumo deadlift':'https://www.youtube.com/watch?v=op9kVnSso6Q',
+  'Step-up':'https://www.youtube.com/watch?v=xrPteyQLGAo',
+  'Close-grip barbell bench press':'https://www.youtube.com/watch?v=vcBig73ojpE',
+  'DB Arnold press':'https://www.youtube.com/watch?v=2yjwXTZQDDI',
+  'Cable overhead tricep extension':'https://www.youtube.com/watch?v=d_KZxkY_0cM',
+  'DB overhead tricep extension':'https://www.youtube.com/watch?v=d_KZxkY_0cM',
+  'Chin-ups':'https://www.youtube.com/watch?v=eGo4IYlbE5g',
+  'Cable straight-arm pulldown':'https://www.youtube.com/watch?v=eGo4IYlbE5g',
+  'DB seal row':'https://www.youtube.com/watch?v=6TSP1TRMUzs',
+  'Incline DB curl':'https://www.youtube.com/watch?v=in7PaeYlhrM',
+  'DB concentration curl':'https://www.youtube.com/watch?v=in7PaeYlhrM',
+  'Barbell bicep curl':'https://www.youtube.com/watch?v=in7PaeYlhrM',
+  'Ab wheel rollout':'https://www.youtube.com/watch?v=pSHjTRCQxIw',
+  'Cable crunch':'https://www.youtube.com/watch?v=pSHjTRCQxIw',
+  'Pallof press':'https://www.youtube.com/watch?v=pSHjTRCQxIw',
+  'Hollow body hold':'https://www.youtube.com/watch?v=pSHjTRCQxIw',
+  'L-sit hold (rings)':'https://www.youtube.com/watch?v=eGo4IYlbE5g',
+  'Barbell good morning':'https://www.youtube.com/watch?v=JCXUYuzwNrM',
+  'Cable kickback':'https://www.youtube.com/watch?v=EA7u4Q_8HQ0',
+  'Cable Romanian deadlift':'https://www.youtube.com/watch?v=JCXUYuzwNrM',
 };
 // Merge into main YT object
 Object.assign(YT, YT_EXTRA);
@@ -958,6 +1022,20 @@ const EX_TYPE = {
   'Cable chest fly':          {type:'weight', unit:'lbs',     label:'Weight'},
   'Cable woodchop':           {type:'weight', unit:'lbs',     label:'Weight'},
   'Cable pull-through':       {type:'weight', unit:'lbs',     label:'Weight'},
+  'Hollow body hold':         {type:'time',   unit:'seconds', label:'Duration'},
+  'L-sit hold (rings)':       {type:'time',   unit:'seconds', label:'Duration'},
+  'Side plank':               {type:'time',   unit:'seconds', label:'Duration'},
+  'Rear foot elevated hip flexor stretch':{type:'time',unit:'seconds',label:'Duration'},
+  'Plank':                    {type:'time',   unit:'seconds', label:'Duration'},
+  'Dead bug':                 {type:'reps',   unit:'reps',    label:'Reps'},
+  'L-sit hold (rings)':       {type:'time',   unit:'seconds', label:'Duration'},
+  'Cable crunch':             {type:'weight', unit:'lbs',     label:'Weight'},
+  'Pallof press':             {type:'weight', unit:'lbs',     label:'Weight'},
+  'Cable straight-arm pulldown':{type:'weight',unit:'lbs',   label:'Weight'},
+  'Cable Romanian deadlift':  {type:'weight', unit:'lbs',     label:'Weight'},
+  'Cable kickback':           {type:'weight', unit:'lbs',     label:'Weight'},
+  'Cable overhead extension': {type:'weight', unit:'lbs',     label:'Weight'},
+  'Cable overhead tricep extension':{type:'weight',unit:'lbs',label:'Weight'},
 };
 function getExType(name){ return EX_TYPE[name] || {type:'weight', unit:'lbs', label:'Weight'}; }
 
@@ -982,112 +1060,393 @@ const SUPERSETS={
   'EZ bar curl':'EZ bar skull crusher',
   'EZ bar skull crusher':'EZ bar curl',
   'Cable face pull':'Cable curl',
+  'Cable crunch':'Pallof press',
+  'Pallof press':'Cable crunch',
+  'Close-grip barbell bench press':'EZ bar skull crusher',
+  'Chin-ups':'DB seal row',
+  'Cable straight-arm pulldown':'Cable face pull',
+  'DB Arnold press':'DB lateral raise',
+  'Cable overhead extension':'Cable curl',
+  'AB wheel rollout':'Hollow body hold',
 };
 
 // ═══════════════════════════════════════════════════ PROGRAM DATA
+// Each phase has per-week unique workouts for full variety across all 12 weeks
 const PHASES=[
+  // ─── PHASE 1: Weeks 1–4 · Foundation · 3 days/week ───────────────────────
   {id:1,label:'Phase 1',color:'p1',sub:'Weeks 1–4 · 3 days/week',
-   desc:'Foundation phase. Learn the barbell movements, dial in form, build your aerobic base. Add 5 lbs to main lifts whenever all reps are completed cleanly.',
+   desc:'Foundation phase. Each week has a different exercise selection to build movement variety while establishing barbell technique, aerobic base, and body control. Add 5 lbs to main lifts whenever all reps are completed cleanly.',
    rest:'Rest 60s between sets, 90s between supersets.',restSec:90,
    weeks:[1,2,3,4],
-   days:[
-    {name:'Day A',title:'Full Body',exercises:[
-      {name:'Barbell back squat',p:'3 × 10',w:'75 lbs',sets:3,note:"Lighter than you think — nail depth and bracing first. Add 5 lbs each session you complete all reps."},
-      {name:'Barbell bench press',p:'3 × 10',w:'115 lbs',sets:3,note:"Slight reduction from your current 125 lbs — technique reset. You'll be back to 125+ within 2 sessions."},
-      {name:'Pull-ups',p:'3 × max (target 5–6)',w:'Bodyweight',sets:3,note:"Rest 90s between sets. Focus on full range of motion."},
-      {name:'Plank',p:'3 × 35s',w:'Bodyweight',sets:3,note:"Brace hard, squeeze glutes, don't let hips sag."},
-      {name:'Bike sprint intervals',p:'5 × 30s on / 30s off',w:'High resistance',sets:5,note:'End of session only. Max effort each interval.'},
-    ]},
-    {name:'Day B',title:'Upper Push + Pull',exercises:[
-      {name:'Barbell overhead press',p:'3 × 10',w:'65 lbs',sets:3,note:'OHP is ~60% of bench press. Start conservative, add 5 lbs each session.'},
-      {name:'DB bent-over row',p:'3 × 12 each side',w:'25–30 lbs',sets:3,note:'Brace on bench, pull to hip not armpit.'},
-      {name:'DB curl',p:'3 × 12',w:'25 lbs',sets:3,note:'Your current weight — maintain through this phase.'},
-      {name:'DB lateral raise',p:'3 × 15',w:'10–12 lbs',sets:3,note:'Strict form, no momentum. Control the negative.'},
-      {name:'Treadmill incline walk',p:'10 mins',w:'10–12% grade, 3.5 mph',sets:1,note:"Zone 2 cardio — you should be able to hold a conversation."},
-    ]},
-    {name:'Day C',title:'Lower + Core',exercises:[
-      {name:'Romanian deadlift',p:'3 × 10',w:'95 lbs',sets:3,note:'All about learning the hip hinge. Feel the hamstring stretch.'},
-      {name:'DB goblet squat',p:'3 × 12',w:'25–30 lbs',sets:3,note:'Pause 1 second at the bottom. Elbows inside knees.'},
-      {name:'DB reverse lunge',p:'3 × 10 each leg',w:'15–20 lbs each',sets:3,note:'Step back, keep front shin vertical, control descent.'},
-      {name:'Hanging knee raise',p:'3 × 10',w:'Bodyweight',sets:3,note:'Full dead hang, then pull knees to chest. No swinging.'},
-      {name:'Bike steady state',p:'8 mins',w:'Moderate resistance',sets:1,note:'Zone 2 — moderate effort.'},
-    ]},
-  ]},
+   weekDays:{
+    1:[
+      {name:'Day A',title:'Full Body',exercises:[
+        {name:'Barbell back squat',p:'3 × 10',w:'75 lbs',sets:3,note:"Nail depth and bracing first. Add 5 lbs each session you complete all reps."},
+        {name:'Barbell bench press',p:'3 × 10',w:'115 lbs',sets:3,note:"Technique reset from your current 125 lbs. You'll be back within 2 sessions."},
+        {name:'Pull-ups',p:'3 × max (target 5–6)',w:'Bodyweight',sets:3,note:"Rest 90s between sets. Full range of motion."},
+        {name:'Plank',p:'3 × 35s',w:'Bodyweight',sets:3,note:"Brace hard, squeeze glutes, don't let hips sag."},
+        {name:'Bike sprint intervals',p:'5 × 30s on / 30s off',w:'High resistance',sets:5,note:'End of session. Max effort each interval.'},
+      ]},
+      {name:'Day B',title:'Upper Push + Pull',exercises:[
+        {name:'Barbell overhead press',p:'3 × 10',w:'65 lbs',sets:3,note:'OHP is ~60% of bench. Start conservative, add 5 lbs each session.'},
+        {name:'DB bent-over row',p:'3 × 12 each side',w:'25–30 lbs',sets:3,note:'Brace on bench, pull to hip not armpit.'},
+        {name:'DB curl',p:'3 × 12',w:'25 lbs',sets:3,note:'Your current weight — maintain through this phase.'},
+        {name:'DB lateral raise',p:'3 × 15',w:'10–12 lbs',sets:3,note:'Strict form, no momentum. Control the negative.'},
+        {name:'Treadmill incline walk',p:'10 mins',w:'10–12% grade, 3.5 mph',sets:1,note:"Zone 2 cardio — hold a conversation."},
+      ]},
+      {name:'Day C',title:'Lower + Core',exercises:[
+        {name:'Romanian deadlift',p:'3 × 10',w:'95 lbs',sets:3,note:'Learning the hip hinge. Feel the hamstring stretch.'},
+        {name:'DB goblet squat',p:'3 × 12',w:'25–30 lbs',sets:3,note:'Pause 1 second at the bottom. Elbows inside knees.'},
+        {name:'DB reverse lunge',p:'3 × 10 each leg',w:'15–20 lbs each',sets:3,note:'Step back, keep front shin vertical.'},
+        {name:'Hanging knee raise',p:'3 × 10',w:'Bodyweight',sets:3,note:'Full dead hang, pull knees to chest. No swinging.'},
+        {name:'Bike steady state',p:'8 mins',w:'Moderate resistance',sets:1,note:'Zone 2 — moderate effort.'},
+      ]},
+    ],
+    2:[
+      {name:'Day A',title:'Strength + Cardio',exercises:[
+        {name:'Barbell back squat',p:'3 × 10',w:'80 lbs',sets:3,note:'Add 5 lbs from week 1 if all reps were clean.'},
+        {name:'Incline barbell bench press',p:'3 × 10',w:'85–95 lbs',sets:3,note:'New angle this week — upper chest focus. Set bench to 30–45°.'},
+        {name:'Ring rows',p:'3 × 12',w:'Bodyweight',sets:3,note:'First ring movement. Walk feet forward to make harder.'},
+        {name:'Cable face pull',p:'3 × 15',w:'20–25 lbs',sets:3,note:'High elbows, pull to forehead. Great for shoulder health.'},
+        {name:'Treadmill run/walk intervals',p:'15 mins',w:'90s run / 60s walk',sets:1,note:'Build aerobic base steadily.'},
+      ]},
+      {name:'Day B',title:'Push + Arms',exercises:[
+        {name:'Barbell bench press',p:'3 × 10',w:'120 lbs',sets:3,note:'Back to your starting weight with better technique.'},
+        {name:'Barbell overhead press',p:'3 × 10',w:'65–70 lbs',sets:3,note:'Add 5 lbs if week 1 was comfortable.'},
+        {name:'EZ bar curl',p:'3 × 12',w:'45–50 lbs total',sets:3,note:'New this week — easier on wrists than straight bar.'},
+        {name:'Cable tricep pushdown',p:'3 × 12',w:'25–30 lbs',sets:3,note:'Elbows pinned at sides. Full extension at bottom.'},
+        {name:'DB lateral raise',p:'3 × 15',w:'10–12 lbs',sets:3,note:'Strict form. Lead with elbows not hands.'},
+      ]},
+      {name:'Day C',title:'Lower + Core',exercises:[
+        {name:'Romanian deadlift',p:'3 × 10',w:'100–105 lbs',sets:3,note:'Progress from week 1. Hip hinge mechanics getting cleaner.'},
+        {name:'DB walking lunge',p:'3 × 10 each leg',w:'15–20 lbs each',sets:3,note:'New variation — step forward, control descent.'},
+        {name:'Cable pull-through',p:'3 × 12',w:'25–30 lbs',sets:3,note:'First cable lower body — hip hinge with constant tension.'},
+        {name:'Hanging leg raise',p:'3 × 8',w:'Bodyweight',sets:3,note:'Full straight-leg version this week — harder than knee raise.'},
+        {name:'Bike steady state',p:'10 mins',w:'Moderate resistance',sets:1,note:'Zone 2 — 2 mins longer than week 1.'},
+      ]},
+    ],
+    3:[
+      {name:'Day A',title:'Full Body Power',exercises:[
+        {name:'Barbell back squat',p:'3 × 8',w:'85–90 lbs',sets:3,note:'Reduce reps slightly, add weight. Focus on speed out of the hole.'},
+        {name:'Barbell bench press',p:'3 × 8',w:'120–125 lbs',sets:3,note:'Lower reps, slightly heavier. Controlled descent, explosive press.'},
+        {name:'Pull-ups',p:'3 × max',w:'Bodyweight',sets:3,note:'You should be hitting 6+ reps now. If so, add a pause at the top.'},
+        {name:'Cable woodchop',p:'3 × 10 each side',w:'15–20 lbs',sets:3,note:'Rotational core — rotate from hips, not just arms.'},
+        {name:'Bike sprint intervals',p:'6 × 30s on / 30s off',w:'High resistance',sets:6,note:'One extra interval vs week 1.'},
+      ]},
+      {name:'Day B',title:'Upper Body + Cable',exercises:[
+        {name:'Barbell overhead press',p:'3 × 8',w:'70–75 lbs',sets:3,note:'Heavier and fewer reps. Strict form — no leg drive.'},
+        {name:'Cable lat pulldown',p:'3 × 10',w:'50–60 lbs',sets:3,note:'First lat pulldown — full stretch at top, pull to upper chest.'},
+        {name:'DB incline press',p:'3 × 12',w:'20–25 lbs each',sets:3,note:'Superset with lateral raise.'},
+        {name:'DB lateral raise',p:'3 × 15',w:'10–12 lbs',sets:3,note:'Superset with incline press.'},
+        {name:'Treadmill incline walk',p:'10 mins',w:'12% grade, 3.5 mph',sets:1,note:'Slightly steeper grade than week 1.'},
+      ]},
+      {name:'Day C',title:'Lower Strength',exercises:[
+        {name:'Romanian deadlift',p:'3 × 8',w:'105–115 lbs',sets:3,note:'Heavier and fewer reps. Feel the stretch and control the descent.'},
+        {name:'DB Bulgarian split squat',p:'3 × 8 each',w:'15–20 lbs each',sets:3,note:'New this week — rear foot on bench. Great single-leg strength builder.'},
+        {name:'Cable pull-through',p:'3 × 12',w:'30–35 lbs',sets:3,note:'Add 5 lbs from week 2.'},
+        {name:'Plank',p:'3 × 40s',w:'Bodyweight',sets:3,note:'Hold 5 seconds longer than week 1.'},
+        {name:'Treadmill run/walk intervals',p:'15 mins',w:'2 min run / 1 min walk',sets:1,note:'Same duration, try to run slightly faster.'},
+      ]},
+    ],
+    4:[
+      {name:'Day A',title:'Full Body — Week 4 Test',exercises:[
+        {name:'Barbell back squat',p:'3 × 8',w:'90–95 lbs',sets:3,note:'Milestone week — log your best squat. How does it compare to week 1?'},
+        {name:'Barbell bench press',p:'3 × 8',w:'125–130 lbs',sets:3,note:'Log your best bench. Target: back to or past your starting 125 lbs.'},
+        {name:'Ring rows',p:'4 × 10',w:'Bodyweight',sets:4,note:'Extra set this week. Walk feet out further for more challenge.'},
+        {name:'Cable face pull',p:'3 × 15',w:'25–30 lbs',sets:3,note:'Heavier than week 2. Shoulder health staple.'},
+        {name:'Bike sprint intervals',p:'6 × 30s on / 30s off',w:'High resistance',sets:6,note:'Push harder than week 3 on each interval.'},
+      ]},
+      {name:'Day B',title:'Push + Pull Balance',exercises:[
+        {name:'Barbell overhead press',p:'3 × 8',w:'70–75 lbs',sets:3,note:'Match or exceed week 3.'},
+        {name:'Cable lat pulldown',p:'3 × 10',w:'55–65 lbs',sets:3,note:'Add 5–10 lbs from week 3.'},
+        {name:'EZ bar curl',p:'3 × 10',w:'50–55 lbs total',sets:3,note:'Superset with skull crushers.'},
+        {name:'EZ bar skull crusher',p:'3 × 10',w:'40–45 lbs total',sets:3,note:'Superset with curls. First skull crusher in the program.'},
+        {name:'DB lateral raise',p:'3 × 15',w:'12 lbs',sets:3,note:'Slightly heavier than previous weeks.'},
+      ]},
+      {name:'Day C',title:'Lower + Core Finisher',exercises:[
+        {name:'Romanian deadlift',p:'4 × 8',w:'110–120 lbs',sets:4,note:'Extra set — milestone week. Log your best.'},
+        {name:'DB goblet squat',p:'3 × 12',w:'25–30 lbs',sets:3,note:'Pause 2 seconds at the bottom. Depth should be significantly better than week 1.'},
+        {name:'DB walking lunge',p:'3 × 10 each leg',w:'20 lbs each',sets:3,note:'Heavier than week 2. Smooth stride.'},
+        {name:'Hanging leg raise',p:'3 × 10',w:'Bodyweight',sets:3,note:'Full straight-leg. Add a 1-second pause at the top.'},
+        {name:'Treadmill HIIT',p:'10 mins',w:'1 min hard / 1 min easy',sets:1,note:'First HIIT session — harder than steady state or walk intervals.'},
+      ]},
+    ],
+   },
+   get days(){return this.weekDays[1];}
+  },
+
+  // ─── PHASE 2: Weeks 5–8 · Build · 4 days/week ────────────────────────────
   {id:2,label:'Phase 2',color:'p2',sub:'Weeks 5–8 · 4 days/week',
-   desc:"Build phase. 4 sessions/week introducing rings, cable work, and varied angles. Heavier compound lifts paired with ring and cable accessories for balanced strength and muscle development.",
+   desc:"Build phase. Each week rotates exercise variations while progressively overloading the main lifts. Rings, cables, and all bench angles are introduced systematically. Complete all reps cleanly → add weight next session.",
    rest:'Rest 60s in supersets. 2 mins after heavy compound sets.',restSec:120,
    weeks:[5,6,7,8],
-   days:[
-    {name:'Day A',title:'Heavy Lower + Core',exercises:[
-      {name:'Barbell back squat',p:'4 × 6–8',w:'95–115 lbs',sets:4,note:'Add 5 lbs each week. Target 115 lbs by week 8.'},
-      {name:'Romanian deadlift',p:'3 × 8',w:'115–135 lbs',sets:3,note:'Progress 5–10 lbs per week as form allows.'},
-      {name:'DB walking lunge',p:'3 × 10 each leg',w:'20–25 lbs each',sets:3,note:'Long stride, torso upright, controlled throughout.'},
-      {name:'Cable pull-through',p:'3 × 12',w:'30–40 lbs',sets:3,note:'Hip hinge with constant cable tension — great hamstring finisher.'},
-      {name:'Cable woodchop',p:'3 × 10 each side',w:'20–25 lbs',sets:3,note:'Rotate from hips, core braced throughout.'},
-    ]},
-    {name:'Day B',title:'Push — Bench Angles',exercises:[
-      {name:'Barbell bench press',p:'4 × 6–8',w:'125–145 lbs',sets:4,note:'Start at your current weight. Add 5 lbs/session when all reps complete.'},
-      {name:'Incline barbell bench press',p:'3 × 8',w:'95–115 lbs',sets:3,note:'Set bench to 30–45°. Upper chest focus. Bar path slightly lower than flat.'},
-      {name:'Ring push-ups',p:'3 × 10–12',w:'Bodyweight',sets:3,note:'Superset with ring rows. Rings demand far more stability than a bar.'},
-      {name:'Ring rows',p:'3 × 10–12',w:'Bodyweight',sets:3,note:'Superset with ring push-ups. Adjust foot position to control difficulty.'},
-      {name:'Treadmill incline walk',p:'8 mins',w:'12% grade, 3.8 mph',sets:1,note:'End of session cardio.'},
-    ]},
-    {name:'Day C',title:'Heavy Pull + Cable',exercises:[
-      {name:'Barbell deadlift',p:'4 × 5',w:'115–135 lbs',sets:4,note:'Add 5–10 lbs each session. Main strength movement.'},
-      {name:'Cable lat pulldown',p:'4 × 8–10',w:'60–80 lbs',sets:4,note:'Full lat stretch at the top, pull to upper chest. Lean back slightly.'},
-      {name:'Cable seated row',p:'3 × 10',w:'50–70 lbs',sets:3,note:'Sit tall, pull to lower chest. Squeeze shoulder blades at the end.'},
-      {name:'Cable face pull',p:'3 × 15',w:'25–35 lbs',sets:3,note:'Elbows high and wide, pull to forehead. Key for shoulder health and posture.'},
-      {name:'Hanging leg raise',p:'3 × 10',w:'Bodyweight',sets:3,note:'Full straight-leg version — progress from knee raises.'},
-    ]},
-    {name:'Day D',title:'Arms + Conditioning',exercises:[
-      {name:'Treadmill run/walk intervals',p:'20 mins total',w:'2 min run / 1 min walk',sets:1,note:'Moderate-hard running pace.'},
-      {name:'EZ bar curl',p:'3 × 10',w:'50–60 lbs total',sets:3,note:'Superset with skull crushers. Easier on wrists than straight bar.'},
-      {name:'EZ bar skull crusher',p:'3 × 10',w:'40–50 lbs total',sets:3,note:'Superset with EZ bar curl. Lower to forehead, elbows pointing up.'},
-      {name:'Cable tricep pushdown',p:'3 × 12',w:'30–40 lbs',sets:3,note:'Elbows pinned at sides. Full extension at the bottom.'},
-      {name:'Cable curl',p:'3 × 12',w:'25–35 lbs',sets:3,note:'Constant tension — feels different from dumbbell curls.'},
-    ]},
-  ]},
+   weekDays:{
+    5:[
+      {name:'Day A',title:'Heavy Lower + Cables',exercises:[
+        {name:'Barbell back squat',p:'4 × 6–8',w:'95–105 lbs',sets:4,note:'First 4-day week. Drop to lower rep range with more weight.'},
+        {name:'Romanian deadlift',p:'3 × 8',w:'115–125 lbs',sets:3,note:'Progress from phase 1. Heavier load, feel the hamstring load.'},
+        {name:'DB walking lunge',p:'3 × 10 each leg',w:'20–25 lbs each',sets:3,note:''},
+        {name:'Cable pull-through',p:'3 × 12',w:'35–45 lbs',sets:3,note:'Hip hinge with constant cable tension — great hamstring finisher.'},
+        {name:'Cable woodchop',p:'3 × 10 each side',w:'20–25 lbs',sets:3,note:'Rotate from hips. Core braced throughout.'},
+      ]},
+      {name:'Day B',title:'Push — Flat + Incline',exercises:[
+        {name:'Barbell bench press',p:'4 × 6–8',w:'125–135 lbs',sets:4,note:'Add weight and drop reps from phase 1.'},
+        {name:'Incline barbell bench press',p:'3 × 8',w:'95–105 lbs',sets:3,note:'Set bench to 30–45°. Upper chest is often underdeveloped.'},
+        {name:'Ring push-ups',p:'3 × 10–12',w:'Bodyweight',sets:3,note:'Superset with ring rows. Instability forces full engagement.'},
+        {name:'Ring rows',p:'3 × 10–12',w:'Bodyweight',sets:3,note:'Superset with ring push-ups. Adjust foot position for difficulty.'},
+        {name:'Treadmill incline walk',p:'8 mins',w:'12% grade, 3.8 mph',sets:1,note:'End of session cardio.'},
+      ]},
+      {name:'Day C',title:'Heavy Pull + Lats',exercises:[
+        {name:'Barbell deadlift',p:'4 × 5',w:'115–125 lbs',sets:4,note:'First heavy deadlifts of the program. Nail the setup.'},
+        {name:'Cable lat pulldown',p:'4 × 8–10',w:'60–70 lbs',sets:4,note:'Full lat stretch at the top, pull to upper chest.'},
+        {name:'Cable seated row',p:'3 × 10',w:'50–60 lbs',sets:3,note:'Sit tall, pull to lower chest, squeeze shoulder blades.'},
+        {name:'Cable face pull',p:'3 × 15',w:'25–30 lbs',sets:3,note:'Elbows high and wide. Shoulder health priority.'},
+        {name:'Hanging leg raise',p:'3 × 10',w:'Bodyweight',sets:3,note:'Full straight-leg version.'},
+      ]},
+      {name:'Day D',title:'Arms + Conditioning',exercises:[
+        {name:'Treadmill run/walk intervals',p:'20 mins total',w:'2 min run / 1 min walk',sets:1,note:''},
+        {name:'EZ bar curl',p:'3 × 10',w:'50–55 lbs total',sets:3,note:'Superset with skull crushers.'},
+        {name:'EZ bar skull crusher',p:'3 × 10',w:'40–45 lbs total',sets:3,note:'Superset with EZ bar curl. Lower to forehead.'},
+        {name:'Cable tricep pushdown',p:'3 × 12',w:'30–35 lbs',sets:3,note:'Elbows pinned. Full extension.'},
+        {name:'Cable curl',p:'3 × 12',w:'25–30 lbs',sets:3,note:'Constant tension — feel the difference vs free weight.'},
+      ]},
+    ],
+    6:[
+      {name:'Day A',title:'Lower Strength',exercises:[
+        {name:'Barbell back squat',p:'4 × 6–8',w:'100–115 lbs',sets:4,note:'Add 5 lbs from week 5 if all reps completed.'},
+        {name:'Barbell deadlift',p:'3 × 5',w:'120–130 lbs',sets:3,note:'Moved to Day A this week to pair two big compounds.'},
+        {name:'DB Bulgarian split squat',p:'3 × 8 each',w:'20–25 lbs each',sets:3,note:'Single-leg strength — rear foot on bench.'},
+        {name:'Cable pull-through',p:'3 × 12',w:'40–50 lbs',sets:3,note:'Add 5 lbs from week 5.'},
+        {name:'Hanging leg raise',p:'3 × 12',w:'Bodyweight',sets:3,note:'Add 2 reps from week 5.'},
+      ]},
+      {name:'Day B',title:'Push — Decline + Rings',exercises:[
+        {name:'Incline barbell bench press',p:'4 × 6–8',w:'100–110 lbs',sets:4,note:'Leading with incline this week — hits upper chest fresh.'},
+        {name:'Barbell bench press',p:'3 × 8',w:'130–140 lbs',sets:3,note:'Second movement this week — still a key lift.'},
+        {name:'Decline barbell bench press',p:'3 × 8',w:'105–115 lbs',sets:3,note:'First decline this week — lower chest activation.'},
+        {name:'Cable chest fly',p:'3 × 12',w:'15–20 lbs each side',sets:3,note:'Superset with tricep pushdown. Constant tension through arc.'},
+        {name:'Cable tricep pushdown',p:'3 × 12',w:'32–40 lbs',sets:3,note:'Superset with cable fly.'},
+      ]},
+      {name:'Day C',title:'Pull — Bar + Ring',exercises:[
+        {name:'Cable lat pulldown',p:'4 × 8',w:'65–75 lbs',sets:4,note:'Heavier than week 5. Explosive pull, controlled return.'},
+        {name:'Ring pull-ups',p:'3 × max',w:'Bodyweight',sets:3,note:'First ring pull-ups — much harder than bar. Turn rings out at top.'},
+        {name:'Cable seated row',p:'3 × 10',w:'55–65 lbs',sets:3,note:'Heavier than week 5.'},
+        {name:'DB single-arm row',p:'3 × 10 each',w:'25–30 lbs',sets:3,note:'Brace on bench. Full range of motion.'},
+        {name:'Cable face pull',p:'3 × 15',w:'28–35 lbs',sets:3,note:'Heavier than week 5.'},
+      ]},
+      {name:'Day D',title:'Conditioning + Core',exercises:[
+        {name:'Treadmill HIIT',p:'15 mins',w:'1 min hard / 90s easy',sets:1,note:'Longer HIIT session than phase 1.'},
+        {name:'EZ bar curl',p:'3 × 10',w:'52–58 lbs total',sets:3,note:'Add 2–4 lbs from week 5.'},
+        {name:'Hammer curl',p:'3 × 12',w:'25–30 lbs',sets:3,note:'Neutral grip — brachialis and forearm development.'},
+        {name:'Cable woodchop',p:'3 × 12 each side',w:'22–28 lbs',sets:3,note:'Heavier and more reps than week 5.'},
+        {name:'Plank',p:'3 × 45s',w:'Bodyweight',sets:3,note:'Progress from phase 1 duration.'},
+      ]},
+    ],
+    7:[
+      {name:'Day A',title:'Lower + Glutes',exercises:[
+        {name:'Barbell back squat',p:'4 × 6',w:'105–120 lbs',sets:4,note:'Lower end of reps, heavier weight. Fight for depth.'},
+        {name:'Romanian deadlift',p:'4 × 8',w:'125–140 lbs',sets:4,note:'Extra set this week. Really feel the hamstring stretch.'},
+        {name:'DB walking lunge',p:'3 × 12 each leg',w:'22–25 lbs each',sets:3,note:'2 extra reps each leg vs week 5.'},
+        {name:'Cable pull-through',p:'4 × 12',w:'45–55 lbs',sets:4,note:'Extra set and heavier. Full glute squeeze at top.'},
+        {name:'Hanging leg raise',p:'3 × 12',w:'Bodyweight',sets:3,note:'Hold 1 second at the top each rep.'},
+      ]},
+      {name:'Day B',title:'Push — All Angles',exercises:[
+        {name:'Barbell bench press',p:'4 × 6',w:'135–145 lbs',sets:4,note:'Heaviest bench of phase 2 so far. Lower reps, fight for quality.'},
+        {name:'Incline barbell bench press',p:'3 × 8',w:'105–115 lbs',sets:3,note:'Heavier than weeks 5–6.'},
+        {name:'Ring push-ups',p:'4 × 10–12',w:'Bodyweight',sets:4,note:'Extra set this week. Try to stay rigid — no hip sag.'},
+        {name:'DB lateral raise',p:'3 × 15',w:'12–15 lbs',sets:3,note:'Superset with cable face pull.'},
+        {name:'Cable face pull',p:'3 × 15',w:'30–35 lbs',sets:3,note:'Superset with lateral raise. Shoulder health.'},
+      ]},
+      {name:'Day C',title:'Back Width + Thickness',exercises:[
+        {name:'Barbell deadlift',p:'4 × 5',w:'130–145 lbs',sets:4,note:'Heaviest deadlift yet. Brace hard before every pull.'},
+        {name:'Cable lat pulldown',p:'4 × 8',w:'70–80 lbs',sets:4,note:'Heavier than week 6. Width focus.'},
+        {name:'Barbell row',p:'3 × 8',w:'95–110 lbs',sets:3,note:'New this week — bent-over barbell row for back thickness.'},
+        {name:'Ring rows',p:'3 × 12',w:'Bodyweight',sets:3,note:'Feet elevated on bench for more difficulty.'},
+        {name:'Cable face pull',p:'3 × 15',w:'30–38 lbs',sets:3,note:'Heavier than previous weeks.'},
+      ]},
+      {name:'Day D',title:'Arms + Sprint Conditioning',exercises:[
+        {name:'Bike sprint intervals',p:'8 × 30s on / 30s off',w:'Max resistance',sets:8,note:'Spin bike — max effort every interval.'},
+        {name:'EZ bar curl',p:'4 × 8',w:'55–62 lbs total',sets:4,note:'Extra set, heavier. Strict form.'},
+        {name:'EZ bar skull crusher',p:'4 × 8',w:'45–52 lbs total',sets:4,note:'Extra set. Elbows pointing straight up throughout.'},
+        {name:'Cable curl',p:'3 × 12',w:'28–35 lbs',sets:3,note:'Superset with cable tricep pushdown.'},
+        {name:'Cable tricep pushdown',p:'3 × 12',w:'35–42 lbs',sets:3,note:'Superset with cable curl.'},
+      ]},
+    ],
+    8:[
+      {name:'Day A',title:'Lower — Peak Week',exercises:[
+        {name:'Barbell back squat',p:'4 × 6',w:'110–125 lbs',sets:4,note:'Milestone week 8 — log your best. Compare to week 5.'},
+        {name:'Barbell deadlift',p:'4 × 5',w:'135–150 lbs',sets:4,note:'Milestone — log your best deadlift of phase 2.'},
+        {name:'DB Bulgarian split squat',p:'3 × 8 each',w:'23–27 lbs each',sets:3,note:'Heaviest split squat yet.'},
+        {name:'Cable pull-through',p:'4 × 12',w:'48–58 lbs',sets:4,note:'Heaviest pull-through of phase 2.'},
+        {name:'Cable woodchop',p:'3 × 12 each side',w:'25–32 lbs',sets:3,note:'Heaviest woodchop yet.'},
+      ]},
+      {name:'Day B',title:'Push — Max Effort',exercises:[
+        {name:'Barbell bench press',p:'4 × 5',w:'140–150 lbs',sets:4,note:'Milestone — strongest bench of phase 2.'},
+        {name:'Incline barbell bench press',p:'4 × 6',w:'110–120 lbs',sets:4,note:'Extra set, heavier than any previous week.'},
+        {name:'Decline barbell bench press',p:'3 × 8',w:'110–120 lbs',sets:3,note:'Heavier than week 6. Complete chest coverage.'},
+        {name:'Ring push-ups',p:'4 × max',w:'Bodyweight',sets:4,note:'Max reps, 4 sets. How many can you do now vs week 5?'},
+        {name:'Cable tricep pushdown',p:'4 × 10',w:'38–45 lbs',sets:4,note:'Extra set and heavier.'},
+      ]},
+      {name:'Day C',title:'Pull — Max Effort',exercises:[
+        {name:'Ring pull-ups',p:'4 × max',w:'Bodyweight',sets:4,note:'Milestone — log your max reps. How many vs week 6?'},
+        {name:'Cable lat pulldown',p:'4 × 6–8',w:'75–88 lbs',sets:4,note:'Heaviest pulldown of phase 2.'},
+        {name:'Cable seated row',p:'4 × 8',w:'65–78 lbs',sets:4,note:'Extra set, heavier.'},
+        {name:'Barbell row',p:'3 × 8',w:'100–115 lbs',sets:3,note:'Heavier than week 7.'},
+        {name:'EZ bar curl',p:'4 × 8',w:'58–65 lbs total',sets:4,note:'Heaviest curls of phase 2.'},
+      ]},
+      {name:'Day D',title:'Full Conditioning',exercises:[
+        {name:'Treadmill run',p:'20 mins steady',w:'Moderate pace',sets:1,note:'Longest run of the program so far. Aim for no walk breaks.'},
+        {name:'Ring dips',p:'3 × max',w:'Bodyweight',sets:3,note:'First ring dips — incredibly hard. Even 3–4 reps is excellent.'},
+        {name:'Cable curl',p:'3 × 12',w:'30–38 lbs',sets:3,note:''},
+        {name:'Cable woodchop',p:'3 × 12 each side',w:'27–34 lbs',sets:3,note:''},
+        {name:'Hanging leg raise',p:'3 × 12',w:'Bodyweight',sets:3,note:'Hold at the top 1 second each rep.'},
+      ]},
+    ],
+   },
+   get days(){return this.weekDays[5];}
+  },
+
+  // ─── PHASE 3: Weeks 9–12 · Peak · 4 days/week ────────────────────────────
   {id:3,label:'Phase 3',color:'p3',sub:'Weeks 9–12 · 4 days/week',
-   desc:'Peak phase. Heaviest barbell work, ring progressions, and full cable integration. Every session pushes intensity — this is what the first 8 weeks built toward.',
+   desc:'Peak phase. Heaviest weights of the program. Each week progressively intensifies with unique exercise variations and higher loads. Every session builds toward a strong finish.',
    rest:'90s–2 mins after heavy compound sets. Push intensity on every lift.',restSec:120,
    weeks:[9,10,11,12],
-   days:[
-    {name:'Day A',title:'Max Lower',exercises:[
-      {name:'Barbell back squat',p:'5 × 5',w:'120–145 lbs',sets:5,note:'Work up to a challenging 5-rep weight. Bodyweight squat (202 lbs) is the 6-month target.'},
-      {name:'Barbell deadlift',p:'4 × 4–5',w:'145–175 lbs',sets:4,note:'Heaviest deadlifts of the program. Add 5–10 lbs each week.'},
-      {name:'DB Bulgarian split squat',p:'3 × 8 each',w:'20–25 lbs each',sets:3,note:'Rear foot elevated on bench. Deep stretch at the bottom.'},
-      {name:'Cable pull-through',p:'4 × 12',w:'40–55 lbs',sets:4,note:'Heavier than Phase 2. Hip hinge with full glute squeeze at the top.'},
-      {name:'Hanging leg raise',p:'3 × 12',w:'Bodyweight',sets:3,note:'Full straight-leg version. Add a pause at the top.'},
-    ]},
-    {name:'Day B',title:'Max Push — Full Chest',exercises:[
-      {name:'Barbell bench press',p:'5 × 5',w:'145–165 lbs',sets:5,note:"Target 165 lbs by week 12 — a ~30 lb improvement on your estimated 1RM."},
-      {name:'Incline barbell bench press',p:'4 × 6',w:'105–125 lbs',sets:4,note:'Progress from Phase 2. Upper chest strength is a serious weak point for most — fix it here.'},
-      {name:'Decline barbell bench press',p:'3 × 8',w:'115–135 lbs',sets:3,note:'Set bench to 15–30° decline. Lower chest activation. Keep feet firmly planted.'},
-      {name:'Cable chest fly',p:'3 × 12',w:'20–30 lbs each side',sets:3,note:'Superset with cable tricep pushdown. Constant tension through the full arc.'},
-      {name:'Cable tricep pushdown',p:'3 × 12',w:'35–50 lbs',sets:3,note:'Superset with cable fly. Elbows pinned throughout.'},
-    ]},
-    {name:'Day C',title:'Max Pull — Rings + Cable',exercises:[
-      {name:'Ring pull-ups',p:'5 × max (target 6–8)',w:'Bodyweight',sets:5,note:'Much harder than bar pull-ups. Turn rings out at the top. Rest 2 mins between sets.'},
-      {name:'Cable lat pulldown',p:'4 × 6–8',w:'80–100 lbs',sets:4,note:'Heavier than Phase 2. Full lat stretch at top, explosive pull.'},
-      {name:'Cable seated row',p:'4 × 8',w:'70–90 lbs',sets:4,note:'Heavy row — really drive the elbows back and hold the squeeze.'},
-      {name:'Ring face pulls',p:'3 × 15',w:'Bodyweight (angle)',sets:3,note:'Adjust your body angle for resistance. Pull to forehead, elbows high.'},
-      {name:'EZ bar curl',p:'4 × 8',w:'60–70 lbs total',sets:4,note:'Heaviest curls of the program. Strict form — no swinging.'},
-    ]},
-    {name:'Day D',title:'Conditioning + Core',exercises:[
-      {name:'Treadmill run',p:'15–20 mins steady',w:'Moderate-hard pace',sets:1,note:'By week 12, aim to run 15+ mins without walk breaks.'},
-      {name:'Ring dips',p:'4 × max (target 8–10)',w:'Bodyweight',sets:4,note:'Hardest tricep/chest exercise in the program. Control the descent — rings will try to flare out.'},
-      {name:'EZ bar skull crusher',p:'4 × 10',w:'50–60 lbs total',sets:4,note:'Superset with EZ bar curl. Heaviest skull crushers of the program.'},
-      {name:'Cable woodchop',p:'3 × 12 each side',w:'25–35 lbs',sets:3,note:'Heavier than Phase 2. Controlled rotation — generate power from the hips.'},
-      {name:'Hanging leg raise',p:'3 × 12',w:'Bodyweight',sets:3,note:'Add a 2-second pause at the top each rep.'},
-    ]},
-  ]},
+   weekDays:{
+    9:[
+      {name:'Day A',title:'Max Lower',exercises:[
+        {name:'Barbell back squat',p:'5 × 5',w:'120–135 lbs',sets:5,note:'5×5 era begins. All 5 reps = add 5 lbs next session.'},
+        {name:'Barbell deadlift',p:'4 × 4',w:'150–165 lbs',sets:4,note:'Heaviest pulls yet. Brace hard, drive through the floor.'},
+        {name:'DB Bulgarian split squat',p:'3 × 8 each',w:'25–28 lbs each',sets:3,note:'Heaviest split squat of the program.'},
+        {name:'Cable pull-through',p:'4 × 12',w:'50–60 lbs',sets:4,note:'Heavy hip hinge finisher.'},
+        {name:'Hanging leg raise',p:'3 × 12',w:'Bodyweight',sets:3,note:'Add a 2-second pause at the top.'},
+      ]},
+      {name:'Day B',title:'Max Push — Flat Focus',exercises:[
+        {name:'Barbell bench press',p:'5 × 5',w:'145–155 lbs',sets:5,note:'Heaviest bench so far. Control down, explosive up.'},
+        {name:'Incline barbell bench press',p:'4 × 6',w:'115–125 lbs',sets:4,note:'Heavier than all of phase 2.'},
+        {name:'Cable chest fly',p:'3 × 12',w:'22–30 lbs each side',sets:3,note:'Superset with cable tricep pushdown.'},
+        {name:'Cable tricep pushdown',p:'3 × 12',w:'40–48 lbs',sets:3,note:'Superset with fly. Heaviest pushdown yet.'},
+        {name:'DB lateral raise',p:'3 × 15',w:'13–15 lbs',sets:3,note:'Strict form. No swinging.'},
+      ]},
+      {name:'Day C',title:'Max Pull — Cable + Bar',exercises:[
+        {name:'Cable lat pulldown',p:'5 × 6–8',w:'82–95 lbs',sets:5,note:'Extra set in phase 3. Explosive pull every rep.'},
+        {name:'Barbell row',p:'4 × 6',w:'110–125 lbs',sets:4,note:'Heaviest row of the program.'},
+        {name:'Cable seated row',p:'4 × 8',w:'70–82 lbs',sets:4,note:'Heavy row. Drive elbows back hard.'},
+        {name:'Ring face pulls',p:'3 × 15',w:'Bodyweight (angle)',sets:3,note:'Shoulder health. Elbows high throughout.'},
+        {name:'EZ bar curl',p:'4 × 8',w:'60–68 lbs total',sets:4,note:'Strict. No swinging.'},
+      ]},
+      {name:'Day D',title:'Conditioning + Core',exercises:[
+        {name:'Treadmill run',p:'20 mins steady',w:'Moderate-hard pace',sets:1,note:'Push the pace above comfort zone.'},
+        {name:'Ring dips',p:'4 × max',w:'Bodyweight',sets:4,note:'Max reps — should be better than week 8 debut.'},
+        {name:'EZ bar skull crusher',p:'4 × 8',w:'52–60 lbs total',sets:4,note:'Heaviest skull crushers yet.'},
+        {name:'Cable woodchop',p:'3 × 12 each side',w:'28–35 lbs',sets:3,note:'Heavy rotation. Control the eccentric.'},
+        {name:'Hanging leg raise',p:'3 × 12',w:'Bodyweight',sets:3,note:''},
+      ]},
+    ],
+    10:[
+      {name:'Day A',title:'Lower — Full Posterior',exercises:[
+        {name:'Barbell back squat',p:'5 × 5',w:'125–140 lbs',sets:5,note:'Add 5 lbs if all 5 sets of 5 were completed week 9.'},
+        {name:'Barbell deadlift',p:'5 × 3',w:'155–175 lbs',sets:5,note:'Fewer reps, more weight. Every pull should be max quality.'},
+        {name:'Romanian deadlift',p:'3 × 8',w:'135–150 lbs',sets:3,note:'Back this week after a break — fresh stimulus.'},
+        {name:'Cable pull-through',p:'4 × 12',w:'55–65 lbs',sets:4,note:'Add 5 lbs from week 9.'},
+        {name:'Cable woodchop',p:'3 × 12 each side',w:'30–38 lbs',sets:3,note:'Heavier rotation work.'},
+      ]},
+      {name:'Day B',title:'Push — Incline Lead',exercises:[
+        {name:'Incline barbell bench press',p:'5 × 5',w:'118–130 lbs',sets:5,note:'Leading with incline this week — upper chest gets fresh attention.'},
+        {name:'Barbell bench press',p:'4 × 6',w:'148–158 lbs',sets:4,note:'Second but still heavy. Should feel different after incline.'},
+        {name:'Decline barbell bench press',p:'3 × 8',w:'120–130 lbs',sets:3,note:'Complete chest coverage.'},
+        {name:'Ring push-ups',p:'4 × max',w:'Bodyweight',sets:4,note:'Max reps — compare to week 7.'},
+        {name:'DB lateral raise',p:'4 × 15',w:'13–15 lbs',sets:4,note:'Extra set this week.'},
+      ]},
+      {name:'Day C',title:'Pull — Ring Focus',exercises:[
+        {name:'Ring pull-ups',p:'5 × max',w:'Bodyweight',sets:5,note:'5 sets this week. Turn rings out at top for full bicep engagement.'},
+        {name:'Cable lat pulldown',p:'4 × 6–8',w:'85–98 lbs',sets:4,note:'Add weight from week 9.'},
+        {name:'DB single-arm row',p:'4 × 8 each',w:'28–30 lbs',sets:4,note:'Heavy unilateral row — brace hard on the bench.'},
+        {name:'Cable face pull',p:'4 × 15',w:'32–40 lbs',sets:4,note:'Extra set. Shoulder health and rear delt development.'},
+        {name:'EZ bar curl',p:'4 × 8',w:'62–70 lbs total',sets:4,note:'Add 2–4 lbs from week 9.'},
+      ]},
+      {name:'Day D',title:'Arms + Sprint',exercises:[
+        {name:'Bike sprint intervals',p:'10 × 20s on / 40s off',w:'Max resistance',sets:10,note:'Hardest bike session of the program. All-out every interval.'},
+        {name:'EZ bar skull crusher',p:'4 × 8',w:'54–62 lbs total',sets:4,note:'Superset with EZ bar curl.'},
+        {name:'EZ bar curl',p:'4 × 8',w:'62–70 lbs total',sets:4,note:'Superset with skull crushers.'},
+        {name:'Cable tricep pushdown',p:'3 × 12',w:'42–50 lbs',sets:3,note:'Heavy finisher.'},
+        {name:'Hanging leg raise',p:'3 × 12',w:'Bodyweight',sets:3,note:'Pause 2 seconds at top.'},
+      ]},
+    ],
+    11:[
+      {name:'Day A',title:'Strength Peak — Lower',exercises:[
+        {name:'Barbell back squat',p:'5 × 5',w:'130–148 lbs',sets:5,note:'Second-heaviest squat week. Add 5 lbs if week 10 was complete.'},
+        {name:'Barbell deadlift',p:'4 × 4',w:'160–180 lbs',sets:4,note:'Heaviest deadlift weights of the program.'},
+        {name:'DB Bulgarian split squat',p:'4 × 8 each',w:'26–30 lbs each',sets:4,note:'Extra set, heaviest split squat.'},
+        {name:'Cable pull-through',p:'4 × 12',w:'58–68 lbs',sets:4,note:'Heaviest pull-through of the program.'},
+        {name:'Hanging leg raise',p:'4 × 12',w:'Bodyweight',sets:4,note:'Extra set this week.'},
+      ]},
+      {name:'Day B',title:'Strength Peak — Push',exercises:[
+        {name:'Barbell bench press',p:'5 × 5',w:'150–162 lbs',sets:5,note:'Second-heaviest bench week. Close to target of 165 lbs.'},
+        {name:'Incline barbell bench press',p:'4 × 6',w:'120–132 lbs',sets:4,note:'Heaviest incline of the program.'},
+        {name:'Cable chest fly',p:'4 × 12',w:'24–32 lbs each side',sets:4,note:'Extra set this week.'},
+        {name:'Ring dips',p:'4 × max',w:'Bodyweight',sets:4,note:'Ring dips getting stronger — track your max reps.'},
+        {name:'Cable tricep pushdown',p:'4 × 10',w:'44–52 lbs',sets:4,note:'Heavy and strong.'},
+      ]},
+      {name:'Day C',title:'Strength Peak — Pull',exercises:[
+        {name:'Cable lat pulldown',p:'5 × 5–6',w:'90–105 lbs',sets:5,note:'Heaviest pulldown of the program. Explosive and controlled.'},
+        {name:'Barbell row',p:'5 × 5',w:'118–130 lbs',sets:5,note:'5×5 barbell row — the back equivalent of the bench press.'},
+        {name:'Ring pull-ups',p:'4 × max',w:'Bodyweight',sets:4,note:'Strong ring pull-ups by now. Add a pause at the top.'},
+        {name:'Ring face pulls',p:'4 × 15',w:'Bodyweight (angle)',sets:4,note:'Extra set. Key for shoulder integrity at heavy loads.'},
+        {name:'EZ bar curl',p:'5 × 6',w:'64–72 lbs total',sets:5,note:'5 sets — peak arm volume.'},
+      ]},
+      {name:'Day D',title:'Conditioning + Core',exercises:[
+        {name:'Treadmill run',p:'20 mins steady',w:'Hard pace',sets:1,note:'Push the pace — this should feel uncomfortable.'},
+        {name:'Ring dips',p:'4 × max',w:'Bodyweight',sets:4,note:'Max reps per set — rest 2 mins between sets.'},
+        {name:'EZ bar skull crusher',p:'4 × 8',w:'56–64 lbs total',sets:4,note:'Heaviest skull crushers of the program.'},
+        {name:'Cable woodchop',p:'4 × 12 each side',w:'32–40 lbs',sets:4,note:'Heaviest woodchop of the program.'},
+        {name:'Plank',p:'3 × 60s',w:'Bodyweight',sets:3,note:'60-second hold — strongest plank of the program.'},
+      ]},
+    ],
+    12:[
+      {name:'Day A',title:'Final Lower Test',exercises:[
+        {name:'Barbell back squat',p:'5 × 5',w:'135–155 lbs',sets:5,note:'FINAL WEEK. Log your absolute best squat. Compare to week 1 (75 lbs).'},
+        {name:'Barbell deadlift',p:'5 × 3',w:'165–185 lbs',sets:5,note:'Best deadlift of the program. Every pull counts.'},
+        {name:'Romanian deadlift',p:'3 × 8',w:'140–155 lbs',sets:3,note:'Hamstring finisher after the big pulls.'},
+        {name:'Cable pull-through',p:'3 × 12',w:'55–65 lbs',sets:3,note:'Glute finisher.'},
+        {name:'Hanging leg raise',p:'3 × 15',w:'Bodyweight',sets:3,note:'Final core session — 15 reps full straight-leg.'},
+      ]},
+      {name:'Day B',title:'Final Push Test',exercises:[
+        {name:'Barbell bench press',p:'5 × 5',w:'155–165 lbs',sets:5,note:'FINAL BENCH. Target 165 lbs — a ~30 lb improvement from Week 1.'},
+        {name:'Incline barbell bench press',p:'4 × 6',w:'122–135 lbs',sets:4,note:'Final incline — log your best.'},
+        {name:'Decline barbell bench press',p:'3 × 8',w:'125–135 lbs',sets:3,note:'Full chest coverage on the final push day.'},
+        {name:'Ring push-ups',p:'4 × max',w:'Bodyweight',sets:4,note:'Final ring push-ups — how many vs week 5 first attempt?'},
+        {name:'Cable chest fly',p:'3 × 12',w:'24–32 lbs each side',sets:3,note:'Pump finisher on the last push day.'},
+      ]},
+      {name:'Day C',title:'Final Pull Test',exercises:[
+        {name:'Ring pull-ups',p:'5 × max',w:'Bodyweight',sets:5,note:'FINAL RING PULL-UPS. Log your best set — the improvement from week 1 pull-ups should be significant.'},
+        {name:'Cable lat pulldown',p:'4 × 6',w:'92–108 lbs',sets:4,note:'Final pulldown — heaviest weights of the program.'},
+        {name:'Barbell row',p:'4 × 6',w:'120–132 lbs',sets:4,note:'Final barbell row — log your best.'},
+        {name:'Cable seated row',p:'3 × 8',w:'75–88 lbs',sets:3,note:'Heaviest seated row of the program.'},
+        {name:'EZ bar curl',p:'4 × 8',w:'65–74 lbs total',sets:4,note:'Final curls — heaviest of the program.'},
+      ]},
+      {name:'Day D',title:'Final Conditioning',exercises:[
+        {name:'Treadmill run',p:'20–25 mins steady',w:'Moderate-hard pace',sets:1,note:'FINAL RUN. Try to beat your longest continuous run. No walk breaks.'},
+        {name:'Ring dips',p:'4 × max',w:'Bodyweight',sets:4,note:'Final ring dips — log your best set of the 12 weeks.'},
+        {name:'EZ bar skull crusher',p:'4 × 8',w:'58–66 lbs total',sets:4,note:'Final skull crushers.'},
+        {name:'Cable curl',p:'3 × 12',w:'35–42 lbs',sets:3,note:'Superset with cable tricep pushdown.'},
+        {name:'Cable tricep pushdown',p:'3 × 12',w:'44–52 lbs',sets:3,note:'Final session. Finish strong.'},
+      ]},
+    ],
+   },
+   get days(){return this.weekDays[9];}
+  },
 ];
 
 // Milestone check dates for weeks 4, 8, 12
 const MILESTONE_WEEKS=[4,8,12];
 
+// Helper: get the days for a specific week (supports per-week unique days)
+function getWeekDays(ph,week){
+  if(ph.weekDays&&ph.weekDays[week])return ph.weekDays[week];
+  return ph.days||[];
+}
+
 // ═══════════════════════════════════════════════════ STATE
-const DEFAULT_STATE={sets:{},completed:{},skipped:{},history:[],prs:{},bodyweight:[],sessionNotes:{},readiness:{},rm1History:{},workoutDays:{},assessments:{},startWeight:202,startBF:22,restDays:{},difficulty:{},customWorkouts:{}};
+const DEFAULT_STATE={sets:{},completed:{},skipped:{},history:[],prs:{},bodyweight:[],sessionNotes:{},readiness:{},rm1History:{},workoutDays:{},assessments:{},startWeight:202,startBF:22,restDays:{},difficulty:{},customWorkouts:{},rpe:{},templates:{}};
 let S=JSON.parse(JSON.stringify(DEFAULT_STATE));
 try{const d=localStorage.getItem('lift12_v5');if(d)S=Object.assign(JSON.parse(JSON.stringify(DEFAULT_STATE)),JSON.parse(d));}catch(e){}
 const save=()=>{
@@ -1166,7 +1525,7 @@ function getRepRange(reps){
 function calcStreak(){
   let s=0;
   for(const ph of PHASES)for(const w of ph.weeks){
-    if(ph.days.every((_,di)=>S.completed[wk(ph.id,w,di)]||S.skipped[wk(ph.id,w,di)]))s++;
+    if(getWeekDays(ph,w).every((_,di)=>S.completed[wk(ph.id,w,di)]||S.skipped[wk(ph.id,w,di)]))s++;
     else return s;
   }
   return s;
@@ -1175,10 +1534,10 @@ function calcStreak(){
 // ═══════════════════════════════════════════════════ ACHIEVEMENTS
 const ACHIEVEMENTS=[
   {id:'first_session',icon:'🎯',name:'First Rep',desc:'Complete your first session',check:()=>Object.values(S.completed).some(Boolean)},
-  {id:'week1',icon:'📅',name:'Week 1 Done',desc:'Complete all of Week 1',check:()=>ph_(1).days.every((_,di)=>S.completed[wk(1,1,di)])},
-  {id:'phase1',icon:'🥉',name:'Phase 1 Complete',desc:'Finish all 4 foundation weeks',check:()=>ph_(1).weeks.every(w=>ph_(1).days.every((_,di)=>S.completed[wk(1,w,di)]))},
-  {id:'phase2',icon:'🥈',name:'Phase 2 Complete',desc:'Finish all 4 build weeks',check:()=>ph_(2).weeks.every(w=>ph_(2).days.every((_,di)=>S.completed[wk(2,w,di)]))},
-  {id:'phase3',icon:'🥇',name:'Phase 3 Complete',desc:'Finish the full 12-week program',check:()=>ph_(3).weeks.every(w=>ph_(3).days.every((_,di)=>S.completed[wk(3,w,di)]))},
+  {id:'week1',icon:'📅',name:'Week 1 Done',desc:'Complete all of Week 1',check:()=>getWeekDays(ph_(1),1).every((_,di)=>S.completed[wk(1,1,di)])},
+  {id:'phase1',icon:'🥉',name:'Phase 1 Complete',desc:'Finish all 4 foundation weeks',check:()=>ph_(1).weeks.every(w=>getWeekDays(ph_(1),w).every((_,di)=>S.completed[wk(1,w,di)]))},
+  {id:'phase2',icon:'🥈',name:'Phase 2 Complete',desc:'Finish all 4 build weeks',check:()=>ph_(2).weeks.every(w=>getWeekDays(ph_(2),w).every((_,di)=>S.completed[wk(2,w,di)]))},
+  {id:'phase3',icon:'🥇',name:'Phase 3 Complete',desc:'Finish the full 12-week program',check:()=>ph_(3).weeks.every(w=>getWeekDays(ph_(3),w).every((_,di)=>S.completed[wk(3,w,di)]))},
   {id:'first_pr',icon:'🏆',name:'Personal Record',desc:'Log your first PR',check:()=>Object.keys(S.prs).length>0},
   {id:'five_prs',icon:'💎',name:'PR Machine',desc:'Set 5 personal records',check:()=>Object.keys(S.prs).length>=5},
   {id:'bench_bw',icon:'💪',name:'Bodyweight Bench',desc:'Bench press your bodyweight',check:()=>S.prs['Barbell bench press']&&S.prs['Barbell bench press'].w>=202},
@@ -1198,7 +1557,7 @@ const ACHIEVEMENTS=[
 function getProgression(ph,week,di,key){
   // find previous matching day
   const allWeeks=[];
-  PHASES.forEach(p=>p.weeks.forEach(w=>p.days.forEach((_,d)=>allWeeks.push({pid:p.id,w,di:d,key:wk(p.id,w,d)}))));
+  PHASES.forEach(p=>p.weeks.forEach(w=>getWeekDays(p,w).forEach((_,d)=>allWeeks.push({pid:p.id,w,di:d,key:wk(p.id,w,d)}))));
   const curIdx=allWeeks.findIndex(e=>e.key===key);
   let prevKey=null;
   for(let i=curIdx-1;i>=0;i--){
@@ -1207,17 +1566,20 @@ function getProgression(ph,week,di,key){
   if(!prevKey)return null;
   const prevPh=ph_(allWeeks.find(e=>e.key===prevKey).pid);
   const results=[];
-  ph.days[di].exercises.forEach((ex,ei)=>{
-    const ek=`${prevKey}_e${ei}`;
-    const sets=S.sets[ek]||[];
-    const completedSets=sets.filter(s=>s.done||(s.reps&&parseInt(s.reps)>0));
-    if(!completedSets.length)return;
-    const allRepsHit=completedSets.every(s=>parseInt(s.reps)>=parseInt(ex.p.match(/\d+/)?.[0]||0));
-    const maxW=Math.max(...sets.map(s=>parseFloat(s.weight)||0).filter(v=>v>0));
-    if(maxW>0){
-      results.push({name:ex.name,prevW:maxW,suggested:allRepsHit?maxW+5:maxW,allRepsHit});
-    }
-  });
+  const wd=getWeekDays(ph,week);
+  if(wd.length>di){
+    wd[di].exercises.forEach((ex,ei)=>{
+      const ek=`${prevKey}_e${ei}`;
+      const sets=S.sets[ek]||[];
+      const completedSets=sets.filter(s=>s.done||(s.reps&&parseInt(s.reps)>0));
+      if(!completedSets.length)return;
+      const allRepsHit=completedSets.every(s=>parseInt(s.reps)>=parseInt(ex.p.match(/\d+/)?.[0]||0));
+      const maxW=Math.max(...sets.map(s=>parseFloat(s.weight)||0).filter(v=>v>0));
+      if(maxW>0){
+        results.push({name:ex.name,prevW:maxW,suggested:allRepsHit?maxW+5:maxW,allRepsHit});
+      }
+    });
+  }
   return results.length?results:null;
 }
 
@@ -1227,7 +1589,7 @@ function getDeloadInfo(){
   // After every 4 completed weeks suggest a deload
   const completedWeeks=[];
   PHASES.forEach(ph=>ph.weeks.forEach(w=>{
-    if(ph.days.every((_,di)=>S.completed[wk(ph.id,w,di)]||S.skipped[wk(ph.id,w,di)]))
+    if(getWeekDays(ph,w).every((_,di)=>S.completed[wk(ph.id,w,di)]||S.skipped[wk(ph.id,w,di)]))
       completedWeeks.push({pid:ph.id,w});
   }));
   if(completedWeeks.length>0&&completedWeeks.length%4===0){
@@ -1239,7 +1601,7 @@ function getDeloadInfo(){
 }
 function getNexIncompleteWeek(){
   for(const ph of PHASES)for(const w of ph.weeks){
-    if(!ph.days.every((_,di)=>S.completed[wk(ph.id,w,di)]||S.skipped[wk(ph.id,w,di)]))
+    if(!getWeekDays(ph,w).every((_,di)=>S.completed[wk(ph.id,w,di)]||S.skipped[wk(ph.id,w,di)]))
       return{pid:ph.id,w};
   }
   return null;
@@ -1278,7 +1640,7 @@ function getRestDaySuggestion(){
 
 // ═══════════════════════════════════════════════════ PROJECTED FINISH
 function getProjectedFinish(){
-  const total=PHASES.reduce((a,p)=>a+p.weeks.length*p.days.length,0);
+  const total=PHASES.reduce((a,p)=>a+p.weeks.reduce((b,w)=>b+getWeekDays(p,w).length,0),0);
   const done=Object.values(S.completed).filter(Boolean).length;
   if(done<3)return null;
   // Use history to get pace (sessions per week)
@@ -1332,7 +1694,7 @@ function getStrengthComparison(){
   const results=[];
   keyLifts.forEach(name=>{
     let week1W=null,latestW=null,latestDate='';
-    PHASES.forEach(ph=>ph.weeks.forEach(w=>ph.days.forEach((day,di)=>{
+    PHASES.forEach(ph=>ph.weeks.forEach(w=>getWeekDays(ph,w).forEach((day,di)=>{
       const key=wk(ph.id,w,di);
       if(!S.completed[key])return;
       day.exercises.forEach((ex,ei)=>{
@@ -1364,7 +1726,7 @@ function openAssessment(phaseId){
   document.getElementById('assess-title').textContent=`${ph.label} Assessment`;
   // Get logged bests for this phase
   const phaseBests={};
-  ph.weeks.forEach(w=>ph.days.forEach((day,di)=>{
+  ph.weeks.forEach(w=>getWeekDays(ph,w).forEach((day,di)=>{
     const key=wk(ph.id,w,di);
     if(!S.completed[key])return;
     day.exercises.forEach((ex,ei)=>{
@@ -1380,7 +1742,7 @@ function openAssessment(phaseId){
       <div class="assess-label">💪 Strength — Logged best vs target</div>
       ${keyLifts.map(name=>{
         const best=phaseBests[name]||prevAssess[name]||0;
-        const target=parseInt(ph.days.flatMap(d=>d.exercises).find(e=>e.name===name)?.w)||startTargets[name]||0;
+        const target=parseInt(ph.weeks.flatMap(w=>getWeekDays(ph,w)).flatMap(d=>d.exercises).find(e=>e.name===name)?.w)||startTargets[name]||0;
         const delta=best&&target?best-target:0;
         const cls=delta>0?'pos':delta<0?'neg':'neu';
         return`<div class="assess-row">
@@ -1454,12 +1816,12 @@ function assessBgClick(e){if(e.target===document.getElementById('assess-modal'))
 
 // ═══════════════════════════════════════════════════ HOME
 function renderHome(){
-  const total=PHASES.reduce((a,p)=>a+p.weeks.length*p.days.length,0);
+  const total=PHASES.reduce((a,p)=>a+p.weeks.reduce((b,w)=>b+getWeekDays(p,w).length,0),0);
   const done=Object.values(S.completed).filter(Boolean).length;
   const skipped=Object.values(S.skipped).filter(Boolean).length;
   const pct=Math.round(done/total*100);
   let curP=PHASES[0];
-  for(const ph of PHASES){if(!ph.weeks.every(w=>ph.days.every((_,di)=>S.completed[wk(ph.id,w,di)]))){curP=ph;break;}}
+  for(const ph of PHASES){if(!ph.weeks.every(w=>getWeekDays(ph,w).every((_,di)=>S.completed[wk(ph.id,w,di)]))){curP=ph;break;}}
   const streak=calcStreak();
   const el=document.getElementById('v-home');
   el.innerHTML=`
@@ -1522,6 +1884,12 @@ function renderHome(){
     <div class="shd">Strength Comparison — Week 1 vs Now</div>
     <div class="strength-comp-card" id="strength-comp-card"></div>
 
+    <div class="shd">Strength — Estimated 1RM Trend</div>
+    <div class="rm1-trend-card" id="rm1-trend-card"></div>
+
+    <div class="shd">Workout Templates</div>
+    <div class="template-section" id="template-section"></div>
+
     <div class="shd">Personal Records & Estimated 1RM</div>
     <div class="card" id="pr-section"></div>
 
@@ -1548,8 +1916,8 @@ function renderHome(){
   // phase grid
   const grid=document.getElementById('ph-grid');
   PHASES.forEach(ph=>{
-    const t=ph.weeks.length*ph.days.length;
-    const d=ph.weeks.reduce((a,w)=>a+ph.days.filter((_,di)=>S.completed[wk(ph.id,w,di)]).length,0);
+    const t=ph.weeks.reduce((a,w)=>a+getWeekDays(ph,w).length,0);
+    const d=ph.weeks.reduce((a,w)=>a+getWeekDays(ph,w).filter((_,di)=>S.completed[wk(ph.id,w,di)]).length,0);
     const pp=Math.round(d/t*100);
     const div=document.createElement('div');div.className=`pc ${ph.color}`;
     div.innerHTML=`<div class="pc-ring-wrap">${progressRing(pp,ph.color)}<div class="pc-info"><div class="pc-num">${ph.id}</div><div class="pc-name">${ph.label}</div><div class="pc-sub">${ph.sub}</div></div></div><div class="pbar-wrap"><div class="pbar" style="width:${pp}%;background:var(--${ph.color})"></div></div><div class="pc-prog">${d}/${t} sessions</div>`;
@@ -1562,6 +1930,8 @@ function renderHome(){
   renderBW();
   renderBodyComp();
   renderStrengthComp();
+  render1RMTrend();
+  renderTemplates();
   renderPR();
   renderChart();
   renderProjectedFinish();
@@ -1617,7 +1987,7 @@ function readinessSummary(d){
 function renderHeatmap(){
   const el=document.getElementById('heatmap-card');if(!el)return;
   const allDays=[];
-  PHASES.forEach(ph=>ph.weeks.forEach(w=>ph.days.forEach((_,di)=>allDays.push({pid:ph.id,w,di,key:wk(ph.id,w,di)}))));
+  PHASES.forEach(ph=>ph.weeks.forEach(w=>getWeekDays(ph,w).forEach((_,di)=>allDays.push({pid:ph.id,w,di,key:wk(ph.id,w,di)}))));
   el.innerHTML=`
     <div style="font-size:14px;font-weight:600;margin-bottom:10px">12-Week Activity</div>
     <div class="heatmap-grid" id="hm-grid"></div>
@@ -1707,7 +2077,7 @@ function detectPR(exName,weight,reps,dateStr){
 // ═══════════════════════════════════════════════════ CHARTS
 function getExHistory(exName){
   const res=[];
-  PHASES.forEach(ph=>ph.weeks.forEach(w=>ph.days.forEach((day,di)=>{
+  PHASES.forEach(ph=>ph.weeks.forEach(w=>getWeekDays(ph,w).forEach((day,di)=>{
     const key=wk(ph.id,w,di);
     if(!S.completed[key])return;
     day.exercises.forEach((ex,ei)=>{
@@ -1722,7 +2092,7 @@ function getExHistory(exName){
 function renderChart(){
   const el=document.getElementById('chart-section');if(!el)return;
   const exNames=[];
-  PHASES.forEach(ph=>ph.days.forEach(d=>d.exercises.forEach(ex=>{if(!exNames.includes(ex.name))exNames.push(ex.name);})));
+  PHASES.forEach(ph=>ph.weeks.forEach(w=>getWeekDays(ph,w).forEach(d=>d.exercises.forEach(ex=>{if(!exNames.includes(ex.name))exNames.push(ex.name);}))));
   let def=exNames[0];
   for(const n of exNames){if(getExHistory(n).length>1){def=n;break;}}
   el.innerHTML=`
@@ -1955,11 +2325,12 @@ function renderPhase(phaseId){
   `;
   const grid=document.getElementById('wk-grid');
   ph.weeks.forEach(w=>{
-    const allDone=ph.days.every((_,di)=>S.completed[wk(ph.id,w,di)]);
-    const doneDays=ph.days.filter((_,di)=>S.completed[wk(ph.id,w,di)]).length;
-    const skippedDays=ph.days.filter((_,di)=>S.skipped[wk(ph.id,w,di)]).length;
+    const wkDays=getWeekDays(ph,w);
+    const allDone=wkDays.every((_,di)=>S.completed[wk(ph.id,w,di)]);
+    const doneDays=wkDays.filter((_,di)=>S.completed[wk(ph.id,w,di)]).length;
+    const skippedDays=wkDays.filter((_,di)=>S.skipped[wk(ph.id,w,di)]).length;
     const div=document.createElement('div');div.className='wk-card';
-    const pills=ph.days.map((d,di)=>{
+    const pills=getWeekDays(ph,w).map((d,di)=>{
       const isDone=S.completed[wk(ph.id,w,di)],isSkipped=S.skipped[wk(ph.id,w,di)];
       return`<span class="dpill${isDone?' done':isSkipped?' skipped':''}">${d.name}: ${d.title}</span>`;
     }).join('');
@@ -1970,8 +2341,8 @@ function renderPhase(phaseId){
       <div class="wk-num ${ph.color}">Week ${w}${isMilestone?` <span style="font-size:10px;background:var(--goldbg);color:var(--gold);padding:1px 5px;border-radius:3px;margin-left:4px">📊 Milestone</span>`:''}</div>
       <div class="wk-title" style="display:flex;align-items:center;gap:8px">Week ${w}<span class="wk-diff-badge ${wkDiff}">${DIFF_EMOJI[wkDiff]} ${wkDiff.charAt(0).toUpperCase()+wkDiff.slice(1)}</span></div>
       <div class="day-pills">${pills}</div>
-      <div class="wk-stat">${ph.days.length} workouts · ${ph.days.reduce((a,d)=>a+d.exercises.length,0)} exercises</div>
-      ${allDone?'<div class="wk-done">✓ Week Complete</div>':`<div class="wk-stat" style="margin-top:6px">${doneDays} done${skippedDays?` · ${skippedDays} skipped`:''} / ${ph.days.length} total</div>`}
+      <div class="wk-stat">${getWeekDays(ph,w).length} workouts · ${getWeekDays(ph,w).reduce((a,d)=>a+d.exercises.length,0)} exercises</div>
+      ${allDone?'<div class="wk-done">✓ Week Complete</div>':`<div class="wk-stat" style="margin-top:6px">${doneDays} done${skippedDays?` · ${skippedDays} skipped`:''} / ${wkDays.length} total</div>`}
     `;
     div.onclick=()=>go('week',ph.id,w);
     grid.appendChild(div);
@@ -1994,7 +2365,7 @@ function renderWeek(phaseId,week){
     <button class="back-btn" id="wk-back">← ${ph.label}</button>
     <div class="badge ${ph.color}">${ph.label} · ${ph.sub.split('·')[0].trim()}</div>
     <div class="wv-title">Week ${week}</div>
-    <div class="wv-sub">${ph.days.length} workouts · ${ph.rest}</div>
+    <div class="wv-sub">${getWeekDays(ph,week).length} workouts · ${ph.rest}</div>
     <div class="view-toggle">
       <button class="vt-btn${!compactView?' on':''}" onclick="setView(false,${phaseId},${week})">Detailed</button>
       <button class="vt-btn${compactView?' on':''}" onclick="setView(true,${phaseId},${week})">Compact</button>
@@ -2008,6 +2379,7 @@ function renderWeek(phaseId,week){
   document.getElementById('wk-back').onclick=()=>go('phase',phaseId);
   _activeRestSec=ph.restSec||90;
   // volume summary
+  const weekDayList=getWeekDays(ph,week);
   const vs=getWeekVolume(phaseId,week);
   const vsEl=document.getElementById('vol-summary-wrap');
   if(vsEl&&(vs.sets>0||vs.prevSets>0)){
@@ -2036,7 +2408,8 @@ function renderWeek(phaseId,week){
     </div>`;
   }
   const container=document.getElementById('days-container');
-  ph.days.forEach((day,di)=>{
+  const weekDays=getWeekDays(ph,week);
+  weekDays.forEach((day,di)=>{
     const key=wk(ph.id,week,di);
     const isDone=!!S.completed[key],isSkipped=!!S.skipped[key];
     // auto-progression
@@ -2074,7 +2447,9 @@ function renderWeek(phaseId,week){
     cb.textContent='↑ Copy last';cb.onclick=e=>{e.stopPropagation();copyLast(ph,week,di,key);};
     const shb=document.createElement('button');shb.className='act-btn';
     shb.textContent='📋 Share';shb.onclick=e=>{e.stopPropagation();shareWorkout(ph,week,di,key);};
-    actions.append(mb,sb,tb,cb,shb);body.appendChild(actions);
+    const stb=document.createElement('button');stb.className='act-btn';
+    stb.textContent='💾 Save Template';stb.onclick=e=>{e.stopPropagation();saveAsTemplate(ph,week,di,key);};
+    actions.append(mb,sb,tb,cb,shb,stb);body.appendChild(actions);
     // workout day picker
     const dp=document.createElement('div');dp.className='day-picker';
     const dpLabel=document.createElement('span');dpLabel.className='day-picker-label';dpLabel.textContent='Trained on:';
@@ -2137,6 +2512,18 @@ function renderWeek(phaseId,week){
       body.appendChild(exList);
     }
     const rb=document.createElement('div');rb.className='rest-bar';rb.textContent='⏱ '+ph.rest;body.appendChild(rb);
+    // RPE slider
+    const rpeWrap=document.createElement('div');rpeWrap.className='rpe-section';
+    const savedRPE=(S.rpe&&S.rpe[key])||5;
+    const rpeLabels=['','Very Easy','Easy','Moderate','Somewhat Hard','Hard','Hard','Very Hard','Very Hard','Near Max','Max Effort'];
+    rpeWrap.innerHTML=`<div class="rpe-label">Session RPE (effort)</div>
+      <div class="rpe-row">
+        <input type="range" class="rpe-slider" min="1" max="10" value="${savedRPE}" id="rpe-${key}"
+          oninput="updateRPE('${key}',this.value)">
+        <div class="rpe-val" id="rpeval-${key}" style="color:${savedRPE<=3?'var(--p2)':savedRPE<=6?'var(--accent)':'var(--red)'}">${savedRPE}</div>
+      </div>
+      <div class="rpe-desc" id="rpedesc-${key}">${rpeLabels[savedRPE]||''}</div>`;
+    body.appendChild(rpeWrap);
     hd.onclick=()=>{hd.classList.toggle('col');body.classList.toggle('hide');};
     sec.append(hd,body);container.appendChild(sec);
   });
@@ -2154,7 +2541,7 @@ function renderWeek(phaseId,week){
 
   if(!compactView){
     setTimeout(()=>{
-      ph.days.forEach((day,di)=>{
+      getWeekDays(ph,week).forEach((day,di)=>{
         const key=wk(ph.id,week,di);
         day.exercises.forEach((ex,ei)=>renderSetRows(ex,`${key}_e${ei}`));
       });
@@ -2247,7 +2634,7 @@ function getSuggestedWeight(ek,ex){
   const pid=parseInt(m[1]),w=parseInt(m[2]),di=parseInt(m[3]),ei=parseInt(m[4]);
   // find prev matching session
   const allWeeks=[];
-  PHASES.forEach(p=>p.weeks.forEach(ww=>p.days.forEach((_,d)=>allWeeks.push({pid:p.id,w:ww,di:d,key:wk(p.id,ww,d)}))));
+  PHASES.forEach(p=>p.weeks.forEach(ww=>getWeekDays(p,ww).forEach((_,d)=>allWeeks.push({pid:p.id,w:ww,di:d,key:wk(p.id,ww,d)}))));
   const curIdx=allWeeks.findIndex(e=>e.pid===pid&&e.w===w&&e.di===di);
   for(let i=curIdx-1;i>=0;i--){
     const prev=allWeeks[i];
@@ -2292,7 +2679,7 @@ function getPrevSetData(ek){
   if(!m)return[];
   const pid=parseInt(m[1]),w=parseInt(m[2]),di=parseInt(m[3]),ei=parseInt(m[4]);
   const allWeeks=[];
-  PHASES.forEach(p=>p.weeks.forEach(ww=>p.days.forEach((_,d)=>allWeeks.push({pid:p.id,w:ww,di:d,key:wk(p.id,ww,d)}))));
+  PHASES.forEach(p=>p.weeks.forEach(ww=>getWeekDays(p,ww).forEach((_,d)=>allWeeks.push({pid:p.id,w:ww,di:d,key:wk(p.id,ww,d)}))));
   const curIdx=allWeeks.findIndex(e=>e.pid===pid&&e.w===w&&e.di===di);
   for(let i=curIdx-1;i>=0;i--){
     const prev=allWeeks[i];
@@ -2435,7 +2822,8 @@ function toggleDone(ph,week,di,key){
     S.history=S.history.filter(h=>h.key!==key);
     const trainedDay=(S.workoutDays&&S.workoutDays[key])||new Date().toLocaleDateString('en-US',{weekday:'short'});
     const sessionDiff=getDiff(ph.id,week,di);
-    S.history.unshift({key,date:today,phase:ph.label,phaseColor:ph.color,week,day:ph.days[di].name,title:ph.days[di].title,ts,tr,note,readiness,trainedDay,difficulty:sessionDiff});
+    const _hDay=getWeekDays(ph,week)[di]||{name:'Day',title:'Workout'};
+    S.history.unshift({key,date:today,phase:ph.label,phaseColor:ph.color,week,day:_hDay.name,title:_hDay.title,ts,tr,note,readiness,trainedDay,difficulty:sessionDiff});
     toast('Workout logged! 💪');
     // check new achievements
     setTimeout(()=>checkNewAchievements(),100);
@@ -2459,13 +2847,14 @@ function toggleSkip(ph,week,di,key){
 // ═══════════════════════════════════════════════════ COPY LAST
 function copyLast(ph,week,di,key){
   const allWeeks=[];
-  PHASES.forEach(p=>p.weeks.forEach(w=>p.days.forEach((_,d)=>allWeeks.push({pid:p.id,w,di:d,key:wk(p.id,w,d)}))));
+  PHASES.forEach(p=>p.weeks.forEach(w=>getWeekDays(p,w).forEach((_,d)=>allWeeks.push({pid:p.id,w,di:d,key:wk(p.id,w,d)}))));
   const curIdx=allWeeks.findIndex(e=>e.key===key);
   for(let i=curIdx-1;i>=0;i--){
     const prev=allWeeks[i];
     if(prev.di===di&&S.completed[prev.key]){
       const prevPh=ph_(prev.pid);let copied=0;
-      prevPh.days[di].exercises.forEach((ex,ei)=>{
+      const prevDayExs=getWeekDays(prevPh,prev.w)[di]?.exercises||[];
+      prevDayExs.forEach((ex,ei)=>{
         const prevEk=`${prev.key}_e${ei}`,curEk=`${key}_e${ei}`;
         const ps=S.sets[prevEk]||[];
         if(!S.sets[curEk])S.sets[curEk]=Array.from({length:ex.sets},()=>({reps:'',weight:'',notes:'',done:false}));
@@ -2741,7 +3130,7 @@ let _activeRestSec=60; // updated when week view opens
 function getWeekVolume(phaseId,week){
   const ph=ph_(phaseId);
   let sets=0,reps=0,tonnage=0;
-  ph.days.forEach((day,di)=>{
+  getWeekDays(ph,week).forEach((day,di)=>{
     const key=wk(ph.id,week,di);
     if(!S.completed[key])return;
     day.exercises.forEach((ex,ei)=>{
@@ -2766,7 +3155,7 @@ function getWeekVolume(phaseId,week){
     const prev=allW[i];
     const prevPh=ph_(prev.pid);
     if(prevPh.days.some((_,di)=>S.completed[wk(prev.pid,prev.w,di)])){
-      prevPh.days.forEach((day,di)=>{
+      getWeekDays(prevPh,prev.w).forEach((day,di)=>{
         const key=wk(prev.pid,prev.w,di);
         if(!S.completed[key])return;
         day.exercises.forEach((ex,ei)=>{
@@ -2782,7 +3171,7 @@ function getWeekVolume(phaseId,week){
 // ═══════════════════════════════════════════════════ EXERCISE NOTE HISTORY
 function getExNoteHistory(exName,currentEk){
   const results=[];
-  PHASES.forEach(ph=>ph.weeks.forEach(w=>ph.days.forEach((day,di)=>{
+  PHASES.forEach(ph=>ph.weeks.forEach(w=>getWeekDays(ph,w).forEach((day,di)=>{
     const key=wk(ph.id,w,di);
     if(!S.completed[key])return;
     day.exercises.forEach((ex,ei)=>{
@@ -2999,6 +3388,47 @@ const ALL_EXERCISES=[
   {name:'Plank',p:'3 × 45s',w:'Bodyweight',sets:3,cat:'core',note:''},
   {name:'Cable woodchop',p:'3 × 12 each side',w:'25–30 lbs',sets:3,cat:'core',note:'Rotate from hips.'},
   {name:'Full core circuit',p:'3 rounds',w:'Plank 45s + leg raise × 10 + hollow hold 20s',sets:3,cat:'core',note:''},
+  // Additional Lower Body
+  {name:'Barbell hip thrust',p:'3 × 10',w:'95–115 lbs',sets:3,cat:'lower',note:'Shoulders on bench, drive hips up. Full glute squeeze at top.'},
+  {name:'Cable Romanian deadlift',p:'3 × 12',w:'40–55 lbs',sets:3,cat:'lower',note:'Cable RDL — constant tension through the hinge.'},
+  {name:'Sumo deadlift',p:'3 × 5',w:'Working weight',sets:3,cat:'lower',note:'Wide stance, toes out. More glute and inner thigh activation.'},
+  {name:'Front squat',p:'3 × 8',w:'65–85 lbs',sets:3,cat:'lower',note:'Bar on front deltoids. Upright torso, quad-dominant.'},
+  {name:'Step-up',p:'3 × 10 each leg',w:'20–25 lbs each',sets:3,cat:'lower',note:'Step onto bench. Drive through heel.'},
+  {name:'Seated leg extension (cable)',p:'3 × 12',w:'30–40 lbs',sets:3,cat:'lower',note:'Attach ankle strap to cable. Extend knee to full extension.'},
+  {name:'Cable kickback',p:'3 × 12 each',w:'15–20 lbs',sets:3,cat:'lower',note:'Ankle strap on cable. Kick straight back, squeeze glute.'},
+  // Additional Push
+  {name:'Close-grip barbell bench press',p:'3 × 8',w:'95–115 lbs',sets:3,cat:'push',note:'Hands shoulder-width. More tricep emphasis than wide grip.'},
+  {name:'DB flat press',p:'3 × 10',w:'25–30 lbs each',sets:3,cat:'push',note:'Full stretch at the bottom. Neutral or slight supination.'},
+  {name:'DB Arnold press',p:'3 × 10',w:'20–25 lbs each',sets:3,cat:'push',note:'Rotate palms from facing you to facing forward as you press.'},
+  {name:'Cable overhead tricep extension',p:'3 × 12',w:'25–35 lbs',sets:3,cat:'push',note:'Rope attachment. Extend fully overhead, elbows in.'},
+  {name:'DB overhead tricep extension',p:'3 × 12',w:'20–25 lbs',sets:3,cat:'push',note:'Both hands on one dumbbell. Lower behind head.'},
+  {name:'Push-up',p:'3 × max',w:'Bodyweight',sets:3,cat:'push',note:'Standard push-up — chest to floor, full extension.'},
+  {name:'Diamond push-up',p:'3 × 10',w:'Bodyweight',sets:3,cat:'push',note:'Hands in diamond shape. Heavy tricep focus.'},
+  // Additional Pull
+  {name:'Chin-ups',p:'3 × max',w:'Bodyweight',sets:3,cat:'pull',note:'Supinated grip (palms toward you). More bicep activation than pull-ups.'},
+  {name:'Cable straight-arm pulldown',p:'3 × 12',w:'30–40 lbs',sets:3,cat:'pull',note:'Keep arms straight. Lat isolation — great for mind-muscle connection.'},
+  {name:'DB seal row',p:'3 × 10',w:'25–30 lbs each',sets:3,cat:'pull',note:'Lie face-down on incline bench. Pull dumbbells up — no body English.'},
+  {name:'Incline DB curl',p:'3 × 12',w:'20–25 lbs each',sets:3,cat:'pull',note:'On incline bench, arms hang. Full stretch at the bottom.'},
+  {name:'DB concentration curl',p:'3 × 12 each',w:'20–25 lbs',sets:3,cat:'arms',note:'Elbow braced on inner knee. Strict isolation.'},
+  {name:'Barbell bicep curl',p:'3 × 10',w:'55–65 lbs total',sets:3,cat:'arms',note:'Straight bar. Full supination at the top.'},
+  {name:'Cable overhead extension',p:'3 × 12',w:'25–35 lbs',sets:3,cat:'arms',note:'Face away from cable. Press overhead. Long head tricep focus.'},
+  {name:'DB wrist curl',p:'3 × 15',w:'10–15 lbs',sets:3,cat:'arms',note:'Forearms on bench, wrists off the edge. Curl upward.'},
+  // Additional Core
+  {name:'Ab wheel rollout',p:'3 × 8–10',w:'Bodyweight',sets:3,cat:'core',note:'From knees or toes. Keep hips level. Brutal for core.'},
+  {name:'Cable crunch',p:'3 × 15',w:'30–45 lbs',sets:3,cat:'core',note:'Kneeling, rope attachment. Crunch down, feel the abs contract.'},
+  {name:'Pallof press',p:'3 × 12 each side',w:'20–30 lbs',sets:3,cat:'core',note:'Anti-rotation. Press cable straight out, resist the pull.'},
+  {name:'Russian twist',p:'3 × 20',w:'10–15 lbs plate',sets:3,cat:'core',note:'Feet elevated, lean back slightly. Rotate with control.'},
+  {name:'Hollow body hold',p:'3 × 30s',w:'Bodyweight',sets:3,cat:'core',note:'Lower back pressed to floor, legs and shoulders off the ground.'},
+  {name:'L-sit hold (rings)',p:'3 × max time',w:'Bodyweight',sets:3,cat:'core',note:'From rings, hold legs parallel to floor. Tremendous core demand.'},
+  {name:'Side plank',p:'3 × 30s each',w:'Bodyweight',sets:3,cat:'core',note:'Lateral core stability. Stack feet or stagger them.'},
+  {name:'Dead bug',p:'3 × 10 each side',w:'Bodyweight',sets:3,note:'Opposite arm and leg extend while lower back stays flat.',cat:'core'},
+  // Additional Cardio
+  {name:'Bike steady state',p:'10 mins',w:'Moderate resistance',sets:1,cat:'cardio',note:'Zone 2.'},
+  {name:'Treadmill incline walk',p:'10 mins',w:'10–12% grade, 3.5 mph',sets:1,cat:'cardio',note:''},
+  // Mobility/Accessory
+  {name:'Barbell good morning',p:'3 × 10',w:'45–65 lbs',sets:3,cat:'lower',note:'Bar on upper back, hinge forward. Hamstring stretch and spinal erector work.'},
+  {name:'Face pull with external rotation',p:'3 × 15',w:'20–28 lbs',sets:3,cat:'pull',note:'At end of face pull, rotate forearms up. Shoulder health gold.'},
+  {name:'Rear foot elevated hip flexor stretch',p:'3 × 45s each',w:'Bodyweight',sets:3,cat:'core',note:'Active stretch — important for squat depth and hip health.'},
   // Cardio
   {name:'Bike sprint intervals',p:'6 × 30s on / 30s off',w:'High resistance',sets:6,cat:'cardio',note:''},
   {name:'Treadmill run/walk intervals',p:'20 mins total',w:'2 min run / 1 min walk',sets:1,cat:'cardio',note:''},
@@ -3025,7 +3455,7 @@ function openCWB(phaseId,week,ph){
 function recommendWorkout(phaseId,week,ph){
   // Analyse what's already been trained this week
   const trained={lower:0,push:0,pull:0,arms:0,core:0,cardio:0};
-  ph.days.forEach((day,di)=>{
+  getWeekDays(ph,week).forEach((day,di)=>{
     const key=wk(ph.id,week,di);
     if(!S.completed[key]&&!S.skipped[key])return;
     const title=day.title.toLowerCase();
@@ -3227,6 +3657,150 @@ function removeCustomWorkout(customKey,ci,phaseId,week){
   save();
   renderWeek(phaseId,week);
   toast('Workout removed');
+}
+
+
+// ═══════════════════════════════════════════════════ RPE
+function updateRPE(key,val){
+  if(!S.rpe)S.rpe={};
+  S.rpe[key]=parseInt(val);
+  const rpeLabels=['','Very Easy','Easy','Moderate','Somewhat Hard','Hard','Hard','Very Hard','Very Hard','Near Max','Max Effort'];
+  const valEl=document.getElementById(`rpeval-${key}`);
+  const descEl=document.getElementById(`rpedesc-${key}`);
+  if(valEl){
+    valEl.textContent=val;
+    valEl.style.color=val<=3?'var(--p2)':val<=6?'var(--accent)':'var(--red)';
+  }
+  if(descEl)descEl.textContent=rpeLabels[parseInt(val)]||'';
+  save();
+}
+
+// ═══════════════════════════════════════════════════ PLATE CHANGE CALCULATOR
+function openPlateChange(ek,btn){
+  btn.stopPropagation&&btn.stopPropagation();
+  const pcc=document.getElementById(`pcc-${ek}`);
+  if(!pcc)return;
+  pcc.classList.toggle('show');
+}
+function calcPlateChange(ek){
+  const fromInp=document.getElementById(`pcc-from-${ek}`);
+  const toInp=document.getElementById(`pcc-to-${ek}`);
+  const res=document.getElementById(`pcc-res-${ek}`);
+  if(!fromInp||!toInp||!res)return;
+  const from=parseFloat(fromInp.value)||0;
+  const to=parseFloat(toInp.value)||0;
+  if(!from||!to){res.innerHTML='Enter both weights';return;}
+  const bar=45;
+  const fromSide=(from-bar)/2;
+  const toSide=(to-bar)/2;
+  const diff=toSide-fromSide;
+  const plates=[45,35,25,10,5,2.5];
+  function breakdown(lbs){
+    let rem=Math.abs(lbs),parts=[];
+    plates.forEach(p=>{while(rem>=p-0.001){rem=Math.round((rem-p)*100)/100;parts.push(p);}});
+    return parts;
+  }
+  if(Math.abs(diff)<0.1){res.innerHTML='Same weight — no change needed';return;}
+  const action=diff>0?'ADD':'REMOVE';
+  const cls=diff>0?'pcc-add':'pcc-remove';
+  const bds=breakdown(diff);
+  res.innerHTML=`<span class="${cls}">${action} per side:</span> ${bds.map(p=>`<strong>${p} lb</strong>`).join(' + ')||'fractional plates'}<br><small style="color:var(--text3)">${from} → ${to} lbs total</small>`;
+}
+
+// ═══════════════════════════════════════════════════ 1RM TREND
+function render1RMTrend(){
+  const el=document.getElementById('rm1-trend-card');if(!el)return;
+  const keyLifts=[
+    {name:'Barbell bench press',label:'Bench'},
+    {name:'Barbell back squat',label:'Squat'},
+    {name:'Barbell deadlift',label:'Deadlift'},
+  ];
+  el.innerHTML=`<div style="font-size:14px;font-weight:600;margin-bottom:4px">Estimated 1RM Trend</div>
+    <div style="font-size:12px;color:var(--text3);margin-bottom:12px">Calculated from your best logged sets using the Epley formula</div>
+    <div class="rm1-grid" id="rm1-grid"></div>`;
+  const grid=document.getElementById('rm1-grid');
+  keyLifts.forEach(lift=>{
+    const history=get1RMHistory(lift.name);
+    const latest=history.length?history[history.length-1]:null;
+    const first=history.length?history[0]:null;
+    const current=latest?latest.rm1:null;
+    const delta=first&&latest&&first!==latest?latest.rm1-first.rm1:null;
+    const div=document.createElement('div');div.className='rm1-item';
+    div.innerHTML=`<div class="rm1-lift">${lift.label}</div>
+      <div class="rm1-val">${current?current:'—'}<small>${current?'lbs':''}</small></div>
+      ${delta!==null?`<div class="rm1-change ${delta>0?'pos':delta<0?'neg':'neu'}">${delta>0?'+':''}${delta} lbs</div>`:'<div class="rm1-change neu">No data yet</div>'}`;
+    grid.appendChild(div);
+  });
+}
+
+function get1RMHistory(exName){
+  const res=[];
+  PHASES.forEach(ph=>ph.weeks.forEach(w=>getWeekDays(ph,w).forEach((day,di)=>{
+    const key=wk(ph.id,w,di);
+    if(!S.completed[key])return;
+    day.exercises.forEach((ex,ei)=>{
+      if(ex.name!==exName)return;
+      const ek=`${key}_e${ei}`;
+      const sets=S.sets[ek]||[];
+      sets.forEach(s=>{
+        const weight=parseFloat(s.weight||0);
+        const reps=parseInt(s.reps||0);
+        if(weight>0&&reps>0){
+          const rm1=epley1RM(weight,reps);
+          const he=S.history.find(h=>h.key===key);
+          res.push({rm1,date:he?he.date:`Wk ${w}`,week:w});
+        }
+      });
+    });
+  })));
+  // deduplicate by week, take max per week
+  const byWeek={};
+  res.forEach(r=>{if(!byWeek[r.week]||r.rm1>byWeek[r.week].rm1)byWeek[r.week]=r;});
+  return Object.values(byWeek).sort((a,b)=>a.week-b.week);
+}
+
+// ═══════════════════════════════════════════════════ WORKOUT TEMPLATES
+function renderTemplates(){
+  const el=document.getElementById('template-section');if(!el)return;
+  const templates=Object.entries(S.templates||{});
+  el.innerHTML=`<div class="template-hd">
+    <div style="font-size:14px;font-weight:600">Saved Templates</div>
+  </div>`;
+  if(!templates.length){
+    el.innerHTML+=`<div style="font-size:13px;color:var(--text3)">No templates yet. Open any workout and tap "💾 Save Template" to save it for reuse in the custom workout builder.</div>`;
+    return;
+  }
+  el.innerHTML+=`<div class="template-grid" id="tmpl-grid"></div>`;
+  const grid=document.getElementById('tmpl-grid');
+  templates.forEach(([name,tmpl])=>{
+    const chip=document.createElement('div');chip.className='template-chip';
+    chip.innerHTML=`${name} <span style="font-size:10px;color:var(--text3)">(${tmpl.exercises?.length||0} ex)</span>`;
+    chip.onclick=()=>{
+      if(confirm(`Load template "${name}" into the workout builder?`)){
+        _cwbExercises=[...(tmpl.exercises||[])];
+        const cwbNameEl=document.getElementById('cwb-name');
+        if(cwbNameEl)cwbNameEl.value=name;
+        renderCWBExList();
+        toast(`Template "${name}" loaded ✓`);
+      }
+    };
+    grid.appendChild(chip);
+    // delete button
+    const del=document.createElement('span');del.style.cssText='font-size:11px;color:var(--red);cursor:pointer;margin-left:4px;';del.textContent='✕';
+    del.onclick=(e)=>{e.stopPropagation();if(confirm(`Delete template "${name}"?`)){delete S.templates[name];save();renderTemplates();toast('Template deleted');}};
+    chip.appendChild(del);
+  });
+}
+
+function saveAsTemplate(ph,week,di,key){
+  const day=getWeekDays(ph,week)[di];
+  if(!day)return;
+  const name=prompt(`Save as template:`,day.title)||day.title;
+  if(!name)return;
+  if(!S.templates)S.templates={};
+  S.templates[name]={exercises:day.exercises.map(e=>({...e})),savedAt:new Date().toISOString()};
+  save();
+  toast(`Template "${name}" saved ✓`);
 }
 
 // ═══════════════════════════════════════════════════ TOAST
