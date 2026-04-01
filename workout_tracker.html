@@ -654,6 +654,23 @@ body.fs-large{font-size:17px;}
 .save-template-btn{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:7px 14px;border-radius:7px;border:1px solid var(--gold);background:var(--goldbg);color:var(--gold);cursor:pointer;transition:all .15s;}
 .save-template-btn:hover{background:var(--gold);color:#000;}
 
+
+/* ── EXERCISE SWAP ── */
+.ex-swap-modal{background:var(--surface);border:1px solid var(--border2);border-radius:14px;width:92%;max-width:480px;max-height:82vh;display:flex;flex-direction:column;overflow:hidden;}
+.ex-swap-hd{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid var(--border);flex-shrink:0;}
+.ex-swap-title{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;text-transform:uppercase;letter-spacing:1px;}
+.ex-swap-close{width:32px;height:32px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text2);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.ex-swap-search{margin:12px 18px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 14px;font-family:'Barlow',sans-serif;font-size:14px;color:var(--text);width:calc(100% - 36px);transition:border-color .15s;flex-shrink:0;}
+.ex-swap-search:focus{outline:none;border-color:var(--accent);}
+.ex-swap-search::placeholder{color:var(--text3);}
+.ex-swap-list{overflow-y:auto;flex:1;padding:0 18px 18px;}
+.ex-swap-cat{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text3);padding:10px 0 6px;}
+.ex-swap-item{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-radius:8px;cursor:pointer;transition:background .15s;border:1px solid transparent;margin-bottom:4px;}
+.ex-swap-item:hover{background:var(--surface2);border-color:var(--border);}
+.ex-swap-item.current{background:var(--p2bg);border-color:var(--p2);}
+.ex-swap-name{font-size:13px;font-weight:600;color:var(--text);}
+.ex-swap-cat-badge{font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;background:var(--surface2);color:var(--text3);border:1px solid var(--border);flex-shrink:0;}
+
 /* TOAST */
 .toast{position:fixed;bottom:24px;right:24px;background:var(--accent);color:var(--atxt);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;letter-spacing:1px;padding:12px 20px;border-radius:8px;z-index:999;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none;max-width:280px;}
 .toast.show{opacity:1;transform:translateY(0);}
@@ -727,32 +744,39 @@ window.fbSave = async (data) => {
 };
 
 // Listen for auth state
+// ── KEY FIX: mutate S in-place so the local let S reference stays valid ──
+function loadFirebaseData(incoming) {
+  const def = JSON.parse(JSON.stringify(window.DEFAULT_STATE));
+  const merged = Object.assign(def, incoming);
+  // Mutate in-place — do NOT reassign window.S
+  Object.keys(merged).forEach(k => { window.S[k] = merged[k]; });
+  Object.keys(window.S).forEach(k => { if(!(k in merged)) delete window.S[k]; });
+}
+
 onAuthStateChanged(auth, async (user) => {
   if(user){
     _uid = user.uid;
     window.updateAuthUI(user);
-    // Load data once, then set up real-time listener
-    const snap = await getDoc(doc(db,'users',_uid,'data','progress'));
-    if(snap.exists()){
-      try {
+    // Load data on sign-in
+    try {
+      const snap = await getDoc(doc(db,'users',_uid,'data','progress'));
+      if(snap.exists()){
         const incoming = JSON.parse(snap.data().payload);
-        const def = JSON.parse(JSON.stringify(window.DEFAULT_STATE));
-        window.S = Object.assign(def, incoming);
+        loadFirebaseData(incoming);
         window.renderHome();
-      } catch(e) { console.warn('Load error:', e); }
-    }
-    // Real-time sync: update if another device saves
+        window.renderSyncStatus('Data loaded ✓');
+      }
+    } catch(e){ console.warn('Firebase load error:', e); }
+    // Real-time listener — fires when another device saves
     if(_syncUnsubscribe) _syncUnsubscribe();
     _syncUnsubscribe = onSnapshot(doc(db,'users',_uid,'data','progress'), (snap) => {
       if(!snap.exists() || snap.metadata.hasPendingWrites) return;
       try {
         const incoming = JSON.parse(snap.data().payload);
-        const def = JSON.parse(JSON.stringify(window.DEFAULT_STATE));
-        window.S = Object.assign(def, incoming);
-        window.renderSyncStatus('Synced just now ✓');
-        // Refresh current view
-        if(document.getElementById('v-home').classList.contains('on')) window.renderHome();
-      } catch(e){}
+        loadFirebaseData(incoming);
+        window.renderSyncStatus('Synced ✓');
+        if(document.getElementById('v-home')?.classList.contains('on')) window.renderHome();
+      } catch(e){ console.warn('Snapshot error:', e); }
     });
   } else {
     _uid = null;
@@ -858,42 +882,95 @@ onAuthStateChanged(auth, async (user) => {
 <script>
 // ═══════════════════════════════════════════════════ YOUTUBE DATA
 const YT={
-  'Barbell back squat':'https://www.youtube.com/watch?v=SW_C1A-rejs',
-  'Barbell bench press':'https://www.youtube.com/watch?v=vcBig73ojpE',
-  'Pull-ups':'https://www.youtube.com/watch?v=eGo4IYlbE5g',
-  'Weighted pull-ups':'https://www.youtube.com/watch?v=eGo4IYlbE5g',
-  'Plank':'https://www.youtube.com/watch?v=pSHjTRCQxIw',
-  'Bike sprint intervals':'https://www.youtube.com/watch?v=LzGCRp9mlAY',
-  'Bike sprints':'https://www.youtube.com/watch?v=LzGCRp9mlAY',
-  'Bike sprint':'https://www.youtube.com/watch?v=LzGCRp9mlAY',
-  'Bike steady state':'https://www.youtube.com/watch?v=LzGCRp9mlAY',
-  'Barbell overhead press':'https://www.youtube.com/watch?v=2yjwXTZQDDI',
-  'DB bent-over row':'https://www.youtube.com/watch?v=6TSP1TRMUzs',
-  'Barbell row':'https://www.youtube.com/watch?v=6TSP1TRMUzs',
-  'DB single-arm row':'https://www.youtube.com/watch?v=6TSP1TRMUzs',
-  'DB curl':'https://www.youtube.com/watch?v=in7PaeYlhrM',
-  'Hammer curl':'https://www.youtube.com/watch?v=TwD-YGVP4Bk',
-  'DB lateral raise':'https://www.youtube.com/watch?v=3VcKaXpzqRo',
-  'Rear delt DB fly':'https://www.youtube.com/watch?v=EA7u4Q_8HQ0',
-  'Treadmill incline walk':'https://www.youtube.com/watch?v=urqjfNRlppc',
+  // Squat / Lower
+  'Barbell back squat':         'https://www.youtube.com/watch?v=ultWZbUMPL8',
+  'Romanian deadlift':          'https://www.youtube.com/watch?v=JCXUYuzwNrM',
+  'Barbell deadlift':           'https://www.youtube.com/watch?v=op9kVnSso6Q',
+  'DB goblet squat':            'https://www.youtube.com/watch?v=MeIiIdhvXT4',
+  'DB reverse lunge':           'https://www.youtube.com/watch?v=xrPteyQLGAo',
+  'DB walking lunge':           'https://www.youtube.com/watch?v=L8fvypPrzzs',
+  'DB Bulgarian split squat':   'https://www.youtube.com/watch?v=2C-uNgKwPLE',
+  'Barbell hip thrust':         'https://www.youtube.com/watch?v=SEdqd9jlHE0',
+  'Sumo deadlift':              'https://www.youtube.com/watch?v=b0G8rqpFkGY',
+  'Front squat':                'https://www.youtube.com/watch?v=m4ytmGpgPbY',
+  'Step-up':                    'https://www.youtube.com/watch?v=WCFCdxzFBa4',
+  'Barbell good morning':       'https://www.youtube.com/watch?v=YA-h3n9L4YU',
+  'Cable pull-through':         'https://www.youtube.com/watch?v=pBuFKhPGFYg',
+  'Cable Romanian deadlift':    'https://www.youtube.com/watch?v=JCXUYuzwNrM',
+  'Cable kickback':             'https://www.youtube.com/watch?v=EkFTCFgFDLM',
+  // Bench / Push
+  'Barbell bench press':        'https://www.youtube.com/watch?v=vcBig73ojpE',
+  'Incline barbell bench press':'https://www.youtube.com/watch?v=DbFgADa2PL8',
+  'Decline barbell bench press':'https://www.youtube.com/watch?v=LfyQTpW1Y48',
+  'Barbell overhead press':     'https://www.youtube.com/watch?v=2yjwXTZQDDI',
+  'DB incline press':           'https://www.youtube.com/watch?v=8iPEnn-ltC8',
+  'Close-grip barbell bench press':'https://www.youtube.com/watch?v=nEF0bv2FW94',
+  'DB flat press':              'https://www.youtube.com/watch?v=VmB1G1K7v94',
+  'DB Arnold press':            'https://www.youtube.com/watch?v=6Z15_WdXmVw',
+  'Push-up':                    'https://www.youtube.com/watch?v=IODxDxX7oi4',
+  'Diamond push-up':            'https://www.youtube.com/watch?v=j0DnG1_S92I',
+  'Ring push-ups':              'https://www.youtube.com/watch?v=XzSNFOBcFNk',
+  'Ring dips':                  'https://www.youtube.com/watch?v=L0pMKtNKTes',
+  'Bench tricep dip':           'https://www.youtube.com/watch?v=0326dy_-CzM',
+  'Weighted bench dip':         'https://www.youtube.com/watch?v=0326dy_-CzM',
+  'Cable chest fly':            'https://www.youtube.com/watch?v=Iwe6AmxVf7o',
+  'Cable tricep pushdown':      'https://www.youtube.com/watch?v=2-LAMcpzODU',
+  'Cable overhead tricep extension':'https://www.youtube.com/watch?v=kjkJXa8CRFI',
+  'Cable overhead extension':   'https://www.youtube.com/watch?v=kjkJXa8CRFI',
+  'DB overhead tricep extension':'https://www.youtube.com/watch?v=YbX7Wd8jQ-Q',
+  'DB skull crusher':           'https://www.youtube.com/watch?v=d_KZxkY_0cM',
+  'EZ bar skull crusher':       'https://www.youtube.com/watch?v=NIRgfJKFKuI',
+  'DB lateral raise':           'https://www.youtube.com/watch?v=3VcKaXpzqRo',
+  // Pull-ups / Pull
+  'Pull-ups':                   'https://www.youtube.com/watch?v=eGo4IYlbE5g',
+  'Weighted pull-ups':          'https://www.youtube.com/watch?v=eGo4IYlbE5g',
+  'Chin-ups':                   'https://www.youtube.com/watch?v=G7l62vOJhrM',
+  'Ring pull-ups':              'https://www.youtube.com/watch?v=PtjdQLMHfJw',
+  'Ring rows':                  'https://www.youtube.com/watch?v=LY5J8wGblCk',
+  'Ring face pulls':            'https://www.youtube.com/watch?v=V8dZ3pyiCBo',
+  'Dead hang':                  'https://www.youtube.com/watch?v=rFJCTsAqTFw',
+  'DB bent-over row':           'https://www.youtube.com/watch?v=6TSP1TRMUzs',
+  'Barbell row':                'https://www.youtube.com/watch?v=G8l_8chR5BE',
+  'DB single-arm row':          'https://www.youtube.com/watch?v=pYcpY20QaE8',
+  'DB seal row':                'https://www.youtube.com/watch?v=IFggnpwlgSM',
+  'Cable lat pulldown':         'https://www.youtube.com/watch?v=CAwf7n6Luuc',
+  'Cable seated row':           'https://www.youtube.com/watch?v=GZbfZ033f74',
+  'Cable face pull':            'https://www.youtube.com/watch?v=rep-qVOkqgk',
+  'Cable straight-arm pulldown':'https://www.youtube.com/watch?v=C8JkK4vTYzI',
+  'Rear delt DB fly':           'https://www.youtube.com/watch?v=EA7u4Q_8HQ0',
+  // Arms
+  'DB curl':                    'https://www.youtube.com/watch?v=ykJmrZ5v0Oo',
+  'Hammer curl':                'https://www.youtube.com/watch?v=TwD-YGVP4Bk',
+  'EZ bar curl':                'https://www.youtube.com/watch?v=zG2C9TbWMA0',
+  'Barbell bicep curl':         'https://www.youtube.com/watch?v=kwG2ipFRgfo',
+  'DB concentration curl':      'https://www.youtube.com/watch?v=0AUGkch3tzc',
+  'Incline DB curl':            'https://www.youtube.com/watch?v=soxrZlIl35U',
+  'Cable curl':                 'https://www.youtube.com/watch?v=NFzTWp2qpiE',
+  'DB wrist curl':              'https://www.youtube.com/watch?v=u0SdTNlm5fQ',
+  // Core
+  'Plank':                      'https://www.youtube.com/watch?v=pSHjTRCQxIw',
+  'Hanging knee raise':         'https://www.youtube.com/watch?v=Pr1ieGZ5atk',
+  'Hanging leg raise':          'https://www.youtube.com/watch?v=Pr1ieGZ5atk',
+  'Ab wheel rollout':           'https://www.youtube.com/watch?v=o9UkFCG5C6g',
+  'Cable crunch':               'https://www.youtube.com/watch?v=Xyd_fa5zoEU',
+  'Cable woodchop':             'https://www.youtube.com/watch?v=fBAH-PH7og4',
+  'Pallof press':               'https://www.youtube.com/watch?v=AaALdEiuSrk',
+  'Hollow body hold':           'https://www.youtube.com/watch?v=LlDNef_Ztsc',
+  'L-sit hold (rings)':         'https://www.youtube.com/watch?v=IUIBuS1GKGk',
+  'Core circuit':               'https://www.youtube.com/watch?v=DHD1-2P94DI',
+  'Full core circuit':          'https://www.youtube.com/watch?v=DHD1-2P94DI',
+  'Side plank':                 'https://www.youtube.com/watch?v=K-CrEi0ymMg',
+  'Dead bug':                   'https://www.youtube.com/watch?v=4XLEnwUr1d8',
+  'Russian twist':              'https://www.youtube.com/watch?v=wkD8rjkodUI',
+  // Cardio
+  'Bike sprint intervals':      'https://www.youtube.com/watch?v=LzGCRp9mlAY',
+  'Bike sprints':               'https://www.youtube.com/watch?v=LzGCRp9mlAY',
+  'Bike sprint':                'https://www.youtube.com/watch?v=LzGCRp9mlAY',
+  'Bike steady state':          'https://www.youtube.com/watch?v=LzGCRp9mlAY',
+  'Treadmill incline walk':     'https://www.youtube.com/watch?v=urqjfNRlppc',
   'Treadmill run/walk intervals':'https://www.youtube.com/watch?v=_kGESn8ArrU',
-  'Treadmill HIIT':'https://www.youtube.com/watch?v=_kGESn8ArrU',
-  'Treadmill run':'https://www.youtube.com/watch?v=_kGESn8ArrU',
-  'Romanian deadlift':'https://www.youtube.com/watch?v=JCXUYuzwNrM',
-  'Barbell deadlift':'https://www.youtube.com/watch?v=op9kVnSso6Q',
-  'DB goblet squat':'https://www.youtube.com/watch?v=MeIiIdhvXT4',
-  'DB reverse lunge':'https://www.youtube.com/watch?v=xrPteyQLGAo',
-  'DB walking lunge':'https://www.youtube.com/watch?v=L8fvypPrzzs',
-  'DB Bulgarian split squat':'https://www.youtube.com/watch?v=2C-uNgKwPLE',
-  'Hanging knee raise':'https://www.youtube.com/watch?v=Pr1ieGZ5atk',
-  'Hanging leg raise':'https://www.youtube.com/watch?v=Pr1ieGZ5atk',
-  'Dead hang':'https://www.youtube.com/watch?v=eGo4IYlbE5g',
-  'DB incline press':'https://www.youtube.com/watch?v=8iPEnn-ltC8',
-  'Bench tricep dip':'https://www.youtube.com/watch?v=0326dy_-CzM',
-  'Weighted bench dip':'https://www.youtube.com/watch?v=0326dy_-CzM',
-  'DB skull crusher':'https://www.youtube.com/watch?v=d_KZxkY_0cM',
-  'Core circuit':'https://www.youtube.com/watch?v=DHD1-2P94DI',
-  'Full core circuit':'https://www.youtube.com/watch?v=DHD1-2P94DI',
+  'Treadmill HIIT':             'https://www.youtube.com/watch?v=_kGESn8ArrU',
+  'Treadmill run':              'https://www.youtube.com/watch?v=_kGESn8ArrU',
 };
 const YT_DESC={
   'Barbell back squat':'Alan Thrall covers setup, depth, and bracing for a safe, strong squat.',
@@ -1446,19 +1523,18 @@ function getWeekDays(ph,week){
 }
 
 // ═══════════════════════════════════════════════════ STATE
-const DEFAULT_STATE={sets:{},completed:{},skipped:{},history:[],prs:{},bodyweight:[],sessionNotes:{},readiness:{},rm1History:{},workoutDays:{},assessments:{},startWeight:202,startBF:22,restDays:{},difficulty:{},customWorkouts:{},rpe:{},templates:{}};
+const DEFAULT_STATE={sets:{},completed:{},skipped:{},history:[],prs:{},bodyweight:[],sessionNotes:{},readiness:{},rm1History:{},workoutDays:{},assessments:{},startWeight:202,startBF:22,restDays:{},difficulty:{},customWorkouts:{},rpe:{},templates:{},exerciseSwaps:{}};
 let S=JSON.parse(JSON.stringify(DEFAULT_STATE));
 try{const d=localStorage.getItem('lift12_v5');if(d)S=Object.assign(JSON.parse(JSON.stringify(DEFAULT_STATE)),JSON.parse(d));}catch(e){}
 const save=()=>{
   try{localStorage.setItem('lift12_v5',JSON.stringify(S));}catch(e){}
-  // also push to Firebase if signed in
   if(window.fbSave) window.fbSave(S);
 };
 window.DEFAULT_STATE = DEFAULT_STATE;
 window.renderHome = renderHome;
+// IMPORTANT: window.S must be the SAME object as S, not a copy
+// Firebase load uses window.S to mutate in-place
 window.S = S;
-// proxy to keep window.S in sync
-const _origSave = save;
 const wk=(pid,w,di)=>`p${pid}_w${w}_d${di}`;
 const ph_=id=>PHASES.find(p=>p.id===id);
 let theme=localStorage.getItem('lift12_theme')||'dark';
@@ -2507,7 +2583,8 @@ function renderWeek(phaseId,week){
             exList.appendChild(conn);
           }
         }
-        exList.appendChild(makeExCard(ex,ek,ei,ph,key));
+        const effEx=getEffectiveExercise(ph,week,di,ei,ek)||(ex);
+        exList.appendChild(makeExCard(effEx,ek,ei,ph,key));
       });
       body.appendChild(exList);
     }
@@ -2543,7 +2620,11 @@ function renderWeek(phaseId,week){
     setTimeout(()=>{
       getWeekDays(ph,week).forEach((day,di)=>{
         const key=wk(ph.id,week,di);
-        day.exercises.forEach((ex,ei)=>renderSetRows(ex,`${key}_e${ei}`));
+        day.exercises.forEach((ex,ei)=>{
+          const ek2=`${key}_e${ei}`;
+          const effEx2=getEffectiveExercise(ph,week,di,ei,ek2)||ex;
+          renderSetRows(effEx2,ek2);
+        });
       });
       // also render custom workout sets
       const cws=S.customWorkouts&&S.customWorkouts[customKey]||[];
@@ -2597,6 +2678,13 @@ function makeExCard(ex,ek,ei,ph,sessionKey){
     </div>
     <div class="ex-chev">▼</div>
   `;
+  // Add swap button separately to avoid template literal escaping issues
+  const swapBtn=document.createElement('button');
+  swapBtn.className='ex-warmup-btn';
+  swapBtn.style.marginLeft='4px';
+  swapBtn.textContent='✏️ Swap';
+  swapBtn.onclick=(e)=>{e.stopPropagation();openSwap(ek,ei,sessionKey,ph.id||ph.color);};
+  top.querySelector('.ex-right').appendChild(swapBtn);
   top.onclick=()=>card.classList.toggle('open');
   const body=document.createElement('div');body.className='ex-body';
   if(ex.note)body.innerHTML=`<div class="ex-note-bar">💡 ${ex.note}</div>`;
@@ -3803,6 +3891,94 @@ function saveAsTemplate(ph,week,di,key){
   toast(`Template "${name}" saved ✓`);
 }
 
+
+// ═══════════════════════════════════════════════════ EXERCISE SWAP
+let _swapEk='',_swapEi=0,_swapSessionKey='',_swapPhaseId=null,_swapCurrentName='';
+
+function openSwap(ek,ei,sessionKey,phaseId){
+  _swapEk=ek;_swapEi=ei;_swapSessionKey=sessionKey;_swapPhaseId=phaseId;
+  // figure out current exercise name
+  const m=ek.match(/p(\d+)_w(\d+)_d(\d+)_e(\d+)/);
+  if(!m){
+    // custom workout exercise
+    _swapCurrentName='';
+  } else {
+    const ph=ph_(parseInt(m[1]));
+    const w=parseInt(m[2]),di=parseInt(m[3]);
+    const day=getWeekDays(ph,w)[di];
+    _swapCurrentName=day?.exercises[ei]?.name||'';
+  }
+  document.getElementById('ex-swap-search').value='';
+  renderSwapList('');
+  document.getElementById('ex-swap-modal').classList.add('on');
+  document.body.style.overflow='hidden';
+  setTimeout(()=>document.getElementById('ex-swap-search').focus(),100);
+}
+
+function closeSwap(){
+  document.getElementById('ex-swap-modal').classList.remove('on');
+  document.body.style.overflow='';
+}
+function swapBgClick(e){if(e.target===document.getElementById('ex-swap-modal'))closeSwap();}
+
+function renderSwapList(filter){
+  const list=document.getElementById('ex-swap-list');if(!list)return;
+  const q=filter.toLowerCase().trim();
+  const cats=['lower','push','pull','arms','core','cardio'];
+  const catLabels={lower:'Lower Body',push:'Push',pull:'Pull',arms:'Arms',core:'Core',cardio:'Cardio'};
+  let html='';
+  cats.forEach(cat=>{
+    const items=ALL_EXERCISES.filter(e=>
+      e.cat===cat&&(!q||e.name.toLowerCase().includes(q))
+    );
+    if(!items.length)return;
+    html+=`<div class="ex-swap-cat">${catLabels[cat]}</div>`;
+    items.forEach(ex=>{
+      const isCurrent=ex.name===_swapCurrentName;
+      html+=`<div class="ex-swap-item${isCurrent?' current':''}" onclick="doSwap('${ex.name.replace(/'/g,"\\'")}')">
+        <div class="ex-swap-name">${ex.name}${isCurrent?' <span style="font-size:10px;color:var(--p2)">current</span>':''}</div>
+        <div class="ex-swap-cat-badge">${cat}</div>
+      </div>`;
+    });
+  });
+  if(!html)html='<div style="padding:20px;text-align:center;color:var(--text3)">No exercises found</div>';
+  list.innerHTML=html;
+}
+
+function filterSwapList(q){renderSwapList(q);}
+
+function doSwap(newExName){
+  const newEx=ALL_EXERCISES.find(e=>e.name===newExName);
+  if(!newEx){closeSwap();return;}
+  // Parse the session key to find the phase/week/day/exercise
+  const m=_swapEk.match(/p(\d+)_w(\d+)_d(\d+)_e(\d+)/);
+  if(!m){closeSwap();return;}
+  const pid=parseInt(m[1]),w=parseInt(m[2]),di=parseInt(m[3]),ei=parseInt(m[4]);
+  const ph=ph_(pid);
+  if(!ph){closeSwap();return;}
+  const day=getWeekDays(ph,w)[di];
+  if(!day){closeSwap();return;}
+  // Swap the exercise in the day's exercises array
+  // Store swaps in S.exerciseSwaps so they persist
+  if(!S.exerciseSwaps)S.exerciseSwaps={};
+  S.exerciseSwaps[_swapEk]={name:newEx.name,p:newEx.p,w:newEx.w,sets:newEx.sets,note:newEx.note||''};
+  // Reset the set data for this exercise slot so old weights don't carry over
+  S.sets[_swapEk]=Array.from({length:newEx.sets},()=>({reps:'',weight:'',notes:'',done:false}));
+  save();
+  closeSwap();
+  // Re-render the week view
+  if(curPhase&&curWeek)renderWeek(curPhase,curWeek);
+  toast(`Swapped to ${newEx.name} ✓`);
+}
+
+// Helper: get the actual exercise for a slot (checking swaps first)
+function getEffectiveExercise(ph,week,di,ei,ek){
+  if(S.exerciseSwaps&&S.exerciseSwaps[ek]){
+    return S.exerciseSwaps[ek];
+  }
+  return getWeekDays(ph,week)[di]?.exercises[ei]||null;
+}
+
 // ═══════════════════════════════════════════════════ TOAST
 function toast(msg){
   const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');
@@ -3887,6 +4063,19 @@ go('home');
       <button class="cwb-close" onclick="closeCWB()">✕</button>
     </div>
     <div class="cwb-body" id="cwb-body"></div>
+  </div>
+</div>
+
+
+<!-- EXERCISE SWAP MODAL -->
+<div class="modal-overlay" id="ex-swap-modal" onclick="swapBgClick(event)">
+  <div class="ex-swap-modal">
+    <div class="ex-swap-hd">
+      <div class="ex-swap-title">Swap Exercise</div>
+      <button class="ex-swap-close" onclick="closeSwap()">✕</button>
+    </div>
+    <input class="ex-swap-search" id="ex-swap-search" placeholder="Search exercises..." oninput="filterSwapList(this.value)">
+    <div class="ex-swap-list" id="ex-swap-list"></div>
   </div>
 </div>
 
