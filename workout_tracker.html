@@ -7,7 +7,7 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600&display=swap');
 
-/* ── EXISTING THEME ── */
+/* ── PRESERVED THEME ── */
 :root{
   --bg:#0e0f11;--surface:#16181c;--surface2:#1e2026;--surface3:#242830;
   --border:#2a2d35;--border2:#363a45;
@@ -18,142 +18,153 @@
   --r:10px;
 }
 
-/* ── NEW: AI SUGGESTION STYLES ── */
+/* ── NEW: AI & INSTRUCTION STYLES ── */
 .ai-suggestion-box {
   background: var(--surface3);
   border: 1px solid var(--accent);
   border-radius: 8px;
-  padding: 10px 14px;
-  margin-top: 12px;
+  padding: 12px;
+  margin-top: 15px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 12px;
   animation: slideIn 0.3s ease-out;
 }
 .ai-icon { font-size: 20px; }
-.ai-text { font-size: 12px; line-height: 1.4; color: var(--text); }
+.ai-text { font-size: 13px; line-height: 1.4; color: var(--text); }
 .ai-text strong { color: var(--accent); font-weight: 800; }
 
-@keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-/* ── NEW: COLLAPSIBLE INSTRUCTIONS ── */
 .instr-toggle {
   font-size: 11px;
   font-weight: 700;
-  color: var(--text3);
+  color: var(--accent);
   text-transform: uppercase;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 4px;
-  margin-top: 8px;
-  transition: color 0.2s;
+  gap: 6px;
+  margin-bottom: 12px;
+  padding: 8px;
+  background: var(--bg);
+  border-radius: 6px;
+  border: 1px dashed var(--border2);
 }
-.instr-toggle:hover { color: var(--accent); }
 .instr-content {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.4s ease-out;
+  display: none;
   background: var(--bg);
   border-radius: 8px;
-}
-.instr-content.open {
-  max-height: 1000px;
-  margin-top: 10px;
+  margin-bottom: 15px;
   padding: 12px;
   border: 1px solid var(--border);
 }
+.instr-content.open { display: block; }
 .instr-gif {
   width: 100%;
   border-radius: 6px;
   margin-bottom: 12px;
   background: var(--surface2);
-  min-height: 150px;
+  min-height: 120px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--text3);
-  font-size: 11px;
 }
-.instr-list {
-  padding-left: 18px;
-  font-size: 12px;
-  color: var(--text2);
-  line-height: 1.6;
-}
-.instr-list li { margin-bottom: 6px; }
+.instr-list { padding-left: 18px; font-size: 12px; color: var(--text2); line-height: 1.6; }
 
-/* ... (Keep your existing styles here) ... */
+/* ── TOUCH OPTIMIZATION ── */
+.si { 
+  height: 44px; /* Apple/Google standard for touch */
+  font-size: 16px !important; /* Prevents iOS auto-zoom */
+}
+.ok-btn { 
+  width: 44px !important; 
+  height: 44px !important; 
+}
+
+/* ── REST TIMER BAR ── */
+.rest-timer-container {
+  height: 4px;
+  background: var(--bg);
+  margin-top: 10px;
+  border-radius: 2px;
+  overflow: hidden;
+  display: none;
+}
+.rest-timer-bar {
+  height: 100%;
+  background: var(--accent);
+  width: 0%;
+  transition: width 1s linear;
+}
+
+@keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ... (Include all other existing styles from your original file here) ... */
 </style>
 </head>
 <body>
 
-<div id="app-root"></div>
-
 <script>
-/* ── NEW: GIF MAPPING ── */
-// Add your GIF URLs here. If a name isn't here, it shows a placeholder.
+/* ── GIF MAPPING ── */
 const GIF_MAP = {
   'Barbell back squat': 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJqZzZqZzZqZzZqZzZqZzZqZzZqZzZqZzZqZzZqZzZqJmRsaT0x/3o7TKMGpxxSAtYp396/giphy.gif',
-  'Barbell bench press': 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJqZzZqZzZqZzZqZzZqZzZqZzZqZzZqZzZqZzZqJmRsaT0x/l0HlJDa8eqoTCV0Yk/giphy.gif',
-  // Add more as needed...
+  // Paste your GIF URLs for other exercises here
 };
 
-/* ── NEW: AI PROGRESSION LOGIC ── */
+/* ── AI PROGRESSION LOGIC ── */
 function getAIProgression(sessionKey, exIdx) {
   const entry = log[sessionKey];
-  if (!entry) return null;
+  if (!entry || !entry.exs[exIdx]) return null;
   const ex = entry.exs[exIdx];
   
-  // Only suggest if all sets are done
-  if (!ex.sets.every(s => s.done)) return null;
+  // Only suggest if all sets are checked off
+  const allDone = ex.sets.every(s => s.done);
+  if (!allDone) return null;
 
-  // Find max weight and avg RPE
-  let maxW = 0;
+  let maxWeight = 0;
   let avgRPE = 0;
-  let count = 0;
+  let setsCount = 0;
 
   ex.sets.forEach(s => {
     const w = parseFloat(s.w) || 0;
-    const rpe = parseInt(s.rpe) || 8; // Default to 8 if not logged
-    if (w > maxW) maxW = w;
+    const rpe = parseInt(s.rpe) || 8; // Default to 8 if they didn't log it
+    if (w > maxWeight) maxWeight = w;
     avgRPE += rpe;
-    count++;
+    setsCount++;
   });
 
-  avgRPE = avgRPE / count;
-  let suggestion = "";
-  let nextWeight = maxW;
+  const finalAvgRPE = avgRPE / setsCount;
+  let message = "";
+  let target = maxWeight;
 
-  if (avgRPE <= 7) {
-    nextWeight = maxW + 5;
-    suggestion = `Feeling strong! AI recommends increasing to <strong>${nextWeight} lbs</strong> next session.`;
-  } else if (avgRPE <= 9) {
-    nextWeight = maxW + 2.5;
-    suggestion = `Solid work. Try a small jump to <strong>${nextWeight} lbs</strong> next time.`;
+  if (finalAvgRPE <= 7) {
+    target = maxWeight + 5;
+    message = `You crushed that! AI suggests jumping to <strong>${target} lbs</strong> next session.`;
+  } else if (finalAvgRPE <= 9) {
+    target = maxWeight + 2.5;
+    message = `Great intensity. Try adding <strong>2.5 lbs</strong> next time to keep the momentum.`;
   } else {
-    suggestion = `High intensity detected. Maintain <strong>${maxW} lbs</strong> to master form before increasing.`;
+    message = `Max effort detected. Stay at <strong>${maxWeight} lbs</strong> next session to master this weight.`;
   }
 
-  return suggestion;
+  return message;
 }
 
-/* ── UPDATED: RENDER EXERCISE CARD ── */
+/* ── UPDATED RENDER EXERCISE CARD ── */
+// This replaces your existing renderExCard logic
 function renderExCard(ex, phase, week, dayIdx, exIdx, sessionKey) {
   const instructions = getExInstructions(ex.name);
   const gifUrl = GIF_MAP[ex.name] || null;
-  const aiCoachTip = getAIProgression(sessionKey, exIdx);
+  const coachTip = getAIProgression(sessionKey, exIdx);
 
-  // Note: This is a conceptual update to your existing template literal
+  // Note: I am simplifying the template here for clarity, 
+  // but you should keep your existing PR badge and YT logic inside.
+  
   return `
     <div class="ex-card ${isExOpen(sessionKey, exIdx)?'open':''}" id="ex-${sessionKey}-${exIdx}">
       <div class="ex-top" onclick="toggleEx('${sessionKey}',${exIdx})">
         <div class="ex-info">
-          <div class="ex-name-row">
             <span class="ex-name-span">${ex.name}</span>
-            ${YT[ex.name] ? `<div class="yt-pill" onclick="event.stopPropagation();openYT('${ex.name}')">▶ Video</div>` : ''}
-          </div>
-          <div class="ex-pres">${ex.p} — ${phase.rest}</div>
+            <div class="ex-pres">${ex.p} — ${phase.rest}</div>
         </div>
         <div class="ex-chev">▼</div>
       </div>
@@ -161,11 +172,11 @@ function renderExCard(ex, phase, week, dayIdx, exIdx, sessionKey) {
       <div class="ex-body">
         ${instructions ? `
           <div class="instr-toggle" onclick="toggleInstructions(this)">
-            <span>📖 Instructions & Form Guide</span>
+            <span>📖 View Form Guide & Tips</span>
           </div>
           <div class="instr-content">
             <div class="instr-gif">
-              ${gifUrl ? `<img src="${gifUrl}" style="width:100%; border-radius:4px;">` : 'GIF Placeholder'}
+              ${gifUrl ? `<img src="${gifUrl}" style="width:100%; border-radius:4px;">` : '<span style="color:var(--text3)">Form Animation Loading...</span>'}
             </div>
             <ul class="instr-list">
               ${instructions.map(i => `<li>${i}</li>`).join('')}
@@ -173,13 +184,34 @@ function renderExCard(ex, phase, week, dayIdx, exIdx, sessionKey) {
           </div>
         ` : ''}
 
-        <div class="sets-table" style="margin-top:15px;">
-           </div>
+        <div class="sets-hdr">
+          <span>Set</span>
+          <span>lbs</span>
+          <span>Reps</span>
+          <span>RPE</span>
+          <span></span>
+        </div>
+        
+        ${ex.sets.map((s, si) => `
+          <div class="set-row">
+            <span class="set-lbl">${si+1}</span>
+            <input class="si" type="number" value="${s.w}" oninput="updateSet('${sessionKey}',${exIdx},${si},'w',this.value)">
+            <input class="si" type="number" value="${s.r}" oninput="updateSet('${sessionKey}',${exIdx},${si},'r',this.value)">
+            <input class="si" type="number" placeholder="1-10" value="${s.rpe||''}" oninput="updateSet('${sessionKey}',${exIdx},${si},'rpe',this.value)">
+            <button class="ok-btn ${s.done?'done':''}" onclick="handleSetClick('${sessionKey}',${exIdx},${si}, ${phase.restSec || 90})">
+              ${s.done?'✓':''}
+            </button>
+          </div>
+        `).join('')}
 
-        ${aiCoachTip ? `
+        <div class="rest-timer-container" id="timer-cont-${sessionKey}-${exIdx}">
+          <div class="rest-timer-bar" id="timer-bar-${sessionKey}-${exIdx}"></div>
+        </div>
+
+        ${coachTip ? `
           <div class="ai-suggestion-box">
             <div class="ai-icon">🤖</div>
-            <div class="ai-text">${aiCoachTip}</div>
+            <div class="ai-text">${coachTip}</div>
           </div>
         ` : ''}
       </div>
@@ -187,15 +219,46 @@ function renderExCard(ex, phase, week, dayIdx, exIdx, sessionKey) {
   `;
 }
 
-/* ── NEW: UI HELPERS ── */
+/* ── NEW HELPERS ── */
 function toggleInstructions(btn) {
   const content = btn.nextElementSibling;
   content.classList.toggle('open');
-  btn.querySelector('span').innerText = content.classList.contains('open') ? '▲ Hide Instructions' : '📖 Instructions & Form Guide';
+  btn.querySelector('span').innerText = content.classList.contains('open') ? '▲ Hide Form Guide' : '📖 View Form Guide & Tips';
 }
 
-// Ensure you call updateStats() or renderDay() inside your toggleSetDone 
-// function to refresh the AI Coach tip when the last set is checked.
+function handleSetClick(sessionKey, exIdx, si, restSeconds) {
+  toggleSetDone(sessionKey, exIdx, si); // Call your existing function
+  
+  const isDoneNow = log[sessionKey].exs[exIdx].sets[si].done;
+  if (isDoneNow) {
+    runRestTimer(sessionKey, exIdx, restSeconds);
+  }
+  
+  // Re-render to show AI tip if it was the last set
+  renderDay(); 
+}
+
+function runRestTimer(sessionKey, exIdx, seconds) {
+  const cont = document.getElementById(`timer-cont-${sessionKey}-${exIdx}`);
+  const bar = document.getElementById(`timer-bar-${sessionKey}-${exIdx}`);
+  if (!cont || !bar) return;
+
+  cont.style.display = 'block';
+  bar.style.transition = 'none';
+  bar.style.width = '100%';
+  
+  setTimeout(() => {
+    bar.style.transition = `width ${seconds}s linear`;
+    bar.style.width = '0%';
+  }, 50);
+
+  setTimeout(() => {
+    cont.style.display = 'none';
+  }, seconds * 1000);
+}
+
+// Ensure your existing toggleSetDone function updates the 'log' correctly
 </script>
+
 </body>
 </html>
