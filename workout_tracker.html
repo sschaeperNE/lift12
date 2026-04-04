@@ -671,6 +671,171 @@ body.fs-large{font-size:17px;}
 .ex-swap-name{font-size:13px;font-weight:600;color:var(--text);}
 .ex-swap-cat-badge{font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;background:var(--surface2);color:var(--text3);border:1px solid var(--border);flex-shrink:0;}
 
+
+/* ── OFFLINE INDICATOR ── */
+.offline-banner{position:fixed;top:54px;left:0;right:0;z-index:290;background:#c96000;color:#fff;
+  font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.5px;
+  text-align:center;padding:7px 16px;display:none;align-items:center;justify-content:center;gap:8px;}
+.offline-banner.show{display:flex;}
+.offline-dot{width:8px;height:8px;border-radius:50%;background:#fff;animation:pulse 1.5s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+
+/* ── WORKOUT DURATION ── */
+.dur-badge{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;
+  padding:4px 10px;border-radius:6px;background:var(--surface2);border:1px solid var(--border);
+  color:var(--text2);margin-left:8px;}
+.dur-badge.active{border-color:var(--p2);color:var(--p2);background:var(--p2bg);}
+
+/* ── PHASE TRANSITION SUMMARY ── */
+.phase-summary-modal{background:var(--surface);border:1px solid var(--border2);border-radius:16px;
+  width:92%;max-width:520px;max-height:88vh;overflow-y:auto;}
+.psm-header{background:var(--surface);padding:24px 24px 0;position:sticky;top:0;z-index:1;}
+.psm-badge{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:1.5px;
+  text-transform:uppercase;padding:4px 10px;border-radius:5px;display:inline-block;margin-bottom:10px;}
+.psm-title{font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:900;
+  text-transform:uppercase;letter-spacing:1px;line-height:1;margin-bottom:6px;}
+.psm-sub{font-size:13px;color:var(--text2);margin-bottom:16px;line-height:1.6;}
+.psm-body{padding:0 24px 24px;}
+.psm-stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px;}
+.psm-stat{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px;text-align:center;}
+.psm-stat-val{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:800;margin-bottom:2px;}
+.psm-stat-lbl{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;font-weight:700;}
+.psm-lifts{margin-bottom:20px;}
+.psm-lift-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);}
+.psm-lift-row:last-child{border-bottom:none;}
+.psm-lift-name{font-size:13px;font-weight:600;flex:1;color:var(--text);}
+.psm-lift-before{font-size:12px;color:var(--text3);min-width:60px;text-align:right;}
+.psm-lift-arrow{font-size:12px;color:var(--text3);}
+.psm-lift-after{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;
+  color:var(--p2);min-width:60px;}
+.psm-lift-delta{font-size:11px;font-weight:700;padding:2px 6px;border-radius:4px;
+  background:var(--p2bg);color:var(--p2);white-space:nowrap;}
+.psm-next-box{background:var(--surface2);border:1px solid var(--border);border-radius:8px;
+  padding:14px 16px;margin-bottom:20px;}
+.psm-next-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;
+  color:var(--text3);margin-bottom:8px;}
+.psm-next-desc{font-size:13px;color:var(--text2);line-height:1.6;}
+.psm-cta{width:100%;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;
+  letter-spacing:1px;text-transform:uppercase;padding:14px;border-radius:10px;border:none;
+  background:var(--accent);color:var(--atxt);cursor:pointer;transition:background .15s;}
+.psm-cta:hover{background:var(--accent2);}
+.psm-close{position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:6px;
+  border:1px solid var(--border2);background:var(--surface2);color:var(--text2);
+  font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+
+/* ── NEXT SESSION CARD ── */
+.next-session-card{background:var(--surface);border:2px solid var(--accent);border-radius:var(--r);
+  padding:18px;margin-bottom:20px;cursor:pointer;transition:all .15s;}
+.next-session-card:hover{border-color:var(--accent2);transform:translateY(-1px);}
+.nsc-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  color:var(--accent);margin-bottom:6px;}
+.nsc-title{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;
+  line-height:1;text-transform:uppercase;margin-bottom:4px;}
+.nsc-sub{font-size:13px;color:var(--text2);margin-bottom:14px;}
+.nsc-exercises{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;}
+.nsc-ex{font-size:11px;font-weight:600;padding:3px 8px;border-radius:5px;
+  background:var(--surface2);border:1px solid var(--border);color:var(--text2);}
+.nsc-start{display:inline-flex;align-items:center;gap:6px;font-family:'Barlow Condensed',sans-serif;
+  font-size:14px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  padding:10px 20px;border-radius:8px;border:none;background:var(--accent);
+  color:var(--atxt);cursor:pointer;}
+.nsc-dur{font-size:12px;color:var(--text3);margin-top:8px;}
+
+/* ── WORKOUT CALENDAR ── */
+.workout-cal-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);
+  padding:18px;margin-bottom:20px;}
+.cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px;}
+.cal-nav{display:flex;align-items:center;gap:10px;}
+.cal-nav-btn{width:28px;height:28px;border-radius:6px;border:1px solid var(--border2);
+  background:var(--surface2);color:var(--text2);cursor:pointer;font-size:14px;
+  display:flex;align-items:center;justify-content:center;transition:all .15s;}
+.cal-nav-btn:hover{border-color:var(--border2);color:var(--text);}
+.cal-month{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;
+  text-transform:uppercase;letter-spacing:1px;}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;}
+.cal-dow{font-size:9px;font-weight:700;text-align:center;color:var(--text3);
+  text-transform:uppercase;letter-spacing:.5px;padding:4px 0;}
+.cal-day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;
+  border-radius:6px;font-size:12px;font-weight:600;position:relative;cursor:default;}
+.cal-day.empty{background:transparent;}
+.cal-day.today{border:1px solid var(--accent);color:var(--accent);}
+.cal-day.trained{color:#fff;font-weight:800;}
+.cal-day.p1-day{background:var(--p1);}
+.cal-day.p2-day{background:var(--p2);}
+.cal-day.p3-day{background:var(--p3);}
+.cal-day.skipped-day{background:var(--border2);color:var(--text3);}
+.cal-legend{display:flex;gap:12px;margin-top:10px;flex-wrap:wrap;}
+.cal-leg-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text3);}
+.cal-leg-swatch{width:12px;height:12px;border-radius:3px;}
+
+/* ── CABLE WEIGHT CONVERTER ── */
+.cable-conv-modal{background:var(--surface);border:1px solid var(--border2);border-radius:14px;
+  width:92%;max-width:380px;}
+.cable-conv-hd{display:flex;align-items:center;justify-content:space-between;
+  padding:16px 18px;border-bottom:1px solid var(--border);}
+.cable-conv-title{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;
+  text-transform:uppercase;letter-spacing:1px;}
+.cable-conv-close{width:32px;height:32px;border-radius:6px;border:1px solid var(--border2);
+  background:var(--surface2);color:var(--text2);font-size:14px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;}
+.cable-conv-body{padding:20px;}
+.cable-row{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap;}
+.cable-inp{background:var(--surface2);border:1px solid var(--border);border-radius:8px;
+  padding:10px 14px;font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:800;
+  color:var(--text);width:100px;text-align:center;-moz-appearance:textfield;}
+.cable-inp::-webkit-inner-spin-button,.cable-inp::-webkit-outer-spin-button{-webkit-appearance:none;}
+.cable-inp:focus{outline:none;border-color:var(--accent);}
+.cable-conv-lbl{font-size:13px;color:var(--text2);}
+.cable-result-box{background:var(--surface2);border:1px solid var(--border);border-radius:8px;
+  padding:14px 16px;margin-top:4px;}
+.cable-result-val{font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:900;
+  color:var(--accent);line-height:1;}
+.cable-result-lbl{font-size:12px;color:var(--text3);margin-top:3px;}
+.cable-conv-note{font-size:11px;color:var(--text3);line-height:1.6;margin-top:12px;
+  padding:8px 10px;background:var(--surface2);border-radius:6px;}
+.cable-conv-btn{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;
+  letter-spacing:1px;text-transform:uppercase;padding:6px 12px;border-radius:6px;
+  border:1px solid var(--border2);background:var(--surface2);color:var(--text2);
+  cursor:pointer;margin-left:auto;display:block;margin-top:10px;transition:all .15s;}
+.cable-conv-btn:hover{color:var(--text);}
+
+/* ── EXERCISE INSTRUCTION CARD ── */
+.ex-instruction{background:var(--bg);border:1px solid var(--border);border-radius:7px;
+  padding:10px 12px;margin-bottom:10px;display:none;}
+.ex-instruction.show{display:block;}
+.ex-instr-title{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  color:var(--text3);margin-bottom:8px;}
+.ex-instr-steps{list-style:none;display:flex;flex-direction:column;gap:5px;}
+.ex-instr-steps li{font-size:12px;color:var(--text2);padding-left:16px;position:relative;
+  line-height:1.5;}
+.ex-instr-steps li::before{content:counter(step);counter-increment:step;position:absolute;
+  left:0;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;
+  color:var(--text3);}
+.ex-instr-steps{counter-reset:step;}
+.ex-instr-toggle{font-size:11px;font-weight:600;padding:3px 8px;border-radius:5px;
+  border:1px solid var(--border);background:var(--surface2);color:var(--text3);
+  cursor:pointer;transition:all .15s;margin-bottom:8px;}
+.ex-instr-toggle:hover{color:var(--text);border-color:var(--border2);}
+
+/* ── BARBELL PLATE VISUAL ── */
+.bb-visual{display:flex;align-items:center;justify-content:center;gap:0;
+  padding:12px 0;margin-bottom:8px;overflow-x:auto;}
+.bb-collar{width:8px;height:28px;background:var(--border2);border-radius:2px;flex-shrink:0;}
+.bb-bar{height:8px;background:var(--border2);flex-shrink:0;border-radius:2px;}
+.bb-plate{display:flex;align-items:center;justify-content:center;border-radius:3px;
+  font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:800;
+  flex-shrink:0;border:2px solid;}
+.bb-plate.p45{background:rgba(255,50,50,.2);border-color:#ff3232;color:#ff5555;width:12px;}
+.bb-plate.p35{background:rgba(255,150,50,.2);border-color:#ff9632;color:#ffaa55;width:10px;}
+.bb-plate.p25{background:rgba(50,150,255,.2);border-color:#3296ff;color:#55aaff;width:9px;}
+.bb-plate.p10{background:rgba(50,200,50,.2);border-color:#32c832;color:#55dd55;width:7px;}
+.bb-plate.p5{background:rgba(200,200,50,.2);border-color:#c8c832;color:#dddd55;width:5px;}
+.bb-plate.p25s{background:rgba(150,100,255,.2);border-color:#9664ff;color:#aa88ff;width:4px;}
+.bb-plate.p125{background:rgba(180,180,180,.2);border-color:#aaa;color:#ccc;width:3px;}
+.bb-plate-ht-45{height:52px;}.bb-plate-ht-35{height:46px;}.bb-plate-ht-25{height:40px;}
+.bb-plate-ht-10{height:34px;}.bb-plate-ht-5{height:28px;}.bb-plate-ht-25s{height:24px;}
+.bb-plate-ht-125{height:20px;}
+
 /* TOAST */
 .toast{position:fixed;bottom:24px;right:24px;background:var(--accent);color:var(--atxt);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;letter-spacing:1px;padding:12px 20px;border-radius:8px;z-index:999;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none;max-width:280px;}
 .toast.show{opacity:1;transform:translateY(0);}
@@ -790,6 +955,7 @@ onAuthStateChanged(auth, async (user) => {
   <div class="bc" id="bc"></div>
   <div class="hdr-r">
     <button class="icon-btn" onclick="openPlateCalc()" title="Plate calculator">🏋️</button>
+    <button class="icon-btn" onclick="openCableConv()" title="Cable weight converter">⚖️</button>
     <button class="icon-btn" id="fs-btn" onclick="cycleFontSize()" title="Font size">Aa</button>
     <button class="icon-btn" id="theme-btn" onclick="toggleTheme()" title="Toggle theme">🌙</button>
     <button class="hbtn" id="hist-btn" onclick="go('history')">History</button>
@@ -1523,7 +1689,7 @@ function getWeekDays(ph,week){
 }
 
 // ═══════════════════════════════════════════════════ STATE
-const DEFAULT_STATE={sets:{},completed:{},skipped:{},history:[],prs:{},bodyweight:[],sessionNotes:{},readiness:{},rm1History:{},workoutDays:{},assessments:{},startWeight:202,startBF:22,restDays:{},difficulty:{},customWorkouts:{},rpe:{},templates:{},exerciseSwaps:{}};
+const DEFAULT_STATE={sets:{},completed:{},skipped:{},history:[],prs:{},bodyweight:[],sessionNotes:{},readiness:{},rm1History:{},workoutDays:{},assessments:{},startWeight:202,startBF:22,restDays:{},difficulty:{},customWorkouts:{},rpe:{},templates:{},exerciseSwaps:{},sessionStart:{}};
 let S=JSON.parse(JSON.stringify(DEFAULT_STATE));
 try{const d=localStorage.getItem('lift12_v5');if(d)S=Object.assign(JSON.parse(JSON.stringify(DEFAULT_STATE)),JSON.parse(d));}catch(e){}
 const save=()=>{
@@ -1904,6 +2070,7 @@ function renderHome(){
     <div class="home-title">Your 12-Week <em>Plan</em></div>
     <div class="home-sub">Personalized · 36M · 5'10" · 202 lbs · Home gym</div>
 
+    <div id="next-session-card-wrap"></div>
     <div class="readiness-card" id="readiness-card"></div>
 
     <div class="streak-bar">
@@ -1972,6 +2139,9 @@ function renderHome(){
     <div class="shd">Strength Progress Chart</div>
     <div class="chart-section" id="chart-section"></div>
 
+    <div class="shd">Workout Calendar</div>
+    <div class="workout-cal-card" id="workout-cal-card"></div>
+
     <div class="shd">Sync & Backup</div>
     <div class="sync-banner">
       <div class="sync-icon">☁️</div>
@@ -2000,6 +2170,7 @@ function renderHome(){
     div.onclick=()=>go('phase',ph.id);
     grid.appendChild(div);
   });
+  renderNextSession();
   renderReadiness();
   renderHeatmap();
   renderAchievements();
@@ -2012,6 +2183,7 @@ function renderHome(){
   renderChart();
   renderProjectedFinish();
   renderRestDaySuggestion();
+  renderWorkoutCalendar();
   try{const ts=localStorage.getItem('lift12_lastExport');document.getElementById('sync-last').textContent=ts?`Last exported: ${ts}`:'Never exported';}catch(e){}
 }
 
@@ -2453,7 +2625,7 @@ function renderWeek(phaseId,week){
     <div id="days-container"></div>
   `;
   document.getElementById('wk-back').onclick=()=>go('phase',phaseId);
-  _activeRestSec=ph.restSec||90;
+  _activeRestSec=60; // corner auto-timer always 60s regardless of phase
   // volume summary
   const weekDayList=getWeekDays(ph,week);
   const vs=getWeekVolume(phaseId,week);
@@ -2702,6 +2874,23 @@ function makeExCard(ex,ek,ei,ph,sessionKey){
     </div>`;
     body.innerHTML+=`<button onclick="document.getElementById('enh-${ek}').classList.toggle('show')" style="font-size:11px;font-weight:600;padding:3px 8px;border-radius:5px;border:1px solid var(--border);background:var(--surface2);color:var(--text3);cursor:pointer;margin-bottom:8px">📝 Past notes (${exNoteHist.length})</button>`;
   }
+  // Exercise instruction card
+  const instrData=getExInstructions(ex.name);
+  if(instrData){
+    const instrDiv=document.createElement('div');
+    instrDiv.className='ex-instruction';instrDiv.id='instr-'+ek;
+    instrDiv.innerHTML='<div class="ex-instr-title">Form Cues</div><ol class="ex-instr-steps">'+instrData.map(function(s){return '<li>'+s+'</li>';}).join('')+'</ol>';
+    body.appendChild(instrDiv);
+    const instrToggle=document.createElement('button');
+    instrToggle.className='ex-instr-toggle';
+    instrToggle.textContent='Form cues';
+    instrToggle.onclick=function(){
+      const d=document.getElementById('instr-'+ek);
+      if(d)d.classList.toggle('show');
+      instrToggle.textContent=d&&d.classList.contains('show')?'Hide cues':'Form cues';
+    };
+    body.appendChild(instrToggle);
+  }
   // Quick-log button
   body.innerHTML+=`<button onclick="openQL('${ek.replace(/'/g,"\\'")}',event)" style="font-size:11px;font-weight:600;padding:4px 10px;border-radius:5px;border:1px solid var(--border2);background:var(--surface2);color:var(--text2);cursor:pointer;margin-bottom:8px;margin-left:6px">⚡ Quick Log</button>`;
   // auto-progression suggestion
@@ -2890,6 +3079,15 @@ function togSet(ek,si){
   }
   // auto-start corner timer
   if(S.sets[ek][si].done) startCornerTimer();
+  // start session duration tracking on first set done
+  if(S.sets[ek][si].done){
+    const skm=ek.match(/p(\d+)_w(\d+)_d(\d+)/);
+    if(skm){
+      const sk=`p${skm[1]}_w${skm[2]}_d${skm[3]}`;
+      if(!S.sessionStart)S.sessionStart={};
+      if(!S.sessionStart[sk])S.sessionStart[sk]=Date.now();
+    }
+  }
   // haptic on mobile
   if(navigator.vibrate)navigator.vibrate(40);
   // update ql display if open
@@ -2912,9 +3110,16 @@ function toggleDone(ph,week,di,key){
     const sessionDiff=getDiff(ph.id,week,di);
     const _hDay=getWeekDays(ph,week)[di]||{name:'Day',title:'Workout'};
     S.history.unshift({key,date:today,phase:ph.label,phaseColor:ph.color,week,day:_hDay.name,title:_hDay.title,ts,tr,note,readiness,trainedDay,difficulty:sessionDiff});
-    toast('Workout logged! 💪');
-    // check new achievements
-    setTimeout(()=>checkNewAchievements(),100);
+    // duration tracking
+    const startTs=S.sessionStart&&S.sessionStart[key];
+    const durMins=startTs?Math.round((Date.now()-startTs)/60000):null;
+    if(durMins&&durMins>0&&durMins<300){
+      S.history[0].duration=durMins;
+    }
+    if(S.sessionStart)delete S.sessionStart[key];
+    toast('Workout logged! 💪'+(durMins?` · ${durMins} min`:''));
+    // check new achievements + phase transition
+    setTimeout(()=>{checkNewAchievements();checkPhaseTransition(ph);},200);
   }
   save();
   const mb=document.getElementById(`mb-${key}`),sb=document.getElementById(`sb-${key}`),hd=document.getElementById(`dshd-${key}`);
@@ -3073,25 +3278,23 @@ function calcPlates(){
   // group plates
   const grouped={};plates.forEach(p=>{grouped[p]=(grouped[p]||0)+1;});
   const chips=Object.entries(grouped).sort((a,b)=>b[0]-a[0]).map(([p,n])=>`<div class="plate-chip ${classes[p]||'p5'}">${n>1?n+'×':''}${p}</div>`).join('');
-  el.innerHTML=`
-    <div class="plate-result-title">Each side of the bar:</div>
-    <div class="plate-side">${chips}</div>
-    <div class="plate-note">Bar: 45 lbs + ${perSide} lbs each side = ${target} lbs total</div>
-  `;
+  el.innerHTML=renderBarbellVisual(target)+'<div class="plate-result-title">Each side of the bar:</div><div class="plate-side">'+chips+'</div><div class="plate-note">Bar: 45 lbs + '+perSide+' lbs each side = '+target+' lbs total</div>';
 }
 
 // ═══════════════════════════════════════════════════ YOUTUBE
 let _ytUrl='';
 function openYT(url,exName){
   _ytUrl=url;
-  const m=url.match(/[?&]v=([^&]+)/);
+  const m=url&&url.match(/[?&]v=([^&]+)/);
   const vid=m?m[1]:null;
   if(vid){
-    document.getElementById('yt-iframe').src=
-      `https://www.youtube.com/embed/${vid}?autoplay=1&rel=0&modestbranding=1`;
+    document.getElementById('yt-iframe').src='https://www.youtube.com/embed/'+vid+'?autoplay=1&rel=0&modestbranding=1';
+  } else {
+    document.getElementById('yt-iframe').src='';
   }
   document.getElementById('yt-title').textContent=exName||'Exercise Tutorial';
-  document.getElementById('yt-desc').textContent=YT_DESC[exName]||'';
+  const desc=(typeof YT_DESC!=='undefined'&&YT_DESC[exName])||'Tap below to search YouTube for this exercise.';
+  document.getElementById('yt-desc').textContent=desc;
   document.getElementById('yt-modal').classList.add('on');
   document.body.style.overflow='hidden';
 }
@@ -3101,7 +3304,12 @@ function closeYT(){
   document.body.style.overflow='';
 }
 function ytBgClick(e){if(e.target===document.getElementById('yt-modal'))closeYT();}
-function ytOpenExternal(){const w=window.open(_ytUrl,'_blank');if(!w||w.closed||typeof w.closed==='undefined')window.location.href=_ytUrl;}
+function ytOpenExternal(){
+  const titleEl=document.getElementById('yt-title');
+  const exName=titleEl?titleEl.textContent:'exercise';
+  const q=encodeURIComponent(exName+' tutorial form technique');
+  window.open('https://www.youtube.com/results?search_query='+q,'_blank');
+}
 
 // ═══════════════════════════════════════════════════ HISTORY
 function renderHistory(){
@@ -3147,12 +3355,54 @@ function importFile(input){
       const parsed=JSON.parse(e.target.result);
       const incoming=parsed.data||parsed;
       if(!incoming.sets||!incoming.completed||!incoming.history){alert('Not a valid LIFT12 backup.');return;}
-      const ed=Object.values(S.completed).filter(Boolean).length;
-      const id=Object.values(incoming.completed).filter(Boolean).length;
-      if(!confirm(`Import backup?\n\nFile: ${id} sessions, ${incoming.history.length} history entries.\nThis device: ${ed} sessions.\n\nThis will replace your current data.`))return;
-      S=Object.assign(JSON.parse(JSON.stringify(DEFAULT_STATE)),incoming);
-      save();go('home');toast(`Imported! ${id} sessions loaded ✓`);
-    }catch(err){alert('Could not read file.');}
+      const localDone=Object.values(S.completed).filter(Boolean).length;
+      const fileDone=Object.values(incoming.completed).filter(Boolean).length;
+      // Smart merge: offer options
+      const choice=localDone>0?window.confirm(
+        `Smart Merge or Full Replace?\n\nFile: ${fileDone} sessions completed.\nThis device: ${localDone} sessions completed.\n\nClick OK to MERGE (keeps the most recent data for each session).\nClick Cancel to REPLACE (file overwrites everything).`
+      ):false;
+      if(choice===null)return; // user cancelled the prompt
+      if(choice){
+        // MERGE — take most recent completed/sets/notes per key
+        const merged=JSON.parse(JSON.stringify(DEFAULT_STATE));
+        // Start with incoming as base
+        Object.assign(merged,JSON.parse(JSON.stringify(incoming)));
+        // Layer in local data where local is newer/has more
+        Object.keys(S.completed||{}).forEach(k=>{
+          if(S.completed[k]&&!merged.completed[k])merged.completed[k]=S.completed[k];
+        });
+        Object.keys(S.sets||{}).forEach(k=>{
+          if(!merged.sets[k])merged.sets[k]=S.sets[k];
+          else{
+            // keep whichever has more filled sets
+            const localFilled=(S.sets[k]||[]).filter(s=>s.reps||s.weight||s.done).length;
+            const fileFilled=(merged.sets[k]||[]).filter(s=>s.reps||s.weight||s.done).length;
+            if(localFilled>fileFilled)merged.sets[k]=S.sets[k];
+          }
+        });
+        // Merge history — deduplicate by key, prefer most recent
+        const histMap={};
+        [...(incoming.history||[]),...(S.history||[])].forEach(h=>{
+          if(!histMap[h.key]||new Date(h.date)>=new Date(histMap[h.key].date))histMap[h.key]=h;
+        });
+        merged.history=Object.values(histMap).sort((a,b)=>new Date(b.date)-new Date(a.date));
+        // Merge PRs — keep higher weight
+        Object.keys(S.prs||{}).forEach(k=>{
+          if(!merged.prs[k]||S.prs[k].w>merged.prs[k].w)merged.prs[k]=S.prs[k];
+        });
+        // Merge bodyweight logs — combine and deduplicate
+        const bwMap={};
+        [...(incoming.bodyweight||[]),...(S.bodyweight||[])].forEach(b=>{bwMap[b.date+b.w]=b;});
+        merged.bodyweight=Object.values(bwMap).sort((a,b)=>new Date(a.date)-new Date(b.date));
+        Object.keys(merged).forEach(k=>{S[k]=merged[k];});
+        save();go('home');toast(`Merged! ${merged.history.length} total sessions ✓`);
+      } else {
+        if(!confirm(`Replace all data with file?\n\nThis cannot be undone.`))return;
+        const merged=Object.assign(JSON.parse(JSON.stringify(DEFAULT_STATE)),incoming);
+        Object.keys(merged).forEach(k=>{S[k]=merged[k];});
+        save();go('home');toast(`Replaced! ${fileDone} sessions loaded ✓`);
+      }
+    }catch(err){console.error(err);alert('Could not read file. Make sure it is a valid LIFT12 backup.');}
   };
   reader.readAsText(file);
 }
@@ -3348,7 +3598,7 @@ function openQL(ek,e){
   const day=ph.days[di];
   _qlExercises=day.exercises.map((ex,i)=>({ex,ek:`${_qlKey}_e${i}`,ei:i,ph}));
   _qlIdx=ei;
-  _activeRestSec=ph.restSec||90;
+  _activeRestSec=60; // corner auto-timer always 60s regardless of phase
   document.getElementById('ql-overlay').style.display='flex';
   document.body.style.overflow='hidden';
   qlRender();
@@ -3892,6 +4142,33 @@ function saveAsTemplate(ph,week,di,key){
 }
 
 
+const EX_INSTRUCTIONS={
+  'Barbell back squat':['Bar across upper traps, feet shoulder-width, toes slightly out','Big breath into your belly and brace hard before each rep','Push knees out in the direction of your toes as you descend','Hip crease must go below the top of the knee — full depth','Drive through your whole foot to stand, keeping chest up'],
+  'Barbell bench press':['Retract and depress shoulder blades — pull them together and down','Grip just outside shoulder-width, wrists straight over elbows','Lower to lower chest with control, elbows at 45–75° from torso','Drive feet into floor and press bar back up in a slight arc','Keep shoulder blades squeezed into the bench throughout'],
+  'Barbell deadlift':['Bar over mid-foot, feet hip-width, grip just outside legs','Hinge down and grip — push the floor away, do not yank upward','Brace fully, pull slack from bar before the real pull begins','Bar stays in contact with legs the whole way up','Lock hips through at the top — do not hyperextend'],
+  'Barbell overhead press':['Grip just outside shoulders, bar resting on front deltoids','Brace core and squeeze glutes before every rep','Press bar straight up — head moves back then through the window','Lock out at the top with bar directly over ears','Control the descent back to front deltoids — do not drop it'],
+  'Romanian deadlift':['Hold bar at hip height with a soft knee bend','Push hips back — bar slides down your thighs as you hinge','Maintain a flat back throughout the entire movement','Feel the hamstring stretch — lower only as far as form allows','Drive hips forward and squeeze glutes to return to standing'],
+  'Pull-ups':['Dead hang start with shoulder blades engaged — not shrugged','Pull elbows toward your hips — not just pulling with your arms','Get chin clearly over the bar on every rep','Lower under full control — 2 to 3 seconds down','No kipping or swinging — strict reps only'],
+  'Ring pull-ups':['Start in a dead hang with rings in a neutral position','Pull rings toward your armpits — actively rotate rings outward as you rise','At the top rings should be turned out and at lower chest level','Lower slowly — the instability is where the benefit is','Harder than bar pull-ups — expect fewer reps initially'],
+  'Ring push-ups':['Set rings 1 to 2 feet off the ground — lower means harder','Keep body rigid as a plank from head to heels','Lower chest between the rings with control','Press back up and fight the wobble — this is intentional challenge','Squeeze chest at the top of each rep'],
+  'Ring dips':['Support on rings with arms locked and rings turned out','Lean slightly forward for chest, stay upright for triceps','Lower until upper arms are parallel to floor — control the wobble','Press back up and turn rings out as you approach lockout','Hardest pushing movement in the program — max effort required'],
+  'Cable lat pulldown':['Sit with thighs under the pad, grip wider than shoulder-width','Lean back slightly, then pull bar to upper chest','Drive elbows toward your hips — not just pulling with your hands','Pause at the bottom and squeeze lats hard','Return slowly — full stretch at the top every single rep'],
+  'Cable seated row':['Sit tall with chest up — do not slouch or lean back excessively','Pull handle to lower chest — drive elbows straight back','Squeeze shoulder blades together at the end and hold briefly','Return slowly to a full stretch — shoulder blades protract','Do not use lower back to generate momentum'],
+  'Cable face pull':['Set pulley above head height with rope attachment','Pull rope toward your face — hands end at ear level','Keep elbows high throughout — above the level of your wrists','Think about pressing the rope apart as you pull it to your face','Non-negotiable for long-term shoulder health — do it every session'],
+  'DB Bulgarian split squat':['Rear foot on bench, front foot about 2 feet in front','Lower rear knee toward the floor — front shin stays vertical','Go as deep as your hip flexor flexibility allows — aim for 90 degrees or more','Drive through the front heel to return to standing','Keep torso upright — do not lean forward excessively'],
+  'DB goblet squat':['Hold dumbbell vertically at chest height with both hands','Feet shoulder-width, toes pointed out 15 to 30 degrees','Push knees outward as you squat — elbows drive inside knees at the bottom','Pause 1 to 2 seconds at the bottom to reinforce depth and position','Drive back up through your whole foot — do not rise onto toes'],
+  'DB curl':['Stand with dumbbells at sides, palms facing forward','Curl both up — keep elbows pinned to your sides throughout','Supinate fully — twist palms up as you reach the top','Squeeze hard at the top — hold for a beat before lowering','Lower slowly — 2 to 3 seconds on the way down'],
+  'EZ bar curl':['Semi-supinated grip on EZ bar — easier on wrists than straight bar','Upper arms vertical, elbows pinned to your sides','Curl to chin level — do not swing or use body momentum','Squeeze at the top, then lower under full control','Full extension at the bottom every rep — do not cheat the range'],
+  'EZ bar skull crusher':['Lie on bench, grip EZ bar with hands slightly inside shoulder-width','Lower bar toward your forehead with elbows pointing at the ceiling','Stop just above your forehead — do not actually touch it','Press back to start — keep upper arms completely vertical throughout','Controlled motion — elbows should not flare out to the sides'],
+  'DB lateral raise':['Stand with dumbbells at sides, slight bend in elbows','Raise arms out to the side — lead with your elbows not your hands','Stop when arms are parallel to the floor — do not go higher','Lower slowly — 3 seconds down is where most of the work happens','Keep shoulders down — avoid shrugging throughout the movement'],
+  'Barbell row':['Hinge forward to about 45 degrees — back flat, core braced','Pull bar into your lower chest or upper abdomen','Drive elbows back and up — squeeze shoulder blades together hard at the top','Lower with control — allow a full stretch at the bottom','Do not use lower back momentum — this is a rowing movement'],
+  'Hanging leg raise':['Dead hang from bar — shoulders engaged, not shrugged up','Tilt pelvis backward before raising legs — this activates the abs properly','Raise legs until parallel or higher — keep them together and straight','Lower slowly — do not just drop your legs on the way down','Modify by bending knees first if straight-leg version is too hard'],
+  'Plank':['Forearms flat, elbows directly under shoulders','Body forms a straight line — no hips piking up or sagging down','Squeeze glutes and brace core as hard as possible throughout','Think about pulling elbows toward your feet for full-body tension','Breathe normally — never hold your breath during a plank'],
+  'Cable pull-through':['Face away from cable, set pulley low, grip rope between legs','Hinge at hips — push them back as in a Romanian deadlift','Keep back flat and core fully braced throughout the movement','Drive hips through to full standing and squeeze glutes hard at top','The movement originates from the hip — not a squat'],
+  'Treadmill incline walk':['Set incline to 10 to 12 percent, speed to 3.2 to 3.8 mph','Do not hold the handrails — this defeats the cardiovascular purpose','Stand tall — slight forward lean from the ankles not the waist','This is Zone 2 — you can speak in full sentences but breathing is elevated','Excellent fat burning with minimal joint stress compared to running'],
+};
+function getExInstructions(name){return EX_INSTRUCTIONS[name]||null;}
+
 // ═══════════════════════════════════════════════════ EXERCISE SWAP
 let _swapEk='',_swapEi=0,_swapSessionKey='',_swapPhaseId=null,_swapCurrentName='';
 
@@ -3977,6 +4254,199 @@ function getEffectiveExercise(ph,week,di,ei,ek){
     return S.exerciseSwaps[ek];
   }
   return getWeekDays(ph,week)[di]?.exercises[ei]||null;
+}
+
+function updateOnlineStatus(){
+  const banner=document.getElementById('offline-banner');
+  if(!banner)return;
+  if(!navigator.onLine)banner.classList.add('show');
+  else banner.classList.remove('show');
+}
+window.addEventListener('online',updateOnlineStatus);
+window.addEventListener('offline',updateOnlineStatus);
+setTimeout(updateOnlineStatus,500);
+
+function openCableConv(){
+  document.getElementById('cable-modal').classList.add('on');
+  document.body.style.overflow='hidden';calcCableWeight();
+}
+function closeCableConv(){
+  document.getElementById('cable-modal').classList.remove('on');
+  document.body.style.overflow='';
+}
+function cableModalBg(e){if(e.target===document.getElementById('cable-modal'))closeCableConv();}
+function calcCableWeight(){
+  const pin=parseFloat(document.getElementById('cable-stack')?.value)||0;
+  const ratio=parseFloat(document.getElementById('cable-ratio')?.value)||10;
+  const actual=pin*ratio;
+  const valEl=document.getElementById('cable-result-val');
+  const lblEl=document.getElementById('cable-result-lbl');
+  if(valEl)valEl.textContent=actual?actual+' lbs':'--';
+  if(lblEl)lblEl.textContent=actual?'actual load (pin '+pin+' x '+ratio+' lbs/pin)':'Enter a pin number';
+}
+
+function renderNextSession(){
+  const el=document.getElementById('next-session-card-wrap');if(!el)return;
+  for(const ph of PHASES){
+    for(const w of ph.weeks){
+      const days=getWeekDays(ph,w);
+      for(let di=0;di<days.length;di++){
+        const key=wk(ph.id,w,di);
+        if(!S.completed[key]&&!S.skipped[key]){
+          const day=days[di];
+          const exNames=day.exercises.slice(0,4).map(function(e){return e.name;});
+          const durs=S.history.filter(function(h){return h.duration&&h.duration>0;}).map(function(h){return h.duration;});
+          const avgDur=durs.length?Math.round(durs.reduce(function(a,b){return a+b;},0)/durs.length):null;
+          el.innerHTML='<div class="shd">Up Next</div>'
+            +'<div class="next-session-card" onclick="go(\'week\','+ph.id+','+w+')">'  
+            +'<div class="nsc-label">'+ph.label+' · Week '+w+' · '+day.name+'</div>'
+            +'<div class="nsc-title">'+day.title+'</div>'
+            +'<div class="nsc-sub">'+ph.sub.split('·')[0].trim()+' · '+day.exercises.length+' exercises</div>'
+            +'<div class="nsc-exercises">'+exNames.map(function(n){return '<span class="nsc-ex">'+n+'</span>';}).join('')+(day.exercises.length>4?'<span class="nsc-ex">+'+( day.exercises.length-4)+' more</span>':'')+'</div>'
+            +'<button class="nsc-start" onclick="event.stopPropagation();go(\'week\','+ph.id+','+w+')">Go to Workout</button>'
+            +(avgDur?'<div class="nsc-dur">Avg session: ~'+avgDur+' min</div>':'')
+            +'</div>';
+          return;
+        }
+      }
+    }
+  }
+  el.innerHTML='';
+}
+
+let _calYear=new Date().getFullYear();
+let _calMonth=new Date().getMonth();
+function renderWorkoutCalendar(){
+  const el=document.getElementById('workout-cal-card');if(!el)return;
+  const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const today=new Date();
+  const sessionMap={};
+  S.history.forEach(function(h){
+    if(!h.date)return;
+    const d=new Date(h.date);
+    if(isNaN(d.getTime()))return;
+    const k=d.getFullYear()+'-'+d.getMonth()+'-'+d.getDate();
+    sessionMap[k]={color:h.phaseColor||'p1'};
+  });
+  const firstDay=new Date(_calYear,_calMonth,1).getDay();
+  const daysInMonth=new Date(_calYear,_calMonth+1,0).getDate();
+  let html='<div class="cal-header"><div class="cal-nav">'
+    +'<button class="cal-nav-btn" onclick="calNav(-1)">‹</button>'
+    +'<div class="cal-month">'+months[_calMonth]+' '+_calYear+'</div>'
+    +'<button class="cal-nav-btn" onclick="calNav(1)">›</button>'
+    +'</div></div><div class="cal-grid">';
+  ['Su','Mo','Tu','We','Th','Fr','Sa'].forEach(function(d){html+='<div class="cal-dow">'+d+'</div>';});
+  for(let i=0;i<firstDay;i++)html+='<div class="cal-day empty"></div>';
+  for(let d=1;d<=daysInMonth;d++){
+    const isToday=d===today.getDate()&&_calMonth===today.getMonth()&&_calYear===today.getFullYear();
+    const mk=_calYear+'-'+_calMonth+'-'+d;
+    const sess=sessionMap[mk];
+    let cls='cal-day'+(isToday?' today':'')+(sess?' trained '+sess.color+'-day':'');
+    html+='<div class="'+cls+'">'+d+'</div>';
+  }
+  html+='</div><div class="cal-legend">'
+    +'<div class="cal-leg-item"><div class="cal-leg-swatch" style="background:var(--p1)"></div>Phase 1</div>'
+    +'<div class="cal-leg-item"><div class="cal-leg-swatch" style="background:var(--p2)"></div>Phase 2</div>'
+    +'<div class="cal-leg-item"><div class="cal-leg-swatch" style="background:var(--p3)"></div>Phase 3</div>'
+    +'</div>';
+  el.innerHTML=html;
+}
+function calNav(dir){
+  _calMonth+=dir;
+  if(_calMonth>11){_calMonth=0;_calYear++;}
+  if(_calMonth<0){_calMonth=11;_calYear--;}
+  renderWorkoutCalendar();
+}
+
+function checkPhaseTransition(ph){
+  const allComplete=ph.weeks.every(function(w){return getWeekDays(ph,w).every(function(_,di){return S.completed[wk(ph.id,w,di)];});});
+  if(!allComplete)return;
+  const shownKey='phaseSummaryShown_'+ph.id;
+  if(S[shownKey])return;
+  S[shownKey]=true;save();
+  setTimeout(function(){openPhaseSummary(ph.id);},800);
+}
+function openPhaseSummary(phaseId){
+  const ph=ph_(phaseId);
+  const nextPh=ph_(phaseId+1);
+  const colorMap={p1:'var(--p1)',p2:'var(--p2)',p3:'var(--p3)'};
+  const bgMap={p1:'var(--p1bg)',p2:'var(--p2bg)',p3:'var(--p3bg)'};
+  const totalDays=ph.weeks.reduce(function(a,w){return a+getWeekDays(ph,w).length;},0);
+  const completedDays=ph.weeks.reduce(function(a,w){return a+getWeekDays(ph,w).filter(function(_,di){return S.completed[wk(ph.id,w,di)];}).length;},0);
+  const sessionDurs=S.history.filter(function(h){return h.phase===ph.label&&h.duration&&h.duration>0;}).map(function(h){return h.duration;});
+  const avgDur=sessionDurs.length?Math.round(sessionDurs.reduce(function(a,b){return a+b;},0)/sessionDurs.length):null;
+  const keyLifts=['Barbell bench press','Barbell back squat','Barbell deadlift','Barbell overhead press'];
+  const liftRows=[];
+  keyLifts.forEach(function(name){
+    let first=null,best=null;
+    ph.weeks.forEach(function(w){getWeekDays(ph,w).forEach(function(day,di){
+      const key=wk(ph.id,w,di);
+      if(!S.completed[key])return;
+      day.exercises.forEach(function(ex,ei){
+        const effEx=getEffectiveExercise(ph,w,di,ei,key+'_e'+ei)||ex;
+        if(effEx.name!==name)return;
+        const ek=key+'_e'+ei;
+        const wts=(S.sets[ek]||[]).map(function(s){return parseFloat(s.weight||0);}).filter(function(v){return v>0;});
+        if(!wts.length)return;
+        const maxW=Math.max.apply(null,wts);
+        if(first===null)first=maxW;
+        best=maxW;
+      });
+    });});
+    if(first!==null&&best!==null)liftRows.push({name:name,first:first,best:best,delta:best-first});
+  });
+  const hdr=document.getElementById('psm-header');
+  const body=document.getElementById('psm-body');
+  hdr.innerHTML=
+    '<div class="psm-badge" style="background:'+bgMap[ph.color]+';color:'+colorMap[ph.color]+'">'+ph.label+' Complete</div>'
+    +'<div class="psm-title">Phase '+ph.id+' Done!</div>'
+    +'<div class="psm-sub">'+ph.sub+' &mdash; all sessions completed</div>';
+  let bhtml=
+    '<div class="psm-stat-grid">'
+    +'<div class="psm-stat"><div class="psm-stat-val" style="color:'+colorMap[ph.color]+'">'+completedDays+'</div><div class="psm-stat-lbl">Sessions done</div></div>'
+    +'<div class="psm-stat"><div class="psm-stat-val" style="color:var(--accent)">'+Object.keys(S.prs).length+'</div><div class="psm-stat-lbl">PRs set</div></div>'
+    +'<div class="psm-stat"><div class="psm-stat-val" style="color:var(--p2)">'+(avgDur?avgDur+'m':'--')+'</div><div class="psm-stat-lbl">Avg duration</div></div>'
+    +'</div>';
+  if(liftRows.length){
+    bhtml+='<div class="psm-lifts"><div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3);margin-bottom:10px">Strength gains this phase</div>'
+      +liftRows.map(function(r){return '<div class="psm-lift-row"><div class="psm-lift-name">'+r.name.replace('Barbell ','')+'</div><div class="psm-lift-before">'+r.first+' lbs</div><div class="psm-lift-arrow">&rarr;</div><div class="psm-lift-after">'+r.best+' lbs</div>'+(r.delta>0?'<div class="psm-lift-delta">+'+r.delta+' lbs</div>':'')+'</div>';}).join('')
+      +'</div>';
+  }
+  if(nextPh){
+    bhtml+='<div class="psm-next-box"><div class="psm-next-title">Next: '+nextPh.label+'</div><div class="psm-next-desc">'+nextPh.desc+'</div></div>'
+      +'<button class="psm-cta" onclick="closePhaseSummary();go(\'phase\','+nextPh.id+')">Start '+nextPh.label+' &rarr;</button>';
+  } else {
+    bhtml+='<div class="psm-next-box"><div class="psm-next-title">Program Complete!</div><div class="psm-next-desc">You have completed all 12 weeks. Review your strength comparison on the home screen.</div></div>'
+      +'<button class="psm-cta" onclick="closePhaseSummary();go(\'home\')">Back to Home</button>';
+  }
+  body.innerHTML=bhtml;
+  document.getElementById('phase-summary-modal').classList.add('on');
+  document.body.style.overflow='hidden';
+}
+function closePhaseSummary(){document.getElementById('phase-summary-modal').classList.remove('on');document.body.style.overflow='';}
+function phaseSumBg(e){if(e.target===document.getElementById('phase-summary-modal'))closePhaseSummary();}
+
+function renderBarbellVisual(targetWeight){
+  const bar=45;
+  const perSide=(targetWeight-bar)/2;
+  if(perSide<=0)return '<div style="font-size:12px;color:var(--text3);text-align:center;padding:8px">Bar only (45 lbs)</div>';
+  const plates=[45,35,25,10,5,2.5,1.25];
+  const clsMap={45:'p45',35:'p35',25:'p25',10:'p10',5:'p5',2.5:'p25s',1.25:'p125'};
+  const htMap={45:'45',35:'35',25:'25',10:'10',5:'5',2.5:'25s',1.25:'125'};
+  let rem=perSide,stack=[];
+  plates.forEach(function(p){while(rem>=p-0.001){rem=Math.round((rem-p)*100)/100;stack.push(p);}});
+  const mk=function(p){return '<div class="bb-plate '+clsMap[p]+' bb-plate-ht-'+htMap[p]+'"></div>';};
+  const left=[...stack].reverse().map(mk).join('');
+  const right=stack.map(mk).join('');
+  return '<div class="bb-visual">'
+    +'<div class="bb-collar"></div>'
+    +'<div class="bb-bar" style="width:20px"></div>'
+    +left
+    +'<div class="bb-bar" style="width:50px"></div>'
+    +right
+    +'<div class="bb-bar" style="width:20px"></div>'
+    +'<div class="bb-collar"></div>'
+    +'</div>';
 }
 
 // ═══════════════════════════════════════════════════ TOAST
@@ -4076,6 +4546,55 @@ go('home');
     </div>
     <input class="ex-swap-search" id="ex-swap-search" placeholder="Search exercises..." oninput="filterSwapList(this.value)">
     <div class="ex-swap-list" id="ex-swap-list"></div>
+  </div>
+</div>
+
+
+<!-- OFFLINE BANNER -->
+<div class="offline-banner" id="offline-banner">
+  <div class="offline-dot"></div>
+  Offline — changes saved locally, will sync when reconnected
+</div>
+
+<!-- CABLE WEIGHT CONVERTER -->
+<div class="modal-overlay" id="cable-modal" onclick="cableModalBg(event)">
+  <div class="cable-conv-modal">
+    <div class="cable-conv-hd">
+      <div class="cable-conv-title">⚖️ Cable Converter</div>
+      <button class="cable-conv-close" onclick="closeCableConv()">✕</button>
+    </div>
+    <div class="cable-conv-body">
+      <div class="cable-row">
+        <div class="cable-conv-lbl">Stack pin #</div>
+        <input class="cable-inp" type="number" id="cable-stack" min="1" max="20" value="8"
+          oninput="calcCableWeight()">
+        <div class="cable-conv-lbl">= actual weight</div>
+      </div>
+      <div class="cable-result-box">
+        <div class="cable-result-val" id="cable-result-val">—</div>
+        <div class="cable-result-lbl" id="cable-result-lbl">lbs (actual load)</div>
+      </div>
+      <div class="cable-conv-note">
+        Based on a standard cable stack where each pin = 10 lbs.<br>
+        Pin 1 = 10 lbs · Pin 5 = 50 lbs · Pin 10 = 100 lbs<br>
+        <strong>Adjust your rack's ratio below if different:</strong>
+      </div>
+      <div class="cable-row" style="margin-top:10px">
+        <div class="cable-conv-lbl">lbs per pin:</div>
+        <input class="cable-inp" type="number" id="cable-ratio" min="1" max="20" value="10"
+          style="width:80px" oninput="calcCableWeight()">
+      </div>
+      <button class="cable-conv-btn" onclick="closeCableConv()">Done</button>
+    </div>
+  </div>
+</div>
+
+<!-- PHASE TRANSITION SUMMARY MODAL -->
+<div class="modal-overlay" id="phase-summary-modal" onclick="phaseSumBg(event)">
+  <div class="phase-summary-modal" style="position:relative">
+    <button class="psm-close" onclick="closePhaseSummary()">✕</button>
+    <div class="psm-header" id="psm-header"></div>
+    <div class="psm-body" id="psm-body"></div>
   </div>
 </div>
 
