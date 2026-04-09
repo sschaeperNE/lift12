@@ -933,6 +933,33 @@ body.fs-large{font-size:17px;}
   letter-spacing:1px;text-transform:uppercase;padding:10px 20px;border-radius:8px;
   border:none;background:var(--accent);color:var(--atxt);cursor:pointer;width:100%;}
 
+
+/* ── MUSCLE MAP V2 — card grid layout ── */
+.muscle-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;margin-top:12px;}
+.muscle-card{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 12px;transition:border-color .2s;}
+.muscle-card.active{border-color:var(--border2);}
+.muscle-card-top{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.muscle-card-icon{font-size:18px;flex-shrink:0;}
+.muscle-card-name{font-size:12px;font-weight:700;color:var(--text);}
+.muscle-card-type{font-size:10px;color:var(--text3);margin-top:1px;}
+.muscle-fill-bg{height:5px;background:var(--border2);border-radius:3px;overflow:hidden;}
+.muscle-fill-bar{height:100%;border-radius:3px;transition:width .6s ease;}
+.muscle-card-sets{font-size:10px;color:var(--text3);margin-top:4px;font-weight:600;}
+.muscle-map-tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;}
+.mmt-btn{font-size:11px;font-weight:600;padding:4px 10px;border-radius:5px;
+  border:1px solid var(--border);background:var(--surface2);color:var(--text2);
+  cursor:pointer;transition:all .15s;}
+.mmt-btn.on{background:var(--accent);color:var(--atxt);border-color:var(--accent);}
+.muscle-balance-bar{display:flex;height:10px;border-radius:5px;overflow:hidden;margin-top:8px;}
+.mbb-push{background:var(--p1);}
+.mbb-pull{background:var(--p2);}
+.mbb-lower{background:var(--p3);}
+.mbb-core{background:#b06aff;}
+.mbb-cardio{background:var(--red);}
+.muscle-balance-legend{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px;font-size:10px;color:var(--text3);}
+.mbl-item{display:flex;align-items:center;gap:4px;}
+.mbl-dot{width:8px;height:8px;border-radius:50%;}
+
 /* TOAST */
 .toast{position:fixed;bottom:24px;right:24px;background:var(--accent);color:var(--atxt);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;letter-spacing:1px;padding:12px 20px;border-radius:8px;z-index:999;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none;max-width:280px;}
 .toast.show{opacity:1;transform:translateY(0);}
@@ -4724,79 +4751,137 @@ function getMusclesForWeek(phaseId,week){
 
 function renderMuscleMap(phaseId,week){
   const el=document.getElementById('muscle-map-wrap');if(!el)return;
-  const counts=getMusclesForWeek(phaseId,week);
-  if(!Object.keys(counts).length){el.innerHTML='';return;}
-  const maxCount=Math.max.apply(null,Object.values(counts));
-  const sorted=Object.entries(counts).sort(function(a,b){return b[1]-a[1];});
-  // Build SVG body silhouette with highlighted muscles
-  // Simple front-view human body outline with muscle zones
-  const highlight=function(muscle){
-    const count=counts[muscle]||0;
-    if(!count)return 'var(--surface3)';
-    const pct=count/maxCount;
-    const col=MUSCLE_COLORS[muscle];
-    return col+(pct>=0.8?'ff':pct>=0.5?'cc':pct>=0.3?'88':'44');
-  };
-  const svg=
-    '<svg viewBox="0 0 120 240" width="120" height="240" xmlns="http://www.w3.org/2000/svg">'+
-    // Head
-    '<ellipse cx="60" cy="18" rx="14" ry="16" fill="var(--surface3)" stroke="var(--border2)" stroke-width="1"/>'+
-    // Neck
-    '<rect x="54" y="32" width="12" height="10" fill="var(--surface3)"/>'+
-    // Chest
-    '<path d="M35 42 Q60 38 85 42 L88 78 Q60 82 32 78 Z" fill="'+highlight('chest')+'" stroke="var(--border2)" stroke-width="0.5"/>'+
-    // Left shoulder
-    '<ellipse cx="28" cy="52" rx="10" ry="12" fill="'+highlight('shoulders')+'" stroke="var(--border2)" stroke-width="0.5"/>'+
-    // Right shoulder
-    '<ellipse cx="92" cy="52" rx="10" ry="12" fill="'+highlight('shoulders')+'" stroke="var(--border2)" stroke-width="0.5"/>'+
-    // Left upper arm (biceps/triceps)
-    '<rect x="17" y="62" width="13" height="28" rx="6" fill="'+highlight('biceps')+'" stroke="var(--border2)" stroke-width="0.5"/>'+
-    // Right upper arm
-    '<rect x="90" y="62" width="13" height="28" rx="6" fill="'+highlight('biceps')+'" stroke="var(--border2)" stroke-width="0.5"/>'+
-    // Forearms left
-    '<rect x="15" y="92" width="11" height="24" rx="5" fill="'+highlight('forearms')+'" stroke="var(--border2)" stroke-width="0.5"/>'+
-    // Forearms right
-    '<rect x="94" y="92" width="11" height="24" rx="5" fill="'+highlight('forearms')+'" stroke="var(--border2)" stroke-width="0.5"/>'+
-    // Core / abs
-    '<path d="M38 78 Q60 82 82 78 L80 118 Q60 122 40 118 Z" fill="'+highlight('core')+'" stroke="var(--border2)" stroke-width="0.5"/>'+
-    // Back (shown as shoulder area gradient)
-    '<path d="M35 42 Q60 38 85 42 L88 78 Q60 74 32 78 Z" fill="'+highlight('back')+'" opacity="0.4"/>'+
-    // Left quads
-    '<path d="M40 118 Q50 116 56 118 L55 168 Q48 170 38 168 Z" fill="'+highlight('quads')+'" stroke="var(--border2)" stroke-width="0.5"/>'+
-    // Right quads
-    '<path d="M64 118 Q70 116 80 118 L82 168 Q72 170 65 168 Z" fill="'+highlight('quads')+'" stroke="var(--border2)" stroke-width="0.5"/>'+
-    // Left hamstrings (back of leg shown as overlay)
-    '<path d="M40 118 Q50 116 56 118 L55 168 Q48 170 38 168 Z" fill="'+highlight('hamstrings')+'" opacity="0.35"/>'+
-    // Right hamstrings
-    '<path d="M64 118 Q70 116 80 118 L82 168 Q72 170 65 168 Z" fill="'+highlight('hamstrings')+'" opacity="0.35"/>'+
-    // Glutes (hip area)
-    '<ellipse cx="49" cy="120" rx="12" ry="8" fill="'+highlight('glutes')+'" stroke="var(--border2)" stroke-width="0.5"/>'+
-    '<ellipse cx="71" cy="120" rx="12" ry="8" fill="'+highlight('glutes')+'" stroke="var(--border2)" stroke-width="0.5"/>'+
-    // Left calves
-    '<path d="M38 168 Q48 170 55 168 L54 210 Q48 214 37 210 Z" fill="var(--surface3)" stroke="var(--border2)" stroke-width="0.5"/>'+
-    // Right calves
-    '<path d="M65 168 Q72 170 82 168 L83 210 Q72 214 66 210 Z" fill="var(--surface3)" stroke="var(--border2)" stroke-width="0.5"/>'+
-    // Cardio pulse line
-    (counts['cardio']?'<path d="M25 200 L35 200 L40 190 L45 210 L50 195 L55 200 L95 200" fill="none" stroke="'+MUSCLE_COLORS['cardio']+'" stroke-width="2" opacity="0.8"/>':'')+
-    '</svg>';
-  // Legend
-  const legendHtml=sorted.slice(0,6).map(function(entry){
-    const m=entry[0],cnt=entry[1];
-    return '<div class="muscle-leg-item">'+
-      '<div class="muscle-leg-swatch" style="background:'+MUSCLE_COLORS[m]+'"></div>'+
-      '<span class="muscle-leg-label">'+(MUSCLE_LABELS[m]||m)+'</span>'+
-      '<span class="muscle-leg-count">'+cnt+(cnt===1?' point':' points')+'</span>'+
-      '</div>';
-  }).join('');
-  el.innerHTML=
+  const ph=ph_(phaseId);
+  const days=getWeekDays(ph,week);
+  if(!days.length){el.innerHTML='';return;}
+
+  // Count sets per muscle group per session day
+  const muscleData={}; // {muscle: {primary:N, secondary:N, days:Set}}
+  const sessionMuscles=[]; // per day breakdown
+  days.forEach(function(day,di){
+    const dayMuscles={push:0,pull:0,lower:0,core:0,cardio:0};
+    day.exercises.forEach(function(ex,ei){
+      const effEx=getEffectiveExercise(ph,week,di,ei,wk(ph.id,week,di)+'_e'+ei)||ex;
+      const mm=MUSCLE_MAP[effEx.name];
+      if(!mm)return;
+      mm.primary.forEach(function(m){
+        if(!muscleData[m])muscleData[m]={primary:0,secondary:0,sets:0};
+        muscleData[m].primary+=2;
+        muscleData[m].sets+=ex.sets||3;
+        // categorise
+        if(['chest','triceps','shoulders'].includes(m))dayMuscles.push++;
+        else if(['back','biceps'].includes(m))dayMuscles.pull++;
+        else if(['quads','hamstrings','glutes','calves'].includes(m))dayMuscles.lower++;
+        else if(m==='core')dayMuscles.core++;
+        else if(m==='cardio')dayMuscles.cardio++;
+      });
+      mm.secondary.forEach(function(m){
+        if(!muscleData[m])muscleData[m]={primary:0,secondary:0,sets:0};
+        muscleData[m].secondary+=1;
+      });
+    });
+    sessionMuscles.push({title:day.title,muscles:dayMuscles});
+  });
+
+  if(!Object.keys(muscleData).length){el.innerHTML='';return;}
+
+  const maxSets=Math.max.apply(null,Object.values(muscleData).map(function(v){return v.primary+v.secondary;}));
+
+  // Group muscles into categories
+  const groups=[
+    {key:'push',label:'Push',icon:'💪',color:'var(--p1)',muscles:['chest','shoulders','triceps']},
+    {key:'pull',label:'Pull',icon:'🔙',color:'var(--p2)',muscles:['back','biceps','forearms']},
+    {key:'lower',label:'Lower',icon:'🦵',color:'var(--p3)',muscles:['quads','hamstrings','glutes']},
+    {key:'core',label:'Core',icon:'🎯',color:'#b06aff',muscles:['core']},
+    {key:'cardio',label:'Cardio',icon:'❤️',color:'var(--red)',muscles:['cardio']},
+  ];
+
+  // Balance totals
+  const totals={push:0,pull:0,lower:0,core:0,cardio:0};
+  Object.keys(muscleData).forEach(function(m){
+    const v=muscleData[m].primary+muscleData[m].secondary;
+    if(['chest','shoulders','triceps'].includes(m))totals.push+=v;
+    else if(['back','biceps','forearms'].includes(m))totals.pull+=v;
+    else if(['quads','hamstrings','glutes'].includes(m))totals.lower+=v;
+    else if(m==='core')totals.core+=v;
+    else if(m==='cardio')totals.cardio+=v;
+  });
+  const totalAll=Object.values(totals).reduce(function(a,b){return a+b;},0)||1;
+
+  // Build HTML
+  let html=
     '<div class="muscle-map-card">'+
+    '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:8px">'+
+    '<div>'+
     '<div class="muscle-map-title">Muscles Trained This Week</div>'+
-    '<div class="muscle-map-sub">Based on exercises in all sessions</div>'+
-    '<div class="muscle-map-wrap">'+
-    '<div class="muscle-svg-wrap">'+svg+'</div>'+
-    '<div class="muscle-legend">'+legendHtml+'</div>'+
+    '<div class="muscle-map-sub">Week '+week+' · '+days.length+' sessions</div>'+
     '</div>'+
     '</div>';
+
+  // Per-session summary pills
+  html+='<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;">';
+  sessionMuscles.forEach(function(s){
+    const top=Object.entries(s.muscles).filter(function(e){return e[1]>0;}).sort(function(a,b){return b[1]-a[1];}).slice(0,2).map(function(e){return e[0];});
+    html+='<div style="font-size:11px;font-weight:600;padding:4px 9px;border-radius:5px;background:var(--surface2);border:1px solid var(--border);color:var(--text2)">'+
+      s.title+': <span style="color:var(--text)">'+(top.join(', ')||'mixed')+'</span></div>';
+  });
+  html+='</div>';
+
+  // Muscle group cards
+  html+='<div class="muscle-grid">';
+  groups.forEach(function(group){
+    const groupMuscles=group.muscles.filter(function(m){return muscleData[m];});
+    if(!groupMuscles.length)return;
+    const totalVol=groupMuscles.reduce(function(a,m){return a+(muscleData[m]?muscleData[m].primary+muscleData[m].secondary:0);},0);
+    const totalSetsForGroup=groupMuscles.reduce(function(a,m){return a+(muscleData[m]?muscleData[m].sets:0);},0);
+    const fillPct=Math.min(Math.round((totalVol/maxSets)*100),100);
+    const intensity=fillPct>=70?'High':fillPct>=40?'Moderate':'Light';
+    html+=
+      '<div class="muscle-card active">'+
+      '<div class="muscle-card-top">'+
+      '<span class="muscle-card-icon">'+group.icon+'</span>'+
+      '<div><div class="muscle-card-name">'+group.label+'</div>'+
+      '<div class="muscle-card-type">'+intensity+' volume</div></div>'+
+      '</div>'+
+      '<div class="muscle-fill-bg"><div class="muscle-fill-bar" style="width:'+fillPct+'%;background:'+group.color+'"></div></div>'+
+      '<div class="muscle-card-sets">~'+totalSetsForGroup+' sets · '+groupMuscles.map(function(m){return MUSCLE_LABELS[m]||m;}).join(', ')+'</div>'+
+      '</div>';
+  });
+  html+='</div>';
+
+  // Balance bar
+  html+=
+    '<div style="margin-top:14px">'+
+    '<div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text3);margin-bottom:6px">Training Balance</div>'+
+    '<div class="muscle-balance-bar">';
+  ['push','pull','lower','core','cardio'].forEach(function(k){
+    const pct=Math.round((totals[k]/totalAll)*100);
+    if(pct>0)html+='<div class="mbb-'+k+'" style="width:'+pct+'%" title="'+k+': '+pct+'%"></div>';
+  });
+  html+='</div>'+
+    '<div class="muscle-balance-legend">'+
+    ['push','pull','lower','core','cardio'].map(function(k){
+      const pct=Math.round((totals[k]/totalAll)*100);
+      if(!pct)return '';
+      const colors={'push':'var(--p1)','pull':'var(--p2)','lower':'var(--p3)','core':'#b06aff','cardio':'var(--red)'};
+      return '<div class="mbl-item"><div class="mbl-dot" style="background:'+colors[k]+'"></div>'+k+' '+pct+'%</div>';
+    }).filter(Boolean).join('')+
+    '</div>'+
+    '</div>';
+
+  // Balance advice
+  const pushPull=totals.push&&totals.pull?totals.push/totals.pull:null;
+  if(pushPull){
+    let advice='';
+    if(pushPull>1.8)advice='⚠️ Push-heavy week — add more pull work to protect your shoulders.';
+    else if(pushPull<0.5)advice='⚠️ Pull-heavy week — add some push volume for balance.';
+    else if(!totals.lower)advice='💡 No lower body work this week — consider adding a leg session.';
+    else advice='✅ Good push/pull balance this week.';
+    html+='<div style="font-size:12px;color:var(--text2);margin-top:10px;padding:8px 10px;background:var(--surface2);border-radius:6px;line-height:1.5">'+advice+'</div>';
+  }
+
+  html+='</div>';
+  el.innerHTML=html;
 }
 
 // ═══════════════════════ WARMUP PROTOCOL
@@ -4902,7 +4987,8 @@ async function openAICoach(key,ph,week,di,autoAdvice){
     '<div class="coach-panel">'+
     '<div class="coach-hd">'+
     '<div class="coach-avatar">🤖</div>'+
-    '<div><div class="coach-name">AI Coach</div><div class="coach-sub">Personalized advice based on your session</div></div>'+
+    '<div style="flex:1"><div class="coach-name">AI Coach</div><div class="coach-sub">Personalized advice based on your session</div></div>'+
+    '<button onclick="promptApiKey()" title="Set API key" style="font-size:18px;background:none;border:none;cursor:pointer;opacity:.6">🔑</button>'+
     '</div>'+
     '<div class="coach-bubbles" id="bubbles-'+key+'"></div>'+
     '<div class="coach-input-row">'+
@@ -4949,24 +5035,39 @@ async function sendCoachMessage(key,phaseId,week,di,overrideMsg,overrideCtx,isSy
     'You are a personal strength and fitness coach for this specific athlete. Use the context provided to give highly personalized, specific advice. Be direct, encouraging, and practical. Never give generic advice — always reference the athlete\'s actual numbers, phase, and recent performance. Keep responses under 100 words unless asked for more detail.\n\nATHLETE CONTEXT: '+JSON.stringify(ctx);
   if(!isSystem){_coachHistory.push({role:'user',content:userMsg});}
   else {_coachHistory.push({role:'user',content:userMsg});}
+  const apiKey=localStorage.getItem('lift12_ai_key')||'';
+  if(!apiKey){
+    const typingEl=document.getElementById(typingId);
+    if(typingEl)typingEl.innerHTML='<strong>API key needed.</strong> Tap the 🔑 button in the coach panel to add your Anthropic API key. Get a free key at <a href="https://console.anthropic.com" target="_blank" style="color:var(--accent)">console.anthropic.com</a>.';
+    if(sendBtn)sendBtn.disabled=false;
+    return;
+  }
   try{
-    const resp=await fetch('https://api.anthropic.com/v1/messages',{
+    const proxyUrl='https://corsproxy.io/?url='+encodeURIComponent('https://api.anthropic.com/v1/messages');
+    const resp=await fetch(proxyUrl,{
       method:'POST',
-      headers:{'Content-Type':'application/json'},
+      headers:{
+        'Content-Type':'application/json',
+        'x-api-key':apiKey,
+        'anthropic-version':'2023-06-01'
+      },
       body:JSON.stringify({
-        model:'claude-sonnet-4-20250514',
-        max_tokens:1000,
+        model:'claude-sonnet-4-6',
+        max_tokens:400,
         system:systemPrompt,
         messages:_coachHistory
       })
     });
+    if(!resp.ok){
+      const err=await resp.json().catch(()=>({}));
+      throw new Error(err.error?.message||'API error '+resp.status);
+    }
     const data=await resp.json();
     const text=data.content&&data.content[0]&&data.content[0].text?data.content[0].text:'Could not get advice.';
     _coachHistory.push({role:'assistant',content:text});
     const typingEl=document.getElementById(typingId);
     if(typingEl)typingEl.innerHTML=text.replace(/\n/g,'<br>');
     bubblesEl.scrollTop=bubblesEl.scrollHeight;
-    // Save coach interaction in history
     if(S.history[0]&&S.history[0].key===key){
       if(!S.history[0].coachAdvice)S.history[0].coachAdvice=[];
       S.history[0].coachAdvice.push({q:userMsg,a:text,ts:Date.now()});
@@ -4974,7 +5075,10 @@ async function sendCoachMessage(key,phaseId,week,di,overrideMsg,overrideCtx,isSy
     }
   }catch(e){
     const typingEl=document.getElementById(typingId);
-    if(typingEl){typingEl.innerHTML='Could not connect to AI Coach. Check your internet connection.';typingEl.classList.add('error');}
+    if(typingEl){
+      typingEl.innerHTML='Error: '+escHtml(e.message||'Unknown error')+'. Check your API key is correct and has credit.';
+      typingEl.classList.add('error');
+    }
   }
   if(sendBtn)sendBtn.disabled=false;
   if(inp)inp.focus();
@@ -5043,6 +5147,14 @@ function renderWeeklyCheckin(){
 function getWeekNumber(d){
   const onejan=new Date(d.getFullYear(),0,1);
   return Math.ceil((((d-onejan)/86400000)+onejan.getDay()+1)/7);
+}
+
+function promptApiKey(){
+  const current=localStorage.getItem('lift12_ai_key')||'';
+  const key=prompt('Enter your Anthropic API key (stored locally, never sent anywhere except Anthropic):\n\nGet one free at console.anthropic.com\n\nLeave blank to clear.',current);
+  if(key===null)return;
+  if(key.trim()){localStorage.setItem('lift12_ai_key',key.trim());toast('API key saved ✓');}
+  else{localStorage.removeItem('lift12_ai_key');toast('API key cleared');}
 }
 
 // ═══════════════════════════════════════════════════ TOAST
