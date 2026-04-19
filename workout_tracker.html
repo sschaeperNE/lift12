@@ -960,6 +960,59 @@ body.fs-large{font-size:17px;}
 .mbl-item{display:flex;align-items:center;gap:4px;}
 .mbl-dot{width:8px;height:8px;border-radius:50%;}
 
+
+/* ── PER-EXERCISE RPE STARS ── */
+.ex-rpe-row{display:flex;align-items:center;gap:6px;padding:6px 0 4px;border-top:1px solid var(--border);margin-top:6px;}
+.ex-rpe-label{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text3);flex-shrink:0;}
+.ex-rpe-stars{display:flex;gap:3px;}
+.ex-rpe-star{font-size:16px;cursor:pointer;opacity:.25;transition:opacity .1s,transform .1s;user-select:none;line-height:1;}
+.ex-rpe-star.on{opacity:1;}
+.ex-rpe-star:hover{transform:scale(1.2);}
+.ex-rpe-desc{font-size:10px;color:var(--text3);margin-left:4px;}
+
+/* ── SESSION EFFORT SUMMARY ── */
+.session-effort{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 14px;margin-top:8px;}
+.se-label{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text3);margin-bottom:6px;}
+.se-row{display:flex;align-items:center;gap:10px;}
+.se-bar-bg{flex:1;height:8px;background:var(--border2);border-radius:4px;overflow:hidden;}
+.se-bar{height:100%;border-radius:4px;transition:width .5s ease;}
+.se-val{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;min-width:36px;text-align:right;}
+.se-desc{font-size:11px;color:var(--text3);margin-top:3px;}
+
+/* ── 1RM INLINE ── */
+.rm1-inline{font-size:10px;color:var(--text3);padding:2px 0;text-align:center;font-style:italic;}
+.rm1-inline.highlight{color:var(--gold);font-weight:700;font-style:normal;}
+
+/* ── FATIGUE SCORE ── */
+.fatigue-bar{display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:12px 18px;margin-bottom:16px;}
+.fatigue-icon{font-size:22px;flex-shrink:0;}
+.fatigue-info{flex:1;}
+.fatigue-title{font-size:13px;font-weight:600;color:var(--text);}
+.fatigue-sub{font-size:11px;color:var(--text2);margin-top:2px;line-height:1.5;}
+.fatigue-score{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;min-width:44px;text-align:center;}
+.fatigue-meter{display:flex;gap:3px;margin-top:6px;}
+.fatigue-pip{flex:1;height:5px;border-radius:2px;background:var(--border2);}
+
+/* ── SMART SWAP SUGGESTIONS ── */
+.swap-suggestions{padding:0 18px 10px;}
+.swap-sugg-title{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--p2);margin-bottom:8px;padding-top:8px;}
+.swap-sugg-item{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border-radius:8px;cursor:pointer;transition:background .15s;border:1px solid var(--p2);background:var(--p2bg);margin-bottom:6px;}
+.swap-sugg-item:hover{background:rgba(47,216,138,.2);}
+.swap-sugg-name{font-size:13px;font-weight:600;color:var(--text);}
+.swap-sugg-why{font-size:10px;color:var(--p2);margin-top:1px;}
+.swap-divider{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text3);margin:10px 0 6px;padding-top:8px;border-top:1px solid var(--border);}
+
+/* ── MULTI-PROGRAM ── */
+.program-select-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px;margin-bottom:20px;}
+.prog-sel-title{font-size:14px;font-weight:600;margin-bottom:4px;}
+.prog-sel-sub{font-size:12px;color:var(--text3);margin-bottom:14px;}
+.prog-pills{display:flex;gap:8px;flex-wrap:wrap;}
+.prog-pill{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.5px;padding:8px 16px;border-radius:8px;border:1px solid var(--border2);background:var(--surface2);color:var(--text2);cursor:pointer;transition:all .15s;}
+.prog-pill.active{border-color:var(--accent);color:var(--atxt);background:var(--accent);}
+.prog-pill:hover:not(.active){border-color:var(--border2);color:var(--text);}
+.prog-pill.locked{opacity:.45;cursor:default;}
+.prog-deload-banner{background:rgba(255,150,64,.1);border:1px solid var(--p3);border-radius:8px;padding:12px 16px;margin-bottom:14px;font-size:13px;color:var(--p3);line-height:1.6;}
+
 /* TOAST */
 .toast{position:fixed;bottom:24px;right:24px;background:var(--accent);color:var(--atxt);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;letter-spacing:1px;padding:12px 20px;border-radius:8px;z-index:999;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none;max-width:280px;}
 .toast.show{opacity:1;transform:translateY(0);}
@@ -1813,7 +1866,7 @@ function getWeekDays(ph,week){
 }
 
 // ═══════════════════════════════════════════════════ STATE
-const DEFAULT_STATE={sets:{},completed:{},skipped:{},history:[],prs:{},bodyweight:[],sessionNotes:{},readiness:{},rm1History:{},workoutDays:{},assessments:{},startWeight:202,startBF:22,restDays:{},difficulty:{},customWorkouts:{},rpe:{},templates:{},exerciseSwaps:{},sessionStart:{}};
+const DEFAULT_STATE={sets:{},completed:{},skipped:{},history:[],prs:{},bodyweight:[],sessionNotes:{},readiness:{},rm1History:{},workoutDays:{},assessments:{},startWeight:202,startBF:22,restDays:{},difficulty:{},customWorkouts:{},rpe:{},templates:{},exerciseSwaps:{},sessionStart:{},exRpe:{},programIndex:0};
 let S=JSON.parse(JSON.stringify(DEFAULT_STATE));
 try{const d=localStorage.getItem('lift12_v5');if(d)S=Object.assign(JSON.parse(JSON.stringify(DEFAULT_STATE)),JSON.parse(d));}catch(e){}
 const save=()=>{
@@ -2194,6 +2247,8 @@ function renderHome(){
     <div class="home-title">Your 12-Week <em>Plan</em></div>
     <div class="home-sub">Personalized · 36M · 5'10" · 202 lbs · Home gym</div>
 
+    <div id="fatigue-bar-wrap"></div>
+    <div id="program-select-wrap"></div>
     <div id="next-session-card-wrap"></div>
     <div class="readiness-card" id="readiness-card"></div>
 
@@ -2295,6 +2350,8 @@ function renderHome(){
     div.onclick=()=>go('phase',ph.id);
     grid.appendChild(div);
   });
+  renderFatigueScore();
+  renderProgramSelector();
   renderNextSession();
   renderReadiness();
   renderHeatmap();
@@ -2638,7 +2695,9 @@ function setDayDiff(phaseId,week,di,level){
 // Returns adjusted prescribed reps string and adjusted target weight string
 function applyDifficulty(ex,phaseId,week,di){
   const level=getDiff(phaseId,week,di);
-  if(level==='medium')return{adjP:ex.p,adjW:ex.w,level};
+  const progMult=getProgramMultiplier();
+  const progBonus=getProgramVolumeBonus();
+  if(level==='medium'&&progMult===1.0)return{adjP:ex.p,adjW:ex.w,level};
 
   const et=getExType(ex.name);
   if(et.type!=='weight')return{adjP:ex.p,adjW:ex.w,level}; // cardio unchanged
@@ -2669,6 +2728,13 @@ function applyDifficulty(ex,phaseId,week,di){
     adjRepHigh=repHigh+2;
   }
 
+  // Apply program multiplier for higher programs on medium difficulty
+  if(level==='medium'&&progMult!==1.0&&baseW>0){
+    const progW=Math.round(baseW*progMult/5)*5;
+    const progSets=prescSets+(progBonus>0&&isBarbell(ex.name)?progBonus:0);
+    const progStr=progSets+' × '+repLow+(repHigh>repLow?'–'+repHigh:'');
+    return{adjP:progStr,adjW:ex.w.replace(/[\d.]+/,progW||baseW),level:'medium'};
+  }
   const wStr=ex.w.replace(/[\d.]+/,adjW||wMatch?.[0]||'');
   const rStr=adjRepLow===adjRepHigh?`${adjSets} × ${adjRepLow}`:`${adjSets} × ${adjRepLow}–${adjRepHigh}`;
   return{adjP:rStr,adjW:baseW>0?wStr:ex.w,level};
@@ -2898,18 +2964,10 @@ function renderWeek(phaseId,week){
       body.appendChild(exList);
     }
     const rb=document.createElement('div');rb.className='rest-bar';rb.textContent='⏱ '+ph.rest;body.appendChild(rb);
-    // RPE slider
-    const rpeWrap=document.createElement('div');rpeWrap.className='rpe-section';
-    const savedRPE=(S.rpe&&S.rpe[key])||5;
-    const rpeLabels=['','Very Easy','Easy','Moderate','Somewhat Hard','Hard','Hard','Very Hard','Very Hard','Near Max','Max Effort'];
-    rpeWrap.innerHTML=`<div class="rpe-label">Session RPE (effort)</div>
-      <div class="rpe-row">
-        <input type="range" class="rpe-slider" min="1" max="10" value="${savedRPE}" id="rpe-${key}"
-          oninput="updateRPE('${key}',this.value)">
-        <div class="rpe-val" id="rpeval-${key}" style="color:${savedRPE<=3?'var(--p2)':savedRPE<=6?'var(--accent)':'var(--red)'}">${savedRPE}</div>
-      </div>
-      <div class="rpe-desc" id="rpedesc-${key}">${rpeLabels[savedRPE]||''}</div>`;
-    body.appendChild(rpeWrap);
+    // Session effort (auto-calculated from per-exercise RPE)
+    const effortDiv=document.createElement('div');effortDiv.id='session-effort-'+key;
+    body.appendChild(effortDiv);
+    renderSessionEffort(key);
     // AI Coach panel
     const coachDiv=document.createElement('div');coachDiv.id='coach-'+key;
     body.appendChild(coachDiv);
@@ -3040,6 +3098,15 @@ function makeExCard(ex,ek,ei,ph,sessionKey){
   // warmup section
   body.innerHTML+=`<div class="warmup-section" id="wu-${ek}"></div>`;
   body.innerHTML+=`<div class="sets-hdr"><span>Set</span><span>Reps done</span><span>Weight used</span><span>Notes</span><span></span></div><div id="sr-${ek}"></div>`;
+  // Per-exercise RPE stars
+  const exRpeWrap=document.createElement('div');exRpeWrap.className='ex-rpe-row';
+  const savedExRpe=(S.exRpe&&S.exRpe[ek])||0;
+  const rpeDescs=['','Very Easy','Easy','Moderate','Hard','Max'];
+  exRpeWrap.innerHTML='<span class="ex-rpe-label">Effort:</span>'+
+    '<div class="ex-rpe-stars" id="exrpe-'+ek+'">'+
+    [1,2,3,4,5].map(i=>'<span class="ex-rpe-star'+(i<=savedExRpe?' on':'')+'" onclick="setExRpe(\''+ek+'\','+i+',\''+sessionKey+'\')" title="'+rpeDescs[i]+'">★</span>').join('')+
+    '</div>'+'<span class="ex-rpe-desc" id="exrpedesc-'+ek+'">'+(rpeDescs[savedExRpe]||'')+'</span>';
+  body.appendChild(exRpeWrap);
   card.append(top,body);
   return card;
 }
@@ -3147,7 +3214,7 @@ function renderSetRows(ex,ek){
         <input class="si${s.notes?' v':''}" type="text" placeholder="notes"
           value="${s.notes||''}" id="nt-${ek}-${si}" onchange="upd('${ek}',${si},'notes',this.value)"/>
         <button class="ok-btn${s.done?' done':''}" id="ob-${ek}-${si}" onclick="togSet('${ek}',${si})">${s.done?'✓':'○'}</button>
-      </div>`;
+      </div>${(()=>{const w=parseFloat(s.weight||0);const r=parseInt(s.reps||0);if(!w||!r||!s.done)return '';const rm=epley1RM(w,r);return '<div class="rm1-inline highlight" id="rm1-'+ek+'-'+si+'">~'+rm+' lbs est. 1RM</div>';})()}`;
     } else if(isTime){
       // time-based: duration field + notes, no weight
       const unitOpts=['seconds','mins'].map(u=>`<option value="${u}"${(s.timeUnit||et.unit)===u?' selected':''}>${u}</option>`).join('');
@@ -3161,7 +3228,7 @@ function renderSetRows(ex,ek){
         <input class="si${s.notes?' v':''}" type="text" placeholder="notes"
           value="${s.notes||''}" id="nt-${ek}-${si}" onchange="upd('${ek}',${si},'notes',this.value)"/>
         <button class="ok-btn${s.done?' done':''}" id="ob-${ek}-${si}" onclick="togSet('${ek}',${si})">${s.done?'✓':'○'}</button>
-      </div>`;
+      </div>${(()=>{const w=parseFloat(s.weight||0);const r=parseInt(s.reps||0);if(!w||!r||!s.done)return '';const rm=epley1RM(w,r);return '<div class="rm1-inline highlight" id="rm1-'+ek+'-'+si+'">~'+rm+' lbs est. 1RM</div>';})()}`;
     } else if(isIntervals){
       // intervals: rounds + effort dropdown + notes
       const effortOpts=['','Easy','Moderate','Hard','Max'].map(e=>`<option value="${e}"${(s.effort||'')=== e?' selected':''}>${e||'Effort'}</option>`).join('');
@@ -3175,7 +3242,7 @@ function renderSetRows(ex,ek){
         <input class="si${s.notes?' v':''}" type="text" placeholder="notes"
           value="${s.notes||''}" id="nt-${ek}-${si}" onchange="upd('${ek}',${si},'notes',this.value)"/>
         <button class="ok-btn${s.done?' done':''}" id="ob-${ek}-${si}" onclick="togSet('${ek}',${si})">${s.done?'✓':'○'}</button>
-      </div>`;
+      </div>${(()=>{const w=parseFloat(s.weight||0);const r=parseInt(s.reps||0);if(!w||!r||!s.done)return '';const rm=epley1RM(w,r);return '<div class="rm1-inline highlight" id="rm1-'+ek+'-'+si+'">~'+rm+' lbs est. 1RM</div>';})()}`;
     } else {
       // reps only
       return`<div class="set-row" style="grid-template-columns:30px 1fr 1fr 34px">
@@ -3185,7 +3252,7 @@ function renderSetRows(ex,ek){
         <input class="si${s.notes?' v':''}" type="text" placeholder="notes"
           value="${s.notes||''}" id="nt-${ek}-${si}" onchange="upd('${ek}',${si},'notes',this.value)"/>
         <button class="ok-btn${s.done?' done':''}" id="ob-${ek}-${si}" onclick="togSet('${ek}',${si})">${s.done?'✓':'○'}</button>
-      </div>`;
+      </div>${(()=>{const w=parseFloat(s.weight||0);const r=parseInt(s.reps||0);if(!w||!r||!s.done)return '';const rm=epley1RM(w,r);return '<div class="rm1-inline highlight" id="rm1-'+ek+'-'+si+'">~'+rm+' lbs est. 1RM</div>';})()}`;
     }
   }).join('');
 }
@@ -3234,6 +3301,16 @@ function togSet(ek,si){
   if(navigator.vibrate)navigator.vibrate(40);
   // update ql display if open
   qlSyncOkBtn(ek,si);
+  // refresh 1RM inline display
+  if(S.sets[ek][si].done){
+    const s2=S.sets[ek][si];
+    const w2=parseFloat(s2.weight||0);const r2=parseInt(s2.reps||0);
+    const rm1El=document.getElementById('rm1-'+ek+'-'+si);
+    if(rm1El&&w2&&r2){const rm=epley1RM(w2,r2);rm1El.textContent='~'+rm+' lbs est. 1RM';rm1El.className='rm1-inline highlight';}
+  }
+  // refresh session effort
+  const skm2=ek.match(/p(\d+)_w(\d+)_d(\d+)/);
+  if(skm2){const sk2='p'+skm2[1]+'_w'+skm2[2]+'_d'+skm2[3];renderSessionEffort(sk2);}
   save();
 }
 
@@ -4349,25 +4426,45 @@ function renderSwapList(filter){
   const q=filter.toLowerCase().trim();
   const cats=['lower','push','pull','arms','core','cardio'];
   const catLabels={lower:'Lower Body',push:'Push',pull:'Pull',arms:'Arms',core:'Core',cardio:'Cardio'};
+  // Get primary muscles of current exercise for smart suggestions
+  const currentMM=_swapCurrentName?MUSCLE_MAP[_swapCurrentName]:null;
+  const primaryMuscles=currentMM?currentMM.primary:[];
+  // Smart suggestions: same muscle group, different exercise
+  const suggestions=q?[]:ALL_EXERCISES.filter(function(e){
+    if(e.name===_swapCurrentName)return false;
+    const mm=MUSCLE_MAP[e.name];
+    if(!mm)return false;
+    return mm.primary.some(function(m){return primaryMuscles.includes(m);});
+  }).slice(0,4);
   let html='';
-  cats.forEach(cat=>{
-    const items=ALL_EXERCISES.filter(e=>
-      e.cat===cat&&(!q||e.name.toLowerCase().includes(q))
-    );
+  if(suggestions.length&&!q){
+    html+='<div class="swap-sugg-title">Best alternatives (same muscles)</div>';
+    suggestions.forEach(function(ex){
+      const mm=MUSCLE_MAP[ex.name];
+      const why=mm?mm.primary.join(', '):'';
+      html+='<div class="swap-sugg-item" onclick="doSwap(\''+ex.name.replace(/'/g,"\\'")+'\')">'+
+        '<div><div class="swap-sugg-name">'+ex.name+'</div>'+
+        '<div class="swap-sugg-why">Trains: '+why+'</div></div>'+
+        '<span style="color:var(--p2);font-size:18px">→</span></div>';
+    });
+    html+='<div class="swap-divider">All exercises</div>';
+  }
+  cats.forEach(function(cat){
+    const items=ALL_EXERCISES.filter(function(e){
+      return e.cat===cat&&(!q||e.name.toLowerCase().includes(q));
+    });
     if(!items.length)return;
-    html+=`<div class="ex-swap-cat">${catLabels[cat]}</div>`;
-    items.forEach(ex=>{
+    html+='<div class="ex-swap-cat">'+catLabels[cat]+'</div>';
+    items.forEach(function(ex){
       const isCurrent=ex.name===_swapCurrentName;
-      html+=`<div class="ex-swap-item${isCurrent?' current':''}" onclick="doSwap('${ex.name.replace(/'/g,"\\'")}')">
-        <div class="ex-swap-name">${ex.name}${isCurrent?' <span style="font-size:10px;color:var(--p2)">current</span>':''}</div>
-        <div class="ex-swap-cat-badge">${cat}</div>
-      </div>`;
+      html+='<div class="ex-swap-item'+(isCurrent?' current':'')+'" onclick="doSwap(\''+ex.name.replace(/'/g,"\\'")+'\')">'+
+        '<div class="ex-swap-name">'+ex.name+(isCurrent?' <span style="font-size:10px;color:var(--p2)">current</span>':'')+'</div>'+
+        '<div class="ex-swap-cat-badge">'+cat+'</div></div>';
     });
   });
   if(!html)html='<div style="padding:20px;text-align:center;color:var(--text3)">No exercises found</div>';
   list.innerHTML=html;
 }
-
 function filterSwapList(q){renderSwapList(q);}
 
 function doSwap(newExName){
@@ -5156,6 +5253,186 @@ function promptApiKey(){
   if(key.trim()){localStorage.setItem('lift12_ai_key',key.trim());toast('API key saved ✓');}
   else{localStorage.removeItem('lift12_ai_key');toast('API key cleared');}
 }
+
+function setExRpe(ek,val,sessionKey){
+  if(!S.exRpe)S.exRpe={};
+  S.exRpe[ek]=val;
+  const stars=document.getElementById('exrpe-'+ek);
+  if(stars){[...stars.children].forEach(function(s,i){s.classList.toggle('on',i<val);});}
+  const desc=document.getElementById('exrpedesc-'+ek);
+  const descs=['','Very Easy','Easy','Moderate','Hard','Max'];
+  if(desc)desc.textContent=descs[val]||'';
+  renderSessionEffort(sessionKey);
+  save();
+}
+
+function renderSessionEffort(key){
+  const el=document.getElementById('session-effort-'+key);if(!el)return;
+  // collect per-exercise RPE for this session
+  const exKeys=Object.keys(S.exRpe||{}).filter(function(k){return k.startsWith(key+'_e');});
+  if(!exKeys.length){el.innerHTML='';return;}
+  const vals=exKeys.map(function(k){return S.exRpe[k]||0;}).filter(function(v){return v>0;});
+  if(!vals.length){el.innerHTML='';return;}
+  const avg=vals.reduce(function(a,b){return a+b;},0)/vals.length;
+  const avgRounded=Math.round(avg*10)/10;
+  const descs={1:'Recovery effort',2:'Easy — well within limits',3:'Moderate — could do more',4:'Hard — near your limit',5:'Max effort — gave everything'};
+  const pct=Math.round((avg/5)*100);
+  const col=avg<=2?'var(--p2)':avg<=3?'var(--accent)':avg<=4?'var(--p3)':'var(--red)';
+  // Also store as session rpe
+  const rpeOn10=Math.round(avg*2);
+  if(!S.rpe)S.rpe={};
+  S.rpe[key]=rpeOn10;
+  el.innerHTML=
+    '<div class="session-effort">'+
+    '<div class="se-label">Session Effort (auto from '+vals.length+' exercise'+( vals.length>1?'s':'')+')</div>'+
+    '<div class="se-row">'+
+    '<div class="se-bar-bg"><div class="se-bar" style="width:'+pct+'%;background:'+col+'"></div></div>'+
+    '<div class="se-val" style="color:'+col+'">'+avgRounded+'<span style="font-size:12px;color:var(--text3)">/5</span></div>'+
+    '</div>'+
+    '<div class="se-desc">'+(descs[Math.round(avg)]||'')+'</div>'+
+    '</div>';
+}
+
+function calcFatigueScore(){
+  const recentHist=S.history.slice(0,7);
+  if(!recentHist.length)return null;
+  let score=0;
+  let factors=[];
+  // Factor 1: Sessions in last 7 days (ideal = 3-4, more = more fatigue)
+  const today=new Date();
+  const recent7=recentHist.filter(function(h){
+    const d=new Date(h.date);
+    return !isNaN(d.getTime())&&(today-d)<7*86400000;
+  });
+  const sessCount=recent7.length;
+  if(sessCount>=5)score+=3;
+  else if(sessCount>=4)score+=2;
+  else if(sessCount>=3)score+=1;
+  // Factor 2: Recent RPE trend
+  const rpeVals=recentHist.slice(0,4).map(function(h){return h.rpe||0;}).filter(Boolean);
+  if(rpeVals.length){
+    const avgRPE=rpeVals.reduce(function(a,b){return a+b;},0)/rpeVals.length;
+    if(avgRPE>=8)score+=3;
+    else if(avgRPE>=7)score+=2;
+    else if(avgRPE>=6)score+=1;
+  }
+  // Factor 3: Today's readiness
+  const todayKey=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+  const r=S.readiness&&S.readiness[todayKey];
+  if(r){
+    if(r.sleep<=2)score+=2;
+    if(r.energy<=2)score+=2;
+    if(r.soreness>=4)score+=2;
+    if(r.sleep>=4&&r.energy>=4)score-=1;
+  }
+  // Factor 4: Consecutive days without rest
+  let streak=0;
+  for(let i=0;i<recentHist.length;i++){
+    if(!recentHist[i].date)break;
+    const d=new Date(recentHist[i].date);
+    const prev=i>0?new Date(recentHist[i-1].date):today;
+    const diff=Math.round((prev-d)/86400000);
+    if(diff<=1)streak++;
+    else break;
+  }
+  if(streak>=4)score+=3;
+  else if(streak>=3)score+=2;
+  score=Math.max(0,Math.min(10,score));
+  return{score,sessCount,streak};
+}
+
+function renderFatigueScore(){
+  const el=document.getElementById('fatigue-bar-wrap');if(!el)return;
+  const f=calcFatigueScore();
+  if(!f){el.innerHTML='';return;}
+  const icons=['💪','💪','😊','😊','😐','😐','😓','😓','😩','😩','🔴'];
+  const labels=['','','Fully recovered','Fully recovered','Feeling good','Feeling good',
+    'Mild fatigue','Mild fatigue','High fatigue — easy session today','High fatigue','Overreaching — rest day strongly recommended'];
+  const col=f.score<=3?'var(--p2)':f.score<=6?'var(--accent)':'var(--red)';
+  const pips=Array.from({length:10},function(_,i){
+    return '<div class="fatigue-pip" style="background:'+(i<f.score?col:'var(--border2)')+'"></div>';
+  }).join('');
+  let advice=labels[f.score]||'';
+  if(f.score>=7)advice+=' · Consider Easy difficulty today';
+  el.innerHTML=
+    '<div class="fatigue-bar">'+
+    '<div class="fatigue-icon">'+icons[f.score]+'</div>'+
+    '<div class="fatigue-info">'+
+    '<div class="fatigue-title">Fatigue Score: <strong>'+f.score+'/10</strong></div>'+
+    '<div class="fatigue-sub">'+advice+'</div>'+
+    '<div class="fatigue-meter">'+pips+'</div>'+
+    '</div>'+
+    '<div class="fatigue-score" style="color:'+col+'">'+f.score+'</div>'+
+    '</div>';
+}
+
+const PROGRAM_LABELS=[
+  {label:'Program 1',sub:'Foundation · Weeks 1–12 · Your starting point',badge:'Beginner–Intermediate'},
+  {label:'Program 2',sub:'Intermediate · Weeks 1–12 · Heavier loads, more volume',badge:'Intermediate'},
+  {label:'Program 3',sub:'Advanced · Weeks 1–12 · Peak strength focus',badge:'Advanced'},
+];
+
+function renderProgramSelector(){
+  const el=document.getElementById('program-select-wrap');if(!el)return;
+  const prog=S.programIndex||0;
+  // Check if all phases of current program are done
+  const allDone=PHASES.every(function(ph){
+    return ph.weeks.every(function(w){
+      return getWeekDays(ph,w).every(function(_,di){return S.completed[wk(ph.id,w,di)];});
+    });
+  });
+  if(!allDone&&prog===0){el.innerHTML='';return;} // hide until Program 1 is complete
+  let html='<div class="shd">Program</div><div class="program-select-card">';
+  if(allDone&&prog===0){
+    html+='<div class="prog-deload-banner">🎉 <strong>Program 1 Complete!</strong> You finished all 12 weeks. Take a 5–7 day deload (light movement, no heavy lifting) before starting Program 2 to let your body fully recover and come back stronger.</div>';
+  }
+  html+='<div class="prog-sel-title">Select Program</div>';
+  html+='<div class="prog-sel-sub">Each program builds on the last. Complete all 12 weeks before advancing.</div>';
+  html+='<div class="prog-pills">';
+  PROGRAM_LABELS.forEach(function(p,i){
+    const isActive=i===prog;
+    const isUnlocked=i<=prog||(i===prog+1&&allDone);
+    let cls='prog-pill'+(isActive?' active':'')+(isUnlocked?'':' locked');
+    html+='<div class="'+cls+'" onclick="'+(isUnlocked?'selectProgram('+i+')':'')+'" title="'+(isUnlocked?'':'Complete Program '+(i)+' first')+'">';
+    html+=p.label+'<br><span style="font-size:10px;opacity:.7">'+p.badge+'</span>';
+    html+='</div>';
+  });
+  html+='</div></div>';
+  el.innerHTML=html;
+}
+
+function selectProgram(idx){
+  if(idx===S.programIndex)return;
+  const labels=PROGRAM_LABELS[idx];
+  if(!confirm('Switch to '+labels.label+'?\n\nYour history and PRs are kept. Session data (sets/weights) for the new program starts fresh.\n\nYou can switch back anytime.'))return;
+  S.programIndex=idx;
+  // Clear completed/skipped/sets for the program (keep history and PRs)
+  S.completed={};
+  S.skipped={};
+  S.sets={};
+  S.sessionNotes={};
+  S.exRpe={};
+  S.rpe={};
+  S.sessionStart={};
+  S.exerciseSwaps={};
+  S.difficulty={};
+  S.customWorkouts={};
+  save();
+  go('home');
+  toast(labels.label+' started! Good luck 💪');
+}
+
+function getProgramMultiplier(){
+  const prog=S.programIndex||0;
+  // Program 2: ~15% heavier, same structure
+  // Program 3: ~30% heavier, more sets on main lifts
+  return [1.0,1.15,1.30][prog]||1.0;
+}
+function getProgramVolumeBonus(){
+  const prog=S.programIndex||0;
+  return [0,1,2][prog]||0; // extra sets added to compound lifts
+}
+
 
 // ═══════════════════════════════════════════════════ TOAST
 function toast(msg){
